@@ -1,15 +1,24 @@
 package gr.kalymnos.sk3m3l10.prognosis.common;
 
+import java.util.Calendar;
+
+import gr.kalymnos.sk3m3l10.prognosis.util.DateFormater;
+
 /**
  * A container which holds weather data fetched from a web service.
  */
 
 public abstract class Weather {
 
-    private String mainWeather,description,timeMilli,tempHigh,tempLow,humidity,pressure,wind;
+    protected WeatherUnit weatherUnit;
+    protected String mainWeather,description,tempHigh,tempLow,humidity,pressure,wind;
+    protected DateFormater dateFormater;
+    private long timeMilli;
 
-    public Weather(long timeMilli, String mainWeather, String description, int tempHigh, int tempLow, int humidity, int pressure, double wind) {
-        this.timeMilli = String.valueOf(timeMilli);
+    public Weather(long timeMilli, String mainWeather, String description,
+                   int tempHigh, int tempLow, int humidity,
+                   int pressure, double wind, WeatherUnit weatherUnit) {
+        this.timeMilli = timeMilli;
         this.mainWeather = mainWeather;
         this.description = description;
         this.tempHigh = String.valueOf(tempHigh);
@@ -19,35 +28,52 @@ public abstract class Weather {
         this.wind = String.format("%.1f");
     }
 
-    public String getMainWeather() {
+    public final String getDate(){
+        DateFormater dateFormater = new DateFormater(this.timeMilli);
+        return dateFormater.getDate();
+    }
+
+    public final String getMainWeather() {
         return mainWeather;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public String getTimeMilli() {
-        return timeMilli;
+    public final String getTempHigh() {
+        return tempHigh+this.weatherUnit.getTempUnit();
     }
 
-    public String getTempHigh() {
-        return tempHigh;
+    public final String getTempLow() {
+        return tempLow+this.weatherUnit.getTempUnit();
     }
 
-    public String getTempLow() {
-        return tempLow;
+    public final String getTempHighWithSymbol() {
+        return tempHigh+this.weatherUnit.getTempUnitSymbol();
     }
 
-    public String getHumidity() {
+    public final String getTempLowWithSymbol() {
+        return tempLow+this.weatherUnit.getTempUnitSymbol();
+    }
+
+    public final String getHumidity() {
         return humidity;
     }
 
-    public String getPressure() {
+    public final String getPressure() {
         return pressure;
     }
 
-    public String getWind() {
-        return wind;
+    public final String getWind() {
+        return wind+this.weatherUnit.getWindUnit();
     }
+
+    public final String getWindWithSymbol() {
+        return wind+this.weatherUnit.getWindUnitSymbol();
+    }
+
+    /* If user searched via city name, then it is the city name,
+        if searched with location, then it's Lat/Lon */
+    public abstract String getQueryTitle();
 }
