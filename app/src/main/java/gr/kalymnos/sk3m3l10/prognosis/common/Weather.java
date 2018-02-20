@@ -5,24 +5,18 @@ package gr.kalymnos.sk3m3l10.prognosis.common;
  */
 
 public abstract class Weather {
-    private long timeMilli;
-    private String mainWeather,description;
-    private int tempHigh,tempLow,humidity,pressure;
-    private double wind;
+
+    private String mainWeather,description,timeMilli,tempHigh,tempLow,humidity,pressure,wind;
 
     public Weather(long timeMilli, String mainWeather, String description, int tempHigh, int tempLow, int humidity, int pressure, double wind) {
-        this.timeMilli = timeMilli;
+        this.timeMilli = String.valueOf(timeMilli);
         this.mainWeather = mainWeather;
         this.description = description;
-        this.tempHigh = tempHigh;
-        this.tempLow = tempLow;
-        this.humidity = humidity;
-        this.pressure = pressure;
-        this.wind = wind;
-    }
-
-    public long getTimeMilli() {
-        return timeMilli;
+        this.tempHigh = String.valueOf(tempHigh);
+        this.tempLow = String.valueOf(tempLow);
+        this.humidity = String.valueOf(humidity);
+        this.pressure = String.valueOf(pressure);
+        this.wind = String.format("%.1f");
     }
 
     public String getMainWeather() {
@@ -33,23 +27,27 @@ public abstract class Weather {
         return description;
     }
 
-    public int getTempHigh() {
+    public String getTimeMilli() {
+        return timeMilli;
+    }
+
+    public String getTempHigh() {
         return tempHigh;
     }
 
-    public int getTempLow() {
+    public String getTempLow() {
         return tempLow;
     }
 
-    public int getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
-    public int getPressure() {
+    public String getPressure() {
         return pressure;
     }
 
-    public double getWind() {
+    public String getWind() {
         return wind;
     }
 }
