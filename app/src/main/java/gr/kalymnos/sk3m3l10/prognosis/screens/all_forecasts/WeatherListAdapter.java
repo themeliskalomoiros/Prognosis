@@ -2,6 +2,7 @@ package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,12 +32,28 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public WeatherViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+
+        LayoutInflater inflater = LayoutInflater.from(this.context);
+
+        switch (viewType){
+            case VIEW_TYPE_FUTURE_DAY:
+                return new WeatherViewHolder(inflater.inflate(R.layout.forecast_list_item,parent,false));
+            case VIEW_TYPE_TODAY:
+                return new WeatherViewHolderForToday(inflater.inflate(R.layout.forecast_list_item_for_today,parent,false));
+            default:
+                throw new IllegalArgumentException("Invalid view type, value of " + viewType);
+        }
     }
 
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {
-
+        Weather w = this.items.get(position);
+        if (holder instanceof WeatherViewHolderForToday){
+            ((WeatherViewHolderForToday) holder).bindViews(w.getQueryTitle(),w.getDate(),
+                    w.getMainWeather(),w.getTempHigh(),w.getTempLow());
+        }else {
+            holder.bindViews(w.getDate(),w.getMainWeather(),w.getTempHigh(),w.getTempLow());
+        }
     }
 
     @Override
@@ -88,7 +105,6 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             this.queryTitle=itemView.findViewById(R.id.tv_query_title);
         }
 
-        @Override
         void bindViews(String queryTitle,String date, String weather, String tempHigh, String tempLow) {
             super.bindViews(date, weather, tempHigh, tempLow);
             this.queryTitle.setText(queryTitle);
