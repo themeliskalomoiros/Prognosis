@@ -25,7 +25,8 @@ public abstract class Weather {
         this.tempLow = String.valueOf(tempLow);
         this.humidity = String.valueOf(humidity);
         this.pressure = String.valueOf(pressure);
-        this.wind = String.format("%.1f");
+        this.wind = String.format("%.1f",wind);
+        this.weatherUnit=weatherUnit;
     }
 
     public final String getDate(){

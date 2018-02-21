@@ -1,4 +1,4 @@
-package gr.kalymnos.sk3m3l10.prognosis.common;
+package gr.kalymnos.sk3m3l10.prognosis.common.weather_units;
 
 /**
  * WeatherUnits for OpenWeatherMap.org
