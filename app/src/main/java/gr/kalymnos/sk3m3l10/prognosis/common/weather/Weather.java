@@ -1,7 +1,6 @@
-package gr.kalymnos.sk3m3l10.prognosis.common;
+package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 
-import java.util.Calendar;
-
+import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
 import gr.kalymnos.sk3m3l10.prognosis.util.DateFormater;
 
 /**
@@ -10,14 +9,14 @@ import gr.kalymnos.sk3m3l10.prognosis.util.DateFormater;
 
 public abstract class Weather {
 
-    protected WeatherUnit weatherUnit;
+    protected WeatherUnits weatherUnit;
     protected String mainWeather,description,tempHigh,tempLow,humidity,pressure,wind;
     protected DateFormater dateFormater;
     private long timeMilli;
 
     public Weather(long timeMilli, String mainWeather, String description,
                    int tempHigh, int tempLow, int humidity,
-                   int pressure, double wind, WeatherUnit weatherUnit) {
+                   int pressure, double wind, WeatherUnits weatherUnit) {
         this.timeMilli = timeMilli;
         this.mainWeather = mainWeather;
         this.description = description;
@@ -59,11 +58,11 @@ public abstract class Weather {
     }
 
     public final String getHumidity() {
-        return humidity;
+        return humidity+" "+this.weatherUnit.getHumidityUnit();
     }
 
     public final String getPressure() {
-        return pressure;
+        return pressure+" "+this.weatherUnit.getPressureUnit();
     }
 
     public final String getWind() {

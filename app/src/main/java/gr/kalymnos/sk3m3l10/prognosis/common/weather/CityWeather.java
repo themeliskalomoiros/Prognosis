@@ -1,9 +1,11 @@
-package gr.kalymnos.sk3m3l10.prognosis.common;
+package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 
 /*
 * A Weather obj acquired by a city name
 *
 * */
+
+import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
 
 public class CityWeather extends Weather {
 
@@ -11,7 +13,7 @@ public class CityWeather extends Weather {
 
     public CityWeather(String cityName, String countryCode,long timeMilli, String mainWeather,
                        String description, int tempHigh, int tempLow, int humidity,
-                       int pressure, double wind, WeatherUnit weatherUnit) {
+                       int pressure, double wind, WeatherUnits weatherUnit) {
         super(timeMilli, mainWeather, description, tempHigh, tempLow, humidity, pressure, wind, weatherUnit);
         this.cityName=cityName;
         this.countryCode=countryCode;

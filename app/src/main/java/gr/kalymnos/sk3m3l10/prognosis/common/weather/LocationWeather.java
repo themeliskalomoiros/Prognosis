@@ -1,9 +1,11 @@
-package gr.kalymnos.sk3m3l10.prognosis.common;
+package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 
 /*
 * A Weather obj acquired by Location (lat,lon)
 *
 * */
+
+import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
 
 public class LocationWeather extends Weather {
 
@@ -11,7 +13,7 @@ public class LocationWeather extends Weather {
 
     public LocationWeather(long lat,long lon,long timeMilli, String mainWeather, String description,
                            int tempHigh, int tempLow, int humidity, int pressure, double wind,
-                           WeatherUnit weatherUnit) {
+                           WeatherUnits weatherUnit) {
         super(timeMilli, mainWeather, description, tempHigh, tempLow, humidity, pressure, wind, weatherUnit);
         this.lat=lat;
         this.lon=lon;
