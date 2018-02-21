@@ -33,6 +33,10 @@ public abstract class Weather {
         return dateFormater.getDate();
     }
 
+    public final long getTimeMilli(){
+        return this.timeMilli;
+    }
+
     public final String getMainWeather() {
         return mainWeather;
     }
