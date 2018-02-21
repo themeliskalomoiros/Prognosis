@@ -8,19 +8,19 @@ import gr.kalymnos.sk3m3l10.prognosis.R;
 
 public class WeatherImageProvider {
 
-    public static final int DAY_LOWER_BOUND = 7;
-    public static final int DAY_UPPER_BOUND = 19;
+    private static final int DAY_LOWER_BOUND = 7;
+    private static final int DAY_UPPER_BOUND = 19;
 
     // OpenWeatherMap.org weather values
-    public static final String CLEAR_SKY = "clear sky";
-    public static final String FEW_CLOUDS = "few clouds";
-    public static final String SCATTERED_CLOUDS = "scattered clouds";
-    public static final String BROKEN_CLOUDS = "broken clouds";
-    public static final String SHOWER_RAIN = "shower rain";
-    public static final String RAIN = "rain";
-    public static final String THUNDERSTORM = "thunderstorm";
-    public static final String SNOW = "snow";
-    public static final String MIST = "mist";
+    private static final String CLEAR_SKY = "clear sky";
+    private static final String FEW_CLOUDS = "few clouds";
+    private static final String SCATTERED_CLOUDS = "scattered clouds";
+    private static final String BROKEN_CLOUDS = "broken clouds";
+    private static final String SHOWER_RAIN = "shower rain";
+    private static final String RAIN = "rain";
+    private static final String THUNDERSTORM = "thunderstorm";
+    private static final String SNOW = "snow";
+    private static final String MIST = "mist";
     
     private static WeatherImageProvider instance = null;
     
@@ -44,7 +44,7 @@ public class WeatherImageProvider {
                 }else{
                     return R.drawable.moon;
                 }
-                
+
             case FEW_CLOUDS:
                 if (isDay){
                     return R.drawable.sun_few_clouds;
