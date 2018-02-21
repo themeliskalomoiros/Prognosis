@@ -38,10 +38,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/sunny_clouds" />
+        tools:src="@drawable/sunny_clouds"
+        android:layout_marginLeft="16dp" />
 
     <TextView
-        android:id="@+id/tv_high_temp"
+        android:id="@+id/tv_temp_high"
         style="@style/WeatherListItem_High_Temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +54,7 @@
         android:layout_marginRight="106dp" />
 
     <TextView
-        android:id="@+id/tv_low_temp"
+        android:id="@+id/tv_temp_low"
         style="@style/WeatherListItem_Low_Temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +62,7 @@
         android:layout_marginStart="51dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_high_temp"
+        app:layout_constraintStart_toStartOf="@+id/tv_temp_high"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="-4"
         android:layout_marginLeft="51dp"
