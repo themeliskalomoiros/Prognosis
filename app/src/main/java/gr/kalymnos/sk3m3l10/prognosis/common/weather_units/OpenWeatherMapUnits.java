@@ -4,9 +4,9 @@ package gr.kalymnos.sk3m3l10.prognosis.common.weather_units;
  * WeatherUnits for OpenWeatherMap.org
  */
 
-public abstract class OpenWeatherUnit extends WeatherUnit {
+public abstract class OpenWeatherMapUnits extends WeatherUnits {
 
-    public static class OpenWeatherDefault extends OpenWeatherUnit{
+    public static class OpenWeatherDefault extends OpenWeatherMapUnits {
 
         @Override
         public String getWindUnit() {
@@ -27,9 +27,19 @@ public abstract class OpenWeatherUnit extends WeatherUnit {
         public String getTempUnitSymbol() {
             return "K";
         }
+
+        @Override
+        public String getHumidityUnit() {
+            return "%";
+        }
+
+        @Override
+        public String getPressureUnit() {
+            return "hPa";
+        }
     }
 
-    public static class OpenWeatherMetric extends OpenWeatherUnit{
+    public static class OpenWeatherMetric extends OpenWeatherMapUnits {
 
         @Override
         public String getWindUnit() {
@@ -50,9 +60,19 @@ public abstract class OpenWeatherUnit extends WeatherUnit {
         public String getTempUnitSymbol() {
             return "\u2103";
         }
+
+        @Override
+        public String getHumidityUnit() {
+            return "%";
+        }
+
+        @Override
+        public String getPressureUnit() {
+            return "hPa";
+        }
     }
 
-    public static class OpenWeatherImperial extends OpenWeatherUnit{
+    public static class OpenWeatherImperial extends OpenWeatherMapUnits {
 
         @Override
         public String getWindUnit() {
@@ -72,6 +92,16 @@ public abstract class OpenWeatherUnit extends WeatherUnit {
         @Override
         public String getTempUnitSymbol() {
             return "\u2109";
+        }
+
+        @Override
+        public String getHumidityUnit() {
+            return "%";
+        }
+
+        @Override
+        public String getPressureUnit() {
+            return "hPa";
         }
     }
 }

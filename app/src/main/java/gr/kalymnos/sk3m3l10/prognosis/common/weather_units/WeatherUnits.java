@@ -8,10 +8,14 @@ package gr.kalymnos.sk3m3l10.prognosis.common.weather_units;
  * the temperature will be Fahrenheit
  */
 
-public abstract class WeatherUnit {
+public abstract class WeatherUnits {
 
     public abstract String getWindUnit();
     public abstract String getWindUnitSymbol();
     public abstract String getTempUnit();
     public abstract String getTempUnitSymbol();
+    public abstract String getHumidityUnit();
+    public abstract String getPressureUnit();
+
+
 }
