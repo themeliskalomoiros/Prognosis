@@ -95,6 +95,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             this.weather=itemView.findViewById(R.id.tv_weather);
             this.tempHigh=itemView.findViewById(R.id.tv_temp_high);
             this.tempLow=itemView.findViewById(R.id.tv_temp_low);
+            // set a listener to the view which is wrapped by the ViewHolder
+            this.itemView.setOnClickListener(this);
         }
 
         void bindViews(String date,String weather,String tempHigh,String tempLow){
@@ -130,11 +132,6 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         void bindViews(String queryTitle,String date, String weather, String tempHigh, String tempLow) {
             super.bindViews(date, weather, tempHigh, tempLow);
             this.queryTitle.setText(queryTitle);
-        }
-
-        @Override
-        public void onClick(View v) {
-            listener.onWeatherItemClick(this.getAdapterPosition());
         }
     }
 }
