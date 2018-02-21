@@ -50,9 +50,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         Weather w = this.items.get(position);
         if (holder instanceof WeatherViewHolderForToday){
             ((WeatherViewHolderForToday) holder).bindViews(w.getQueryTitle(),w.getDate(),
-                    w.getMainWeather(),w.getTempHigh(),w.getTempLow());
+                    w.getMainWeather(),w.getTempHighWithSymbol(),w.getTempLowWithSymbol());
         }else {
-            holder.bindViews(w.getDate(),w.getMainWeather(),w.getTempHigh(),w.getTempLow());
+            holder.bindViews(w.getDate(),w.getMainWeather(),w.getTempHighWithSymbol(),w.getTempLowWithSymbol());
         }
     }
 
