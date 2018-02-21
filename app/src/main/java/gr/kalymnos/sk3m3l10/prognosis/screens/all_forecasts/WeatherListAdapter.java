@@ -12,6 +12,7 @@ import java.util.List;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
+import gr.kalymnos.sk3m3l10.prognosis.util.WeatherImageProvider;
 
 /**
  * This adapter will bind Weather objects to a recycler view
@@ -89,11 +90,19 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         }
 
         void bindViews(String date,String weather,String tempHigh,String tempLow){
-            this.imageView.setImageResource(R.drawable.sunny);
+            this.imageView.setImageResource(this.getImage(weather));
             this.date.setText(date);
             this.weather.setText(weather);
             this.tempHigh.setText(tempHigh);
             this.tempLow.setText(tempLow);
+        }
+
+        protected final int getImage(String weather){
+            int currentPosition = this.getAdapterPosition();
+            long timeMilli = items.get(currentPosition).getTimeMilli();
+            WeatherImageProvider imageProvider = WeatherImageProvider.getInstance();
+            //TODO: Should I set imageProvider to null here? Is there a memory leak?
+            return imageProvider.getImage(weather,timeMilli);
         }
     }
 
