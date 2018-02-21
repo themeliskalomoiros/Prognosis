@@ -1,7 +1,7 @@
 package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
-import gr.kalymnos.sk3m3l10.prognosis.util.DateFormater;
+import gr.kalymnos.sk3m3l10.prognosis.util.DateUtils;
 
 /**
  * A container which holds weather data fetched from a web service.
@@ -11,7 +11,7 @@ public abstract class Weather {
 
     protected WeatherUnits weatherUnit;
     protected String mainWeather,description,tempHigh,tempLow,humidity,pressure,wind;
-    protected DateFormater dateFormater;
+    protected DateUtils dateUtils;
     private long timeMilli;
 
     public Weather(long timeMilli, String mainWeather, String description,
@@ -29,8 +29,8 @@ public abstract class Weather {
     }
 
     public final String getDate(){
-        DateFormater dateFormater = new DateFormater(this.timeMilli);
-        return dateFormater.getDate();
+        DateUtils dateUtils = new DateUtils(this.timeMilli);
+        return dateUtils.getDate();
     }
 
     public final long getTimeMilli(){

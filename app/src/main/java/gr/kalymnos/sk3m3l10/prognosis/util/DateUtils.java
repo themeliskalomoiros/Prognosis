@@ -9,10 +9,10 @@ import java.util.Calendar;
 *
 * */
 
-public class DateFormater {
+public class DateUtils {
     private Calendar calendar;
 
-    public DateFormater(long timeMilli){
+    public DateUtils(long timeMilli){
         this.calendar = Calendar.getInstance();
         this.calendar.setTimeInMillis(timeMilli);
     }
