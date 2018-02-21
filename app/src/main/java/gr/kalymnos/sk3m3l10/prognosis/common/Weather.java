@@ -42,11 +42,11 @@ public abstract class Weather {
     }
 
     public final String getTempHigh() {
-        return tempHigh+this.weatherUnit.getTempUnit();
+        return tempHigh+" "+this.weatherUnit.getTempUnit();
     }
 
     public final String getTempLow() {
-        return tempLow+this.weatherUnit.getTempUnit();
+        return tempLow+" "+this.weatherUnit.getTempUnit();
     }
 
     public final String getTempHighWithSymbol() {
@@ -66,11 +66,11 @@ public abstract class Weather {
     }
 
     public final String getWind() {
-        return wind+this.weatherUnit.getWindUnit();
+        return wind+" "+this.weatherUnit.getWindUnit();
     }
 
     public final String getWindWithSymbol() {
-        return wind+this.weatherUnit.getWindUnitSymbol();
+        return wind+" "+this.weatherUnit.getWindUnitSymbol();
     }
 
     /* If user searched via city name, then it is the city name,

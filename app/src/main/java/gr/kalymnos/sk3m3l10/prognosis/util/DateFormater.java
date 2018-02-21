@@ -17,8 +17,7 @@ public class DateFormater {
         this.calendar.setTimeInMillis(timeMilli);
     }
 
-    @Override
-    public String toString() {
+    public String getDate() {
         return this.getDayName()+", "+this.getMonth()+" "+this.getDayOfMonth();
     }
 
