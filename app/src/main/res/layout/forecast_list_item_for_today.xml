@@ -8,7 +8,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/tv_city_name"
+        android:id="@+id/tv_query_title"
         style="@style/WeatherListItemForToday_City"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_city_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_query_title"
         app:layout_constraintVertical_bias="0.0"
         tools:text="Tuesday, February 20" />
 
