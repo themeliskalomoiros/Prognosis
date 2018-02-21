@@ -25,6 +25,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     private List<Weather> items;
 
     public WeatherListAdapter(Context context, List<Weather> items) {
+        this.context=context;
+        this.items=items;
     }
 
     @Override
@@ -48,6 +50,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     @Override
     public int getItemViewType(int position) {
         if (position==0){
+            // The first item in the list will be the todays forecast
             return VIEW_TYPE_TODAY;
         }else{
             return VIEW_TYPE_FUTURE_DAY;
