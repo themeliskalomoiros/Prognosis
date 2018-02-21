@@ -26,9 +26,17 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     private Context context;
     private List<Weather> items;
 
-    public WeatherListAdapter(Context context, List<Weather> items) {
+    // A listener which is triggered when an item (wrapped in a ViewHolder) in the list is clicked
+    private OnWeatherItemClickListener listener;
+
+    public interface OnWeatherItemClickListener{
+        public void onWeatherItemClick(int itemPosition);
+    }
+
+    public WeatherListAdapter(Context context, List<Weather> items, OnWeatherItemClickListener listener) {
         this.context=context;
         this.items=items;
+        this.listener=listener;
     }
 
     @Override
@@ -75,7 +83,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         }
     }
 
-    class WeatherViewHolder extends RecyclerView.ViewHolder{
+    class WeatherViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView date,weather,tempHigh,tempLow;
         private ImageView imageView;
@@ -104,6 +112,11 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             //TODO: Should I set imageProvider to null here? Is there a memory leak?
             return imageProvider.getImage(weather,timeMilli);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.onWeatherItemClick(this.getAdapterPosition());
+        }
     }
 
     class WeatherViewHolderForToday extends WeatherViewHolder{
@@ -117,6 +130,11 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         void bindViews(String queryTitle,String date, String weather, String tempHigh, String tempLow) {
             super.bindViews(date, weather, tempHigh, tempLow);
             this.queryTitle.setText(queryTitle);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onWeatherItemClick(this.getAdapterPosition());
         }
     }
 }
