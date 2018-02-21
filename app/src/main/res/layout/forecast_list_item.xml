@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:padding="2dp"
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
@@ -12,59 +13,66 @@
         style="@style/WeatherListItem_Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tv_weather"
-        app:layout_constraintStart_toEndOf="@+id/tv_weather"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/img_weather"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Today, February 21" />
+        tools:text="Today, February 21"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/tv_weather"
         style="@style/WeatherListItem_Weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="86dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_weather"
         app:layout_constraintTop_toBottomOf="@+id/tv_date"
-        tools:text="Broken clouds"
-        android:layout_marginLeft="86dp" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Broken clouds" />
 
     <ImageView
         android:id="@+id/img_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/forecast_list_item_imageview_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/sunny_clouds"
-        android:layout_marginLeft="16dp" />
+        tools:src="@drawable/sunny_clouds" />
 
     <TextView
         android:id="@+id/tv_temp_high"
         style="@style/WeatherListItem_High_Temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="106dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_temp_low"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_date"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="3"
-        android:layout_marginRight="106dp" />
+        tools:text="3" />
 
     <TextView
         android:id="@+id/tv_temp_low"
         style="@style/WeatherListItem_Low_Temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="49dp"
-        android:layout_marginStart="51dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_temp_high"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="-4"
-        android:layout_marginLeft="51dp"
-        android:layout_marginRight="49dp" />
+        tools:text="-4" />
 </android.support.constraint.ConstraintLayout>
