@@ -21,6 +21,18 @@ public class DateFormater {
         return this.getDayName()+", "+this.getMonth()+" "+this.getDayOfMonth();
     }
 
+    /*
+    * @param lowerBound: From this hour is a day
+    * @param lowerBound: Until this hour is a day
+    * */
+    public boolean isDay(int lowerBound, int upperBound){
+        int hour = this.calendar.get(Calendar.HOUR_OF_DAY);
+        if (hour>=lowerBound && hour<=upperBound){
+            return true;
+        }
+        return false;
+    }
+
     private String getMonth(){
         switch (this.calendar.get(Calendar.MONTH)){
             case Calendar.JANUARY:
