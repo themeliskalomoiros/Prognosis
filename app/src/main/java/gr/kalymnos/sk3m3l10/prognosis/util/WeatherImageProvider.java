@@ -34,8 +34,8 @@ public class WeatherImageProvider {
     }
     
     public int getImage(String weather, long timeMilli){
-        DateFormater dateFormater = new DateFormater(timeMilli);
-        boolean isDay = dateFormater.isDay(DAY_LOWER_BOUND,DAY_UPPER_BOUND);
+        DateUtils dateUtils = new DateUtils(timeMilli);
+        boolean isDay = dateUtils.isDay(DAY_LOWER_BOUND,DAY_UPPER_BOUND);
 
         switch (weather){
             case CLEAR_SKY:
