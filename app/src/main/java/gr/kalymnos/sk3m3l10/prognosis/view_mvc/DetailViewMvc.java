@@ -8,5 +8,12 @@ import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
  */
 
 public interface DetailViewMvc extends ViewMvc {
-    public void bindWeather(Weather weather);
+    public void bindImage(int imgResId);
+    public void bindDate(String s);
+    public void bindDescription(String s);
+    public void bindHighTemp(String s);
+    public void bindLowTemp(String s);
+    public void bindHumidity(String s);
+    public void bindPressure(String s);
+    public void bindWind(String s);
 }
