@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="5dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/WeatherListItemForToday_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Tuesday, February 20" />
+
+    <ImageView
+        android:id="@+id/weather_icon"
+        style="@style/WeatherListItemForToday_Img"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/forecast_list_item_imageview_description"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        tools:src="@drawable/scattered_rain" />
+
+    <TextView
+        android:id="@+id/weather_description"
+        style="@style/WeatherListItemForToday_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/secondary_text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/low_temperature"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Clear" />
+
+    <TextView
+        android:id="@+id/high_temperature"
+        style="@style/WeatherListItemForToday_High_Temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        tools:text="16" />
+
+    <TextView
+        android:id="@+id/low_temperature"
+        style="@style/WeatherListItemForToday_Low_Temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/secondary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/high_temperature"
+        tools:text="11" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="192dp" />
+</android.support.constraint.ConstraintLayout>
