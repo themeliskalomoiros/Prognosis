@@ -34,7 +34,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         this.context=context;
     }
 
-    public void setItems(List<Weather> items) {
+    public void addItems(List<Weather> items) {
         this.items = items;
     }
 
