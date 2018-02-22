@@ -120,7 +120,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
         @Override
         public void onClick(View v) {
-            listener.onWeatherItemClicked(this.getAdapterPosition());
+            if (WeatherListAdapter.this.listener!=null){
+                listener.onWeatherItemClicked(this.getAdapterPosition());
+            }
         }
     }
 
