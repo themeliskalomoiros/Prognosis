@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
@@ -59,13 +60,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {
-        Weather w = this.items.get(position);
-        if (holder instanceof WeatherViewHolderForToday){
-            ((WeatherViewHolderForToday) holder).bindViews(w.getQueryTitle(),w.getDate(),
-                    w.getMainWeather(),w.getTempHighWithSymbol(),w.getTempLowWithSymbol());
-        }else {
-            holder.bindViews(w.getDate(),w.getMainWeather(),w.getTempHighWithSymbol(),w.getTempLowWithSymbol());
-        }
+        holder.bindViews(position);
     }
 
     @Override
@@ -102,13 +97,18 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             this.itemView.setOnClickListener(this);
         }
 
-        void bindViews(String date,String weather,String tempHigh,String tempLow){
-            Weather w = items.get(this.getAdapterPosition());
-            this.imageView.setImageResource(w.getImage());
-            this.date.setText(date);
-            this.weather.setText(weather);
-            this.tempHigh.setText(tempHigh);
-            this.tempLow.setText(tempLow);
+        void bindViews(int position){
+            if (items!=null){
+                Weather w = items.get(position);
+                this.imageView.setImageResource(w.getImage());
+                this.date.setText(w.getDate());
+                this.weather.setText(w.getMainWeather());
+                this.tempHigh.setText(w.getTempHighWithSymbol());
+                this.tempLow.setText(w.getTempLowWithSymbol());
+            }else{
+                throw new NullPointerException("The list in the "
+                        +WeatherListAdapter.class.getSimpleName()+" is null!");
+            }
         }
 
         @Override
@@ -127,9 +127,11 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             this.queryTitle=itemView.findViewById(R.id.tv_query_title);
         }
 
-        void bindViews(String queryTitle,String date, String weather, String tempHigh, String tempLow) {
-            super.bindViews(date, weather, tempHigh, tempLow);
-            this.queryTitle.setText(queryTitle);
+        @Override
+        void bindViews(int position) {
+            super.bindViews(position);
+            Weather w = items.get(position);
+            this.queryTitle.setText(w.getQueryTitle());
         }
     }
 }
