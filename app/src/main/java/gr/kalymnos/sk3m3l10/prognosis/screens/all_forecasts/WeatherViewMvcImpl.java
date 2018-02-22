@@ -53,7 +53,8 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
 
     @Override
     public void bindWeatherItems(List<Weather> items) {
-
+        this.adapter.addItems(items);
+        this.adapter.notifyDataSetChanged();
     }
 
     @Override
