@@ -22,9 +22,9 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
     private RecyclerView recyclerView;
     private WeatherListAdapter adapter;
 
-    public WeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent, WeatherListAdapter adapter) {
+    public WeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
         this.rootView = inflater.inflate(R.layout.activity_main,parent,false);
-        this.adapter = adapter;
+        this.adapter=new WeatherListAdapter(inflater.getContext());
         this.initRecyclerView(rootView,adapter);
     }
 
