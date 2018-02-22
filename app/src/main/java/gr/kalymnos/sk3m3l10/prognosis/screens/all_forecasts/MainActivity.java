@@ -14,8 +14,9 @@ import gr.kalymnos.sk3m3l10.prognosis.common.weather.CityWeather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.LocationWeather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.OpenWeatherMapUnits;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
+import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
-public class MainActivity extends AppCompatActivity implements WeatherListAdapter.OnWeatherItemClickListener{
+public class MainActivity extends AppCompatActivity implements WeatherItemListener{
 
     List<Weather> weatherList;
 
@@ -33,18 +34,10 @@ public class MainActivity extends AppCompatActivity implements WeatherListAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        RecyclerView rc = this.findViewById(R.id.recyclerview_forecast);
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rc.setLayoutManager(layoutManager);
-
-        WeatherListAdapter adapter = new WeatherListAdapter(this,weatherList,this);
-        rc.setAdapter(adapter);
     }
 
     @Override
-    public void onWeatherItemClick(int itemPosition) {
+    public void onWeatherItemClicked(int itemPosition) {
         Toast.makeText(this, "Position "+itemPosition, Toast.LENGTH_SHORT).show();
     }
 }
