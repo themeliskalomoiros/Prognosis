@@ -13,6 +13,7 @@ import java.util.List;
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.util.WeatherImageProvider;
+import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
 /**
  * This adapter will bind Weather objects to a recycler view
@@ -27,13 +28,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     private List<Weather> items;
 
     // A listener which is triggered when an item (wrapped in a ViewHolder) in the list is clicked
-    private OnWeatherItemClickListener listener;
+    private WeatherItemListener listener;
 
-    public interface OnWeatherItemClickListener{
-        public void onWeatherItemClick(int itemPosition);
-    }
-
-    public WeatherListAdapter(Context context, List<Weather> items, OnWeatherItemClickListener listener) {
+    public WeatherListAdapter(Context context, List<Weather> items, WeatherItemListener listener) {
         this.context=context;
         this.items=items;
         this.listener=listener;
@@ -117,7 +114,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
         @Override
         public void onClick(View v) {
-            listener.onWeatherItemClick(this.getAdapterPosition());
+            listener.onWeatherItemClicked(this.getAdapterPosition());
         }
     }
 
