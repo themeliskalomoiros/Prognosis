@@ -30,10 +30,16 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     // A listener which is triggered when an item (wrapped in a ViewHolder) in the list is clicked
     private WeatherItemListener listener;
 
-    public WeatherListAdapter(Context context, List<Weather> items, WeatherItemListener listener) {
+    public WeatherListAdapter(Context context) {
         this.context=context;
-        this.items=items;
-        this.listener=listener;
+    }
+
+    public void setItems(List<Weather> items) {
+        this.items = items;
+    }
+
+    public void setListener(WeatherItemListener listener) {
+        this.listener = listener;
     }
 
     @Override
