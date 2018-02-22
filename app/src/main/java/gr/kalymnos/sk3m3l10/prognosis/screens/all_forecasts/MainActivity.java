@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,22 +15,18 @@ import gr.kalymnos.sk3m3l10.prognosis.common.weather.LocationWeather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.OpenWeatherMapUnits;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements WeatherListAdapter.OnWeatherItemClickListener{
 
     List<Weather> weatherList;
 
     {
         weatherList = new ArrayList<>();
-        Weather w1 = new CityWeather("Athens","GR",1519138800,"Clear","Great day, no clouds",15,8,86,55,56.4,new OpenWeatherMapUnits.OpenWeatherMetric());
-        Weather w2 = new CityWeather("Rio De Janeiro","GR",1519138800,"Clear","Great day, no clouds",15,8,86,55,56.4,new OpenWeatherMapUnits.OpenWeatherMetric());
-        Weather w3 = new CityWeather("Kalpaca","GR",1519138800,"Clear","Great day, no clouds",15,8,86,55,56.4,new OpenWeatherMapUnits.OpenWeatherMetric());
-        Weather w4 = new LocationWeather(55555,666666,1519138800,"Clear","Great day, no clouds",15,8,86,55,56.4,new OpenWeatherMapUnits.OpenWeatherMetric());
-        Weather w5 = new CityWeather("Kalymnos","GR",1519138800,"Clear","Great day, no clouds",15,8,86,55,56.4,new OpenWeatherMapUnits.OpenWeatherMetric());
-        weatherList.add(w1);
-        weatherList.add(w2);
-        weatherList.add(w3);
-        weatherList.add(w4);
-        weatherList.add(w5);
+        for (int i=0; i<100; i++){
+            weatherList.add(new CityWeather("Kalpaca","GR",1519138800,
+                    "rain","Great day, no clouds",
+                    15,8,86,55,
+                    56.4,new OpenWeatherMapUnits.OpenWeatherMetric()));
+        }
     }
 
     @Override
@@ -42,7 +39,12 @@ public class MainActivity extends AppCompatActivity {
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rc.setLayoutManager(layoutManager);
 
-        WeatherListAdapter adapter = new WeatherListAdapter(this,weatherList);
+        WeatherListAdapter adapter = new WeatherListAdapter(this,weatherList,this);
         rc.setAdapter(adapter);
+    }
+
+    @Override
+    public void onWeatherItemClick(int itemPosition) {
+        Toast.makeText(this, "Position "+itemPosition, Toast.LENGTH_SHORT).show();
     }
 }
