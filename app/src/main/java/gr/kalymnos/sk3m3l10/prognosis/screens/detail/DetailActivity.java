@@ -39,8 +39,8 @@ public class DetailActivity extends AppCompatActivity {
                 this.detailViewMvc.bindHumidity(extras.getString(HUMIDITY_KEY));
                 this.detailViewMvc.bindPressure(extras.getString(PRESSURE_KEY));
                 this.detailViewMvc.bindWind(extras.getString(WIND_KEY));
+                setContentView(this.detailViewMvc.getRootView());
             }
-            setContentView(R.layout.activity_detail);
         }else{
             // TODO: Do something (better) if the intent does not contain bundled info
             this.finish();
