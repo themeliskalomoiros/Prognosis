@@ -48,17 +48,44 @@ public class DetailViewMvcImpl implements DetailViewMvc {
         return null;
     }
 
+
     @Override
-    public void bindWeather(Weather weather) {
-        this.tvDate.setText(weather.getDate());
-        this.tvWeatherDescription.setText(weather.getDate());
-        this.tvHighTemp.setText(weather.getTempHighWithSymbol());
-        this.tvLowTemp.setText(weather.getTempLowWithSymbol());
-        this.tvHumidity.setText(weather.getHumidity());
-        this.tvPressure.setText(weather.getPressure());
-        this.tvWind.setText(weather.getWindWithSymbol());
-        this.imageView.setImageResource(weather.getImage());
+    public void bindImage(int imgResId) {
+        this.imageView.setImageResource(imgResId);
     }
 
+    @Override
+    public void bindDate(String s) {
+        this.tvDate.setText(s);
+    }
 
+    @Override
+    public void bindDescription(String s) {
+        this.tvWeatherDescription.setText(s);
+    }
+
+    @Override
+    public void bindHighTemp(String s) {
+        this.tvHighTemp.setText(s);
+    }
+
+    @Override
+    public void bindLowTemp(String s) {
+        this.tvLowTemp.setText(s);
+    }
+
+    @Override
+    public void bindHumidity(String s) {
+        this.tvHumidity.setText(s);
+    }
+
+    @Override
+    public void bindPressure(String s) {
+        this.tvPressure.setText(s);
+    }
+
+    @Override
+    public void bindWind(String s) {
+        this.tvWind.setText(s);
+    }
 }
