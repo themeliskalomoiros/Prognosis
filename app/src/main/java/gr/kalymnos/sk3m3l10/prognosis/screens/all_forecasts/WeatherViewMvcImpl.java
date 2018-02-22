@@ -25,29 +25,21 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
     public WeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
         this.rootView = inflater.inflate(R.layout.activity_main,parent,false);
         this.adapter=new WeatherListAdapter(inflater.getContext());
-        this.initRecyclerView(rootView,adapter);
+        this.initRecyclerView();
     }
 
-    private void initRecyclerView(View rootView, WeatherListAdapter adapter){
+    private void initRecyclerView(){
         this.recyclerView=this.rootView.findViewById(R.id.recyclerview_forecast);
         /*
          * A LinearLayoutManager is responsible for measuring and positioning item views within a
          * RecyclerView into a linear list. This means that it can produce either a horizontal or
-         * vertical list depending on which parameter you pass in to the LinearLayoutManager
-         * constructor. In our case, we want a vertical list, so we pass in the constant from the
-         * LinearLayoutManager class for vertical lists, LinearLayoutManager.VERTICAL.
-         *
-         * There are other LayoutManagers available to display your data in uniform grids,
-         * staggered grids, and more! See the developer documentation for more details.
-         *
-         * The third parameter (shouldReverseLayout) should be true if you want to reverse your
-         * layout. Generally, this is only true with horizontal lists that need to support a
-         * right-to-left layout.
+         * vertical list depending on which parameter we pass in to the LinearLayoutManager
+         * constructor. (Comment from Udacity)
          */
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false);
         this.recyclerView.setLayoutManager(layoutManager);
-        this.recyclerView.setAdapter(adapter);
+        this.recyclerView.setAdapter(this.adapter);
     }
 
     @Override
