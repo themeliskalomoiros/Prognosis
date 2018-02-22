@@ -25,6 +25,8 @@ public interface WeatherViewMvc extends ViewMvc {
 
     /*
     *   Set a listener that will be notified by this MVC View
+    *   In the MVC pattern that we are following here, that responsibility
+    *   would fall to the Controler
     *   -null to clear
     * */
     void setWeatherItemListener(WeatherItemListener listener);
