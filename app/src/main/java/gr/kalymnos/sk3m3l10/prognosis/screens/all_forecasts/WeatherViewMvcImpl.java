@@ -17,7 +17,6 @@ import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
 public class WeatherViewMvcImpl implements WeatherViewMvc {
 
     private View rootView;
-    private WeatherItemListener weatherItemListener;
 
     private RecyclerView recyclerView;
     private WeatherListAdapter adapter;
@@ -59,7 +58,7 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
 
     @Override
     public void setWeatherItemListener(WeatherItemListener listener) {
-
+        this.adapter.setListener(listener);
     }
 
     @Override
