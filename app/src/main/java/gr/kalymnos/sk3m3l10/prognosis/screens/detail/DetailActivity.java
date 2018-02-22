@@ -42,7 +42,8 @@ public class DetailActivity extends AppCompatActivity {
             }
             setContentView(R.layout.activity_detail);
         }else{
-            // TODO: Do something if the intent does not contain bundled info
+            // TODO: Do something (better) if the intent does not contain bundled info
+            this.finish();
         }
     }
 }
