@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Prognosis</string>
     <string name="forecast_list_item_imageview_description">This image mirrors the weather condition.</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="pressure_label">Pressure</string>
+    <string name="wind_label">Wind</string>
 </resources>
