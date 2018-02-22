@@ -1,7 +1,10 @@
 package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -14,9 +17,11 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
     private View rootView;
     private WeatherItemListener weatherItemListener;
 
+    private RecyclerView recyclerView;
+    private WeatherListAdapter adapter;
 
-
-    public WeatherViewMvcImpl() {
+    public WeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
+        
     }
 
     @Override
