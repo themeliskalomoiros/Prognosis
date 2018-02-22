@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".screens.detail.DetailActivity"
+            android:parentActivityName=".screens.all_forecasts.MainActivity"/>
     </application>
 
 </manifest>
