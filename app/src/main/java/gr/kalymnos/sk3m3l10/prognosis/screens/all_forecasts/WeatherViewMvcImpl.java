@@ -25,8 +25,10 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
     public WeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent, WeatherListAdapter adapter) {
         this.rootView = inflater.inflate(R.layout.activity_main,parent,false);
         this.adapter = adapter;
+        this.initRecyclerView(rootView,adapter);
+    }
 
-        // recycler view initialization
+    private void initRecyclerView(View rootView, WeatherListAdapter adapter){
         this.recyclerView=this.rootView.findViewById(R.id.recyclerview_forecast);
         /*
          * A LinearLayoutManager is responsible for measuring and positioning item views within a
@@ -43,7 +45,7 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
          * right-to-left layout.
          */
         LinearLayoutManager layoutManager =
-                new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false);
+                new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false);
         this.recyclerView.setLayoutManager(layoutManager);
         this.recyclerView.setAdapter(adapter);
     }
