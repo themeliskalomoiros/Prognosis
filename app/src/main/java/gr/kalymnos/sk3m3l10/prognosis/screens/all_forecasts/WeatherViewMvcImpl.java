@@ -44,7 +44,7 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
 
     @Override
     public View getRootView() {
-        return null;
+        return this.rootView;
     }
 
     @Override
