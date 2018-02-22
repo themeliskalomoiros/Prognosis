@@ -103,19 +103,12 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         }
 
         void bindViews(String date,String weather,String tempHigh,String tempLow){
-            this.imageView.setImageResource(this.getImage(weather));
+            Weather w = items.get(this.getAdapterPosition());
+            this.imageView.setImageResource(w.getImage());
             this.date.setText(date);
             this.weather.setText(weather);
             this.tempHigh.setText(tempHigh);
             this.tempLow.setText(tempLow);
-        }
-
-        protected final int getImage(String weather){
-            int currentPosition = this.getAdapterPosition();
-            long timeMilli = items.get(currentPosition).getTimeMilli();
-            WeatherImageProvider imageProvider = WeatherImageProvider.getInstance();
-            //TODO: Should I set imageProvider to null here? Is there a memory leak?
-            return imageProvider.getImage(weather,timeMilli);
         }
 
         @Override

@@ -2,6 +2,7 @@ package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
 import gr.kalymnos.sk3m3l10.prognosis.util.DateUtils;
+import gr.kalymnos.sk3m3l10.prognosis.util.WeatherImageProvider;
 
 /**
  * A container which holds weather data fetched from a web service.
@@ -80,4 +81,9 @@ public abstract class Weather {
     /* If user searched via city name, then it is the city name,
         if searched with location, then it's Lat/Lon */
     public abstract String getQueryTitle();
+
+    public final int getImage(){
+        WeatherImageProvider imageProvider = WeatherImageProvider.getInstance();
+        return imageProvider.getImage(this.mainWeather,this.timeMilli);
+    }
 }
