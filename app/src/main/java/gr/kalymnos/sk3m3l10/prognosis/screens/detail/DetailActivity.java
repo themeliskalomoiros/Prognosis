@@ -25,22 +25,20 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        if (savedInstanceState!=null){
-            Bundle extras = this.getIntent().getExtras();
-            if (extras!=null){
-                this.detailViewMvc=new DetailViewMvcImpl(LayoutInflater.from(this),null);
 
-                this.detailViewMvc.bindDate(extras.getString(DATE_KEY));
-                this.detailViewMvc.bindImage(extras.getInt(IMAGE_KEY));
-                this.detailViewMvc.bindDescription(extras.getString(DESCRIPTION_KEY));
-                this.detailViewMvc.bindHighTemp(extras.getString(HIGH_TEMP_KEY));
-                this.detailViewMvc.bindLowTemp(extras.getString(LOW_TEMP_KEY));
-                this.detailViewMvc.bindHumidity(extras.getString(HUMIDITY_KEY));
-                this.detailViewMvc.bindPressure(extras.getString(PRESSURE_KEY));
-                this.detailViewMvc.bindWind(extras.getString(WIND_KEY));
-                setContentView(this.detailViewMvc.getRootView());
-            }
+        Bundle extras = this.getIntent().getExtras();
+        if (extras!=null){
+            this.detailViewMvc=new DetailViewMvcImpl(LayoutInflater.from(this),null);
+
+            this.detailViewMvc.bindDate(extras.getString(DATE_KEY));
+            this.detailViewMvc.bindImage(extras.getInt(IMAGE_KEY));
+            this.detailViewMvc.bindDescription(extras.getString(DESCRIPTION_KEY));
+            this.detailViewMvc.bindHighTemp(extras.getString(HIGH_TEMP_KEY));
+            this.detailViewMvc.bindLowTemp(extras.getString(LOW_TEMP_KEY));
+            this.detailViewMvc.bindHumidity(extras.getString(HUMIDITY_KEY));
+            this.detailViewMvc.bindPressure(extras.getString(PRESSURE_KEY));
+            this.detailViewMvc.bindWind(extras.getString(WIND_KEY));
+            setContentView(this.detailViewMvc.getRootView());
         }else{
             // TODO: Do something (better) if the intent does not contain bundled info
             this.finish();
