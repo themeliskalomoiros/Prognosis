@@ -12,7 +12,7 @@ import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.DetailViewMvc;
 
 /**
- * Created by skemelio on 22.02.18.
+ * An implementation of the Detail MVC View
  */
 
 public class DetailViewMvcImpl implements DetailViewMvc {
@@ -40,7 +40,7 @@ public class DetailViewMvcImpl implements DetailViewMvc {
 
     @Override
     public View getRootView() {
-        return null;
+        return this.rootView;
     }
 
     @Override
@@ -50,6 +50,15 @@ public class DetailViewMvcImpl implements DetailViewMvc {
 
     @Override
     public void bindWeather(Weather weather) {
-
+        this.tvDate.setText(weather.getDate());
+        this.tvWeatherDescription.setText(weather.getDate());
+        this.tvHighTemp.setText(weather.getTempHighWithSymbol());
+        this.tvLowTemp.setText(weather.getTempLowWithSymbol());
+        this.tvHumidity.setText(weather.getHumidity());
+        this.tvPressure.setText(weather.getPressure());
+        this.tvWind.setText(weather.getWindWithSymbol());
+        this.imageView.setImageResource(weather.getImage());
     }
+
+
 }
