@@ -14,7 +14,7 @@ public interface WeatherViewMvc extends ViewMvc {
         /*
         *   This will be invoked when the user clicks a weather item in the list
         * */
-        void onWeatherItemClicked();
+        void onWeatherItemClicked(int itemPosition);
     }
 
 
