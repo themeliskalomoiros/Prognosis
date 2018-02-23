@@ -10,5 +10,6 @@ import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 
 public interface WeatherService {
     public List<Weather> getWeatherForecast(String cityName);
+    public List<Weather> getWeatherForecast(String cityName,String countryCode);
     public List<Weather> getWeatherForecast(double lat, double lon);
 }
