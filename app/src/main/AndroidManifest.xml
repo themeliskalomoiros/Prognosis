@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screens.all_forecasts.MainActivity"
+        <activity
+            android:name=".screens.all_forecasts.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.detail.DetailActivity"
-            android:parentActivityName=".screens.all_forecasts.MainActivity"/>
+        <activity
+            android:name=".screens.detail.DetailActivity"
+            android:parentActivityName=".screens.all_forecasts.MainActivity" />
+        <activity android:name=".screens.settings.SettingsActivity"></activity>
     </application>
 
 </manifest>
