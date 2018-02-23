@@ -1,10 +1,16 @@
 package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -15,14 +21,9 @@ import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
-import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
 public class MainActivity extends AppCompatActivity implements WeatherItemListener,
 LoaderCallbacks<List<Weather>>{
@@ -109,8 +110,13 @@ LoaderCallbacks<List<Weather>>{
                     @Nullable
                     @Override
                     public List<Weather> loadInBackground() {
+                        // take location query from user settings
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        String locationKey = getContext().getString(R.string.pref_location_key);
+                        String defaultValue = getContext().getString(R.string.pref_location_default);
+                        String location = preferences.getString(locationKey,defaultValue);
                         // fetch the weather
-                        return weatherList = weatherService.getWeatherForecast("Athens");
+                        return weatherList = weatherService.getWeatherForecast(location);
                     }
                 };
             default:
