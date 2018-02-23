@@ -1,31 +1,24 @@
 package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import gr.kalymnos.sk3m3l10.prognosis.R;
-import gr.kalymnos.sk3m3l10.prognosis.common.weather.CityWeather;
-import gr.kalymnos.sk3m3l10.prognosis.common.weather.LocationWeather;
-import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.OpenWeatherMapUnits;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
-import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
-
 import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
-public class MainActivity extends AppCompatActivity implements WeatherItemListener, LoaderManager.LoaderCallbacks<List<Weather>>{
+import static android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
+
+public class MainActivity extends AppCompatActivity implements WeatherItemListener,
+LoaderCallbacks<List<Weather>>{
+
+    private static final int ID_WEATHER_LOADER= 1821;
 
     private WeatherService weatherService;
     List<Weather> weatherList;
@@ -35,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,null,this);
     }
 
     @Override
