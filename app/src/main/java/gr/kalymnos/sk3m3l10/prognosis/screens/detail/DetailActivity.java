@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
+import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.DetailViewMvc;
 
 public class DetailActivity extends AppCompatActivity {
@@ -42,6 +45,23 @@ public class DetailActivity extends AppCompatActivity {
         }else{
             // TODO: Do something (better) if the intent does not contain bundled info
             this.finish();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_item_settings:
+                this.startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
