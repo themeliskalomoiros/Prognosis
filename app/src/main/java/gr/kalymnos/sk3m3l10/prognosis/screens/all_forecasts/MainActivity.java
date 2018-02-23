@@ -33,16 +33,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // get the weather
-        weatherService = new FakeWeatherService();
-        this.weatherList = weatherService.getWeatherForecast("Athens");
-
-        // create the view to display the weather forecast
-        view = new WeatherViewMvcImpl(LayoutInflater.from(this),null);
-        view.setWeatherItemListener(this);
-        view.bindWeatherItems(this.weatherList);
-        setContentView(view.getRootView());
     }
 
     @Override
