@@ -17,28 +17,9 @@ import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 * */
 
 public class FakeWeatherService implements WeatherService {
-
-    // OpenWeatherMap.org weather values
-    private static final String CLEAR_SKY = "clear sky";
-    private static final String FEW_CLOUDS = "few clouds";
-    private static final String SCATTERED_CLOUDS = "scattered clouds";
-    private static final String BROKEN_CLOUDS = "broken clouds";
-    private static final String SHOWER_RAIN = "shower rain";
-    private static final String RAIN = "rain";
-    private static final String THUNDERSTORM = "thunderstorm";
-    private static final String SNOW = "snow";
-    private static final String MIST = "mist";
-
-    // Possible descriptions
-    private static final String CLEAR_SKY = "Great day, seize it";
-    private static final String FEW_CLOUDS = "Some clouds in the sky";
-    private static final String SCATTERED_CLOUDS = "Clouds scattered along the sky";
-    private static final String BROKEN_CLOUDS = "Broken clouds";
-    private static final String SHOWER_RAIN = "Raining heavilly";
-    private static final String RAIN = "Raining";
-    private static final String THUNDERSTORM = "Raining cats and dogs";
-    private static final String SNOW = "Snowing";
-    private static final String MIST = "Misty mountains";
+    
+    String[] weatherValues = {"clear sky","few clouds","scattered clouds","broken clouds","shower rain","thunderstorm","snow","mist"};
+    String[] descriptions = {"Great day, seize it","Some clouds in the sky","Clouds scattered along the sky","Broken clouds","Raining heavilly","Raining cats and dogs","Raining","Snowing","Misty mountains"};
 
     @Override
     public List<Weather> getWeatherForecast(String cityName) {
