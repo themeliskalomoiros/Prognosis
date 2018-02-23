@@ -10,9 +10,16 @@
     <CheckBoxPreference
         android:defaultValue="@bool/gps_search_by_default"
         android:key="@string/pref_enable_gps_search_key"
-        android:summaryOff="@string/pref_enable_notifications_false"
-        android:summaryOn="@string/pref_enable_notifications_true"
-        android:title="@string/pref_enable_notifications_label" />
+        android:summaryOff="@string/pref_enable_gps_search_false"
+        android:summaryOn="@string/pref_enable_gps_search_true"
+        android:title="@string/pref_gps_search_label" />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/weather_notifications_by_default"
+        android:key="@string/pref_weather_notifications_search_key"
+        android:summaryOff="@string/pref_weather_notifications_false"
+        android:summaryOn="@string/pref_weather_notifications_true"
+        android:title="@string/pref_weather_notifications_label" />
 
 
 </PreferenceScreen>

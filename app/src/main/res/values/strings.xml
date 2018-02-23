@@ -8,7 +8,11 @@
     <string name="pref_location_key">location_preference_key</string>
     <string name="pref_location_label">Location</string>
     <string name="pref_enable_gps_search_key">gps_search</string>
-    <string name="pref_enable_notifications_label">Automate GPS Search</string>
-    <string name="pref_enable_notifications_true">Enabled</string>
-    <string name="pref_enable_notifications_false">Disabled</string>
+    <string name="pref_gps_search_label">Automate GPS Search</string>
+    <string name="pref_enable_gps_search_true">Enabled</string>
+    <string name="pref_enable_gps_search_false">Disabled</string>
+    <string name="pref_weather_notifications_search_key">weather_notifications_key</string>
+    <string name="pref_weather_notifications_false">Disabled</string>
+    <string name="pref_weather_notifications_true">Enabled</string>
+    <string name="pref_weather_notifications_label">Weather Notifications</string>
 </resources>
