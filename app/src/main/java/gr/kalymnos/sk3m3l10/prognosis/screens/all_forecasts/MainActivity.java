@@ -166,6 +166,10 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
             */
             this.forceLoad = true;
             this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,null,this);
+        }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
+            // TODO: gps setting changed
+        }else if(key.equals(this.getString(R.string.pref_weather_notifications_search_key))){
+            // TODO: weather notification setting changed
         }
     }
 }
