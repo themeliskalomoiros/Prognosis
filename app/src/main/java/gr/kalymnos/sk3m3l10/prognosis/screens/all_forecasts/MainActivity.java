@@ -26,7 +26,7 @@ LoaderCallbacks<List<Weather>>{
     private static final int ID_WEATHER_LOADER= 1821;
 
     private WeatherService weatherService;
-    List<Weather> weatherList;
+    private List<Weather> weatherList = null;
 
     private WeatherViewMvc view;
 
@@ -74,9 +74,15 @@ LoaderCallbacks<List<Weather>>{
 
                     @Override
                     protected void onStartLoading() {
-                        // we start fetching, display the progress
-                        view.displayProgressIndicator(true);
-                        this.forceLoad();
+                        if (weatherList!=null){
+                            // Delivers any previously loaded data immediately
+                            deliverResult(weatherList);
+                        }else{
+                            // Start fetching, display the progress
+                            view.displayProgressIndicator(true);
+                            // Force a new load
+                            this.forceLoad();
+                        }
                     }
 
                     @Nullable
