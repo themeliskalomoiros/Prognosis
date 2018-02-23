@@ -2,11 +2,14 @@ package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
+import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
@@ -14,6 +17,8 @@ import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItem
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.view.LayoutInflater;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements WeatherItemListener,
 LoaderCallbacks<List<Weather>>{
@@ -29,6 +34,15 @@ LoaderCallbacks<List<Weather>>{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // create the mvc view to display the weather forecast
+        this.view = new WeatherViewMvcImpl(LayoutInflater.from(this),null);
+        this.view.setWeatherItemListener(this);
+        setContentView(view.getRootView());
+
+        // define the weather service
+        this.weatherService = new FakeWeatherService();
+
+        // initialize the loader to start fetching weather from a service
         this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,null,this);
     }
 
@@ -53,13 +67,36 @@ LoaderCallbacks<List<Weather>>{
     }
 
     @Override
-    public Loader<List<Weather>> onCreateLoader(int id, Bundle args) {
-        return null;
+    public Loader<List<Weather>> onCreateLoader(int loaderId, Bundle args) {
+        switch (loaderId){
+            case ID_WEATHER_LOADER:
+                return new AsyncTaskLoader<List<Weather>>(this) {
+
+                    @Override
+                    protected void onStartLoading() {
+                        // we start fetching, display the progress
+                        view.displayProgressIndicator(true);
+                        this.forceLoad();
+                    }
+
+                    @Nullable
+                    @Override
+                    public List<Weather> loadInBackground() {
+                        // fetch the weather
+                        return weatherList = weatherService.getWeatherForecast("Athens");
+                    }
+                };
+            default:
+                return null;
+        }
     }
 
     @Override
     public void onLoadFinished(Loader<List<Weather>> loader, List<Weather> data) {
-
+        // load is finished, hide the progress bar and
+        // command the MVC view to bind the weather data
+        view.displayProgressIndicator(false);
+        view.bindWeatherItems(data);
     }
 
     @Override
