@@ -27,6 +27,10 @@ public class FakeWeatherService implements WeatherService {
         return null;
     }
 
+    private int returnNumber(int limit){
+        return new Random().nextInt(limit)+1;
+    }
+
     @Override
     public List<Weather> getWeatherForecast(String cityName, String countryCode) {
         return null;
