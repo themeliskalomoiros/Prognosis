@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener{
 
     private static final int ID_WEATHER_LOADER= 1821;
+    private static final String CLASS_TAG = MainActivity.class.getSimpleName();
 
     private WeatherService weatherService;
     private List<Weather> weatherList = null;
@@ -168,8 +169,20 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
             this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,null,this);
         }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
             // TODO: gps setting changed
+            boolean gpsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.gps_search_by_default));
+            if (gpsEnabled){
+                Log.d(CLASS_TAG,"GPS enabled.");
+            }else{
+                Log.d(CLASS_TAG,"GPS disabled.");
+            }
         }else if(key.equals(this.getString(R.string.pref_weather_notifications_search_key))){
             // TODO: weather notification setting changed
+            boolean notificationsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.weather_notifications_by_default));
+            if (notificationsEnabled){
+                Log.d(CLASS_TAG,"Notifications enabled.");
+            }else{
+                Log.d(CLASS_TAG,"Notifications disabled.");
+            }
         }
     }
 }
