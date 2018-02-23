@@ -8,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
 public class MainActivity extends AppCompatActivity implements WeatherItemListener,
-LoaderCallbacks<List<Weather>>{
+LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener{
 
     private static final int ID_WEATHER_LOADER= 1821;
 
@@ -34,6 +36,11 @@ LoaderCallbacks<List<Weather>>{
     private List<Weather> weatherList = null;
 
     private WeatherViewMvc view;
+
+    private SharedPreferences defaultPreferences;
+
+    // When true Loader is forced to load new data
+    private boolean forceLoad = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,10 @@ LoaderCallbacks<List<Weather>>{
 
         // define the weather service
         this.weatherService = new FakeWeatherService();
+
+        // initialize the default shared preferences which are the settings
+        this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
 
         // initialize the loader to start fetching weather from a service
         this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,null,this);
@@ -66,6 +77,12 @@ LoaderCallbacks<List<Weather>>{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.defaultPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -96,7 +113,9 @@ LoaderCallbacks<List<Weather>>{
 
                     @Override
                     protected void onStartLoading() {
-                        if (weatherList!=null){
+                        if (weatherList!=null && !forceLoad){
+                            // reset the flag
+                            forceLoad=false;
                             // Delivers any previously loaded data immediately
                             deliverResult(weatherList);
                         }else{
@@ -111,10 +130,10 @@ LoaderCallbacks<List<Weather>>{
                     @Override
                     public List<Weather> loadInBackground() {
                         // take location query from user settings
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        defaultPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                         String locationKey = getContext().getString(R.string.pref_location_key);
                         String defaultValue = getContext().getString(R.string.pref_location_default);
-                        String location = preferences.getString(locationKey,defaultValue);
+                        String location = defaultPreferences.getString(locationKey,defaultValue);
                         // fetch the weather
                         return weatherList = weatherService.getWeatherForecast(location);
                     }
@@ -135,5 +154,18 @@ LoaderCallbacks<List<Weather>>{
     @Override
     public void onLoaderReset(Loader<List<Weather>> loader) {
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(this.getString(R.string.pref_location_key))){
+            /*
+                  Location in settings changed.
+               1) State that the loader is forced to load new data.
+               2) Fetch the new weather data
+            */
+            this.forceLoad = true;
+            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,null,this);
+        }
     }
 }
