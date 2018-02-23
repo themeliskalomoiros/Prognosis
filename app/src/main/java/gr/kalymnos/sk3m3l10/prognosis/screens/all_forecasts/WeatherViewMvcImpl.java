@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -21,8 +22,11 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
     private RecyclerView recyclerView;
     private WeatherListAdapter adapter;
 
+    private ProgressBar progressBar;
+
     public WeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
         this.rootView = inflater.inflate(R.layout.activity_main,parent,false);
+        this.progressBar = this.rootView.findViewById(R.id.pb_loading_indicator);
         this.adapter=new WeatherListAdapter(inflater.getContext());
         this.initRecyclerView();
     }
@@ -64,6 +68,10 @@ public class WeatherViewMvcImpl implements WeatherViewMvc {
 
     @Override
     public void displayProgressIndicator(boolean display) {
-
+        if (display){
+            this.progressBar.setVisibility(View.VISIBLE);
+        }else{
+            this.progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 }
