@@ -32,19 +32,39 @@ public class FakeWeatherService implements WeatherService {
 
     @Override
     public List<Weather> getWeatherForecast(String cityName) {
-        List<Weather> list = new ArrayList<>();
-        int itemSize = this.returnNumber(WEATHER_ITEMS_MAX_SIZE);
+        final List<Weather> list = new ArrayList<>();
 
-        Random r = new Random();
+        Thread worker = new Thread(() -> {
+            int itemSize = this.returnNumber(WEATHER_ITEMS_MAX_SIZE);
 
-        for (int i=0; i<itemSize; i++){
-            // This will point to a random weather and description value
-            int index = r.nextInt(this.weatherValues.length);
-            Weather weather = new CityWeather(cityName,null,TIME_MILLI,weatherValues[index],
-                    descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
-                    getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
-            list.add(weather);
+            Random r = new Random();
+
+            for (int i=0; i<itemSize; i++){
+                // This will point to a random weather and description value
+                int index = r.nextInt(this.weatherValues.length);
+                Weather weather = new CityWeather(cityName,null,TIME_MILLI,weatherValues[index],
+                        descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
+                        getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
+                list.add(weather);
+            }
+
+
+            // sleep a little bit to mimic slow network delays
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        worker.start();
+
+        try {
+            worker.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
         return list;
     }
 
