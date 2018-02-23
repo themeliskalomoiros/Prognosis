@@ -1,6 +1,8 @@
 package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +25,7 @@ import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
 
 import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
-public class MainActivity extends AppCompatActivity implements WeatherItemListener{
+public class MainActivity extends AppCompatActivity implements WeatherItemListener, LoaderManager.LoaderCallbacks<List<Weather>>{
 
     private WeatherService weatherService;
     List<Weather> weatherList;
@@ -53,5 +55,20 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         intent.putExtras(extras);
 
         this.startActivity(intent);
+    }
+
+    @Override
+    public Loader<List<Weather>> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Weather>> loader, List<Weather> data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Weather>> loader) {
+
     }
 }
