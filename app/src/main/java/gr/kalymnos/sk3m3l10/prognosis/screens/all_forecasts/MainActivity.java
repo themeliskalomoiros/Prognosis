@@ -28,16 +28,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private WeatherService weatherService;
     List<Weather> weatherList;
 
-//    {
-//        weatherList = new ArrayList<>();
-//        for (int i=0; i<100; i++){
-//            weatherList.add(new CityWeather("Kalpaca","GR",1519138800,
-//                    "rain","Great day, no clouds",
-//                    15,8,86,55,
-//                    56.4,new OpenWeatherMapUnits.OpenWeatherMetric()));
-//        }
-//    }
-
     private WeatherViewMvc view;
 
     @Override
