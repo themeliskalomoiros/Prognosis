@@ -31,8 +31,11 @@ import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItem
 public class MainActivity extends AppCompatActivity implements WeatherItemListener,
 LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private static final int ID_WEATHER_LOADER= 1821;
     private static final String CLASS_TAG = MainActivity.class.getSimpleName();
+
+    private static final int ID_WEATHER_LOADER= 1821;
+    private static final int TYPE_FETCH_FROM_DEVICE_LOCATION = 1010;
+    private static final int TYPE_FETCH_FROM_CITY_NAME= 1011;
 
     private WeatherService weatherService;
     private List<Weather> weatherList = null;
