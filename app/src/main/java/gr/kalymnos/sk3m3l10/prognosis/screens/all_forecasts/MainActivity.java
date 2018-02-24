@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -33,11 +32,16 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
 
     private static final String CLASS_TAG = MainActivity.class.getSimpleName();
 
+    /* ---------------------------- LOADER ------------------------------------------------------*/
     private static final int ID_WEATHER_LOADER= 1821;
     private static final int TYPE_FETCH_FROM_DEVICE_LOCATION = 1010;
     private static final int TYPE_FETCH_FROM_CITY_NAME= 1011;
     // when access Loader<List<Weather>> args, this key will return the fetch type of the Loader.
     private static final String TYPE_FETCH_KEY = "loader type fetch key";
+    private static final String CITY_NAME_KEY = "city name key";
+    private static final String LAT_KEY = "latitude key";
+    private static final String LON_KEY = "longitude key";
+    /* ------------------------------------------------------------------------------------------*/
 
     private WeatherService weatherService;
     private List<Weather> weatherList = null;
@@ -68,7 +72,9 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
 
         // initialize the loader to start fetching weather from a service
-        this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME),this);
+        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
+        loaderArgs.putString(CITY_NAME_KEY,this.getCityName());
+        this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
     @Override
@@ -143,15 +149,13 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                             int fetchType = args.getInt(TYPE_FETCH_KEY);
                             switch (fetchType){
                                 case TYPE_FETCH_FROM_CITY_NAME:
-                                    // take location query from user settings
-                                    defaultPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                                    String locationKey = getContext().getString(R.string.pref_location_key);
-                                    String defaultValue = getContext().getString(R.string.pref_location_default);
-                                    String location = defaultPreferences.getString(locationKey,defaultValue);
                                     // fetch the weather
-                                    return weatherList = weatherService.getWeatherForecast(location);
+                                    String cityName = args.getString(CITY_NAME_KEY);
+                                    return weatherList = weatherService.getWeatherForecast(cityName);
                                 case TYPE_FETCH_FROM_DEVICE_LOCATION:
-                                    return null;
+                                    double lat = args.getDouble(LAT_KEY);
+                                    double lon = args.getDouble(LON_KEY);
+                                    return weatherList = weatherService.getWeatherForecast(lat,lon);
                                 default:
                                     throw new IllegalArgumentException(CLASS_TAG+": Unknown loader fetch type!");
                             }
@@ -169,6 +173,14 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         Bundle loaderArgs = new Bundle();
         loaderArgs.putInt(TYPE_FETCH_KEY,fetchType);
         return loaderArgs;
+    }
+    
+    private String getCityName(){
+        // take location query from user settings
+        defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String locationKey = this.getString(R.string.pref_location_key);
+        String defaultValue = this.getString(R.string.pref_location_default);
+        return defaultPreferences.getString(locationKey,defaultValue);
     }
 
     @Override
@@ -193,7 +205,9 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                2) Fetch the new weather data
             */
             this.forceLoad = true;
-            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME),this);
+            Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
+            loaderArgs.putString(CITY_NAME_KEY,this.getCityName());
+            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
         }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
             // TODO: gps setting changed
             boolean gpsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.gps_search_by_default));
