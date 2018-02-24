@@ -22,7 +22,24 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         // Load the preferences from the XML resourse
         this.addPreferencesFromResource(R.xml.preferences);
 
-        setLocationSummary();
+        this.setLocationSummary();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        
     }
 
     private void setLocationSummary() {
@@ -33,10 +50,5 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         PreferenceScreen settings = getPreferenceScreen();
         Preference locationSetting = settings.getPreference(QUERY_LOCATION_INDEX);
         locationSetting.setSummary(storedLocation);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
     }
 }
