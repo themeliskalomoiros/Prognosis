@@ -36,6 +36,8 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
     private static final int ID_WEATHER_LOADER= 1821;
     private static final int TYPE_FETCH_FROM_DEVICE_LOCATION = 1010;
     private static final int TYPE_FETCH_FROM_CITY_NAME= 1011;
+    // when access Loader<List<Weather>> args, this key will return the fetch type of the Loader.
+    private static final String TYPE_FETCH_KEY = "loader type fetch key";
 
     private WeatherService weatherService;
     private List<Weather> weatherList = null;
