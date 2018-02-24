@@ -115,8 +115,6 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                     @Override
                     protected void onStartLoading() {
                         if (weatherList!=null && !forceLoad){
-                            // reset the flag
-                            forceLoad=false;
                             // Delivers any previously loaded data immediately
                             deliverResult(weatherList);
                         }else{
@@ -124,6 +122,9 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                             view.displayProgressIndicator(true);
                             // Force a new load
                             this.forceLoad();
+                            // reset the flag
+                            forceLoad=false;
+
                         }
                     }
 
