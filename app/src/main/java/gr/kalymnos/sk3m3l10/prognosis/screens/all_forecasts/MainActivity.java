@@ -183,6 +183,11 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         return defaultPreferences.getString(locationKey,defaultValue);
     }
 
+    private boolean isSettingsLocationEnabled(){
+        return this.defaultPreferences.getBoolean(this.getString(R.string.pref_enable_gps_search_key)
+                ,this.getResources().getBoolean(R.bool.gps_search_by_default));
+    }
+
     @Override
     public void onLoadFinished(Loader<List<Weather>> loader, List<Weather> data) {
         // load is finished, hide the progress bar and
