@@ -21,6 +21,6 @@ public class LocationWeather extends Weather {
 
     @Override
     public String getQueryTitle() {
-        return String.format("Lat:%d\nLon:%d",this.lat,this.lon);
+        return String.format("Lat:%f\nLon:%f",this.lat,this.lon);
     }
 }
