@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.CityWeather;
+import gr.kalymnos.sk3m3l10.prognosis.common.weather.LocationWeather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.OpenWeatherMapUnits;
 
@@ -73,7 +74,40 @@ public class FakeWeatherService implements WeatherService {
 
     @Override
     public List<Weather> getWeatherForecast(double lat, double lon) {
-        return null;
+        final List<Weather> list = new ArrayList<>();
+
+        Thread worker = new Thread(() -> {
+            int itemSize = this.returnRandomNumber(WEATHER_ITEMS_MAX_SIZE);
+
+            Random r = new Random();
+
+            for (int i=0; i<itemSize; i++){
+                // This will point to a random weather and description value
+                int index = r.nextInt(this.weatherValues.length);
+                Weather weather = new LocationWeather(lat,lon,TIME_MILLI,weatherValues[index],
+                        descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
+                        getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
+                list.add(weather);
+            }
+
+
+            // sleep a little bit to mimic slow network delays
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        worker.start();
+
+        try {
+            worker.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
     private int getRandomTemp(){
