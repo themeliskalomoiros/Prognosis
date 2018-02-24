@@ -42,7 +42,7 @@ public class FakeWeatherService implements WeatherService {
             for (int i=0; i<itemSize; i++){
                 // This will point to a random weather and description value
                 int index = r.nextInt(this.weatherValues.length);
-                Weather weather = new CityWeather(cityName,null,TIME_MILLI,weatherValues[index],
+                Weather weather = new CityWeather(cityName,"",TIME_MILLI,weatherValues[index],
                         descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                         getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
                 list.add(weather);

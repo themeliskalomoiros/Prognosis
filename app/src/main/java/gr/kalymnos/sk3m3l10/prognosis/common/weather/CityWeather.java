@@ -5,6 +5,8 @@ package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 *
 * */
 
+import android.text.TextUtils;
+
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
 
 public class CityWeather extends Weather {
@@ -21,6 +23,9 @@ public class CityWeather extends Weather {
 
     @Override
     public String getQueryTitle() {
+        if (TextUtils.isEmpty(this.countryCode)){
+            return this.cityName;
+        }
         return cityName+", "+countryCode;
     }
 }
