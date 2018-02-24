@@ -139,13 +139,25 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                     @Nullable
                     @Override
                     public List<Weather> loadInBackground() {
-                        // take location query from user settings
-                        defaultPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                        String locationKey = getContext().getString(R.string.pref_location_key);
-                        String defaultValue = getContext().getString(R.string.pref_location_default);
-                        String location = defaultPreferences.getString(locationKey,defaultValue);
-                        // fetch the weather
-                        return weatherList = weatherService.getWeatherForecast(location);
+                        if (args!=null){
+                            int fetchType = args.getInt(TYPE_FETCH_KEY);
+                            switch (fetchType){
+                                case TYPE_FETCH_FROM_CITY_NAME:
+                                    // take location query from user settings
+                                    defaultPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                                    String locationKey = getContext().getString(R.string.pref_location_key);
+                                    String defaultValue = getContext().getString(R.string.pref_location_default);
+                                    String location = defaultPreferences.getString(locationKey,defaultValue);
+                                    // fetch the weather
+                                    return weatherList = weatherService.getWeatherForecast(location);
+                                case TYPE_FETCH_FROM_DEVICE_LOCATION:
+                                    return null;
+                                default:
+                                    throw new IllegalArgumentException(CLASS_TAG+": Unknown loader fetch type!")
+                            }
+                        }else{
+                            throw new NullPointerException(CLASS_TAG+": Loader can't load in background, args are null!");
+                        }
                     }
                 };
             default:
