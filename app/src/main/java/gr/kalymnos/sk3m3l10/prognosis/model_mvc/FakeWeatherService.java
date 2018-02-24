@@ -1,7 +1,5 @@
 package gr.kalymnos.sk3m3l10.prognosis.model_mvc;
 
-import android.text.style.TtsSpan;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,7 +33,7 @@ public class FakeWeatherService implements WeatherService {
         final List<Weather> list = new ArrayList<>();
 
         Thread worker = new Thread(() -> {
-            int itemSize = this.returnNumber(WEATHER_ITEMS_MAX_SIZE);
+            int itemSize = this.returnRandomNumber(WEATHER_ITEMS_MAX_SIZE);
 
             Random r = new Random();
 
@@ -66,10 +64,6 @@ public class FakeWeatherService implements WeatherService {
         }
 
         return list;
-    }
-
-    private int returnNumber(int limit){
-        return new Random().nextInt(limit)+1;
     }
 
     @Override
@@ -104,6 +98,10 @@ public class FakeWeatherService implements WeatherService {
         int integerPart = r.nextInt(10);
         int fractionalPart = r.nextInt(10);
         return new Double(String.format("%d.%d",integerPart,fractionalPart));
+    }
+
+    private int returnRandomNumber(int limit){
+        return new Random().nextInt(limit)+1;
     }
 
 }
