@@ -71,10 +71,17 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
 
-        // initialize the loader to start fetching weather from a service
-        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-        loaderArgs.putString(CITY_NAME_KEY,this.getCityNameFromSettings());
-        this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
+        if (this.isSettingsLocationEnabled()){
+            // app is set to get weather from device location
+
+        }else{
+            // start fetching weather using the settings city-name
+            Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
+            loaderArgs.putString(CITY_NAME_KEY,this.getCityNameFromSettings());
+            this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
+        }
+
+
     }
 
     @Override
