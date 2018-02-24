@@ -38,21 +38,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        String locationKey = this.getActivity().getString(R.string.pref_location_key);
-        if (key.equals(sharedPreferences.getString(locationKey,""))){
-            PreferenceScreen settings = getPreferenceScreen();
-            Preference locationSetting = settings.getPreference(LOCATION_SETTING_INDEX);
-            locationSetting.setSummary(sharedPreferences.getString(key,""));
+        String locationPreferenceKey = this.getActivity().getString(R.string.pref_location_key);
+        if (key.equals(locationPreferenceKey)){
+            this.setLocationSummary();
         }
     }
 
-    private void setLocationSummary() {
-        SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
-        String storedLocation = sharedPreferences.getString(getActivity().getString(R.string.pref_location_key)
-                ,getActivity().getString(R.string.pref_location_default));
-
+    private void setLocationSummary(){
         PreferenceScreen settings = getPreferenceScreen();
         Preference locationSetting = settings.getPreference(LOCATION_SETTING_INDEX);
-        locationSetting.setSummary(storedLocation);
+        locationSetting.setSummary(settings.getSharedPreferences()
+                .getString(getActivity().getString(R.string.pref_location_key),""));
     }
 }
