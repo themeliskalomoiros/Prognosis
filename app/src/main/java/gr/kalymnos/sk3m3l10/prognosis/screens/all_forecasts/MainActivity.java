@@ -2,6 +2,7 @@ package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -39,6 +40,8 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
     private WeatherViewMvc view;
 
     private SharedPreferences defaultPreferences;
+
+    private LocationListener locationListener = null;
 
     // When true Loader is forced to load new data
     private boolean forceLoad = false;
