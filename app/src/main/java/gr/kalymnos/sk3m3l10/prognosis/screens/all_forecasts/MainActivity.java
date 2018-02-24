@@ -73,7 +73,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
 
         // initialize the loader to start fetching weather from a service
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-        loaderArgs.putString(CITY_NAME_KEY,this.getCityName());
+        loaderArgs.putString(CITY_NAME_KEY,this.getCityNameFromSettings());
         this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
@@ -175,7 +175,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         return loaderArgs;
     }
     
-    private String getCityName(){
+    private String getCityNameFromSettings(){
         // take location query from user settings
         defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String locationKey = this.getString(R.string.pref_location_key);
@@ -206,7 +206,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
             */
             this.forceLoad = true;
             Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-            loaderArgs.putString(CITY_NAME_KEY,this.getCityName());
+            loaderArgs.putString(CITY_NAME_KEY,this.getCityNameFromSettings());
             this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
         }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
             // TODO: gps setting changed
