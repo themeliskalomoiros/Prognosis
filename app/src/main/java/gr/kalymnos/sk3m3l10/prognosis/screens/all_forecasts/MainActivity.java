@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+
 import java.util.List;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
@@ -50,7 +52,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
 
     private SharedPreferences defaultPreferences;
 
-    private LocationListener locationListener = null;
+    private FusedLocationProviderClient locationListener;
 
     // When true Loader is forced to load new data
     private boolean forceLoad = false;
@@ -73,7 +75,6 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
 
         if (this.isSettingsLocationEnabled()){
             // app is set to get weather from device location
-
         }else{
             // start fetching weather using the settings city-name
             Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
