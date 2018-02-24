@@ -68,7 +68,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
 
         // initialize the loader to start fetching weather from a service
-        this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,null,this);
+        this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME),this);
     }
 
     @Override
@@ -153,7 +153,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                                 case TYPE_FETCH_FROM_DEVICE_LOCATION:
                                     return null;
                                 default:
-                                    throw new IllegalArgumentException(CLASS_TAG+": Unknown loader fetch type!")
+                                    throw new IllegalArgumentException(CLASS_TAG+": Unknown loader fetch type!");
                             }
                         }else{
                             throw new NullPointerException(CLASS_TAG+": Loader can't load in background, args are null!");
@@ -163,6 +163,12 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
             default:
                 return null;
         }
+    }
+
+    private Bundle getLoaderArgs(int fetchType){
+        Bundle loaderArgs = new Bundle();
+        loaderArgs.putInt(TYPE_FETCH_KEY,fetchType);
+        return loaderArgs;
     }
 
     @Override
@@ -187,7 +193,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                2) Fetch the new weather data
             */
             this.forceLoad = true;
-            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,null,this);
+            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME),this);
         }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
             // TODO: gps setting changed
             boolean gpsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.gps_search_by_default));
