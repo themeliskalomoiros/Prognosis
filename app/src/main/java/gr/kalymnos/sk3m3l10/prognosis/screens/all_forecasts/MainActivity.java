@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -126,11 +127,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 }else{
                     // permission denied, ask for permission from the users (works in Marshmellow and later)
                     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-                        // if user wants to, we will explain why we need this permission
+
+                        // if continues to deny, we will explain why we need this permission
                         if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                            Toast.makeText(this, R.string.permission_location_explanation_msg, Toast.LENGTH_SHORT).show();
+                            this.showAlertDialog(R.string.permission_location_denied_title,R.string.permission_location_explanation_msg);
                         }
                         // request permissions (calls onRequestPermissionsResult()
+
                         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
                                 ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
                     }
@@ -343,5 +346,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    private void showAlertDialog(int titleRes, int msgRes){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(titleRes)
+                .setMessage(msgRes)
+                .create()
+                .show();
     }
 }
