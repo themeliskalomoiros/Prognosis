@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     /* ---------------------------- LOCATION ----------------------------------------------------*/
     private static final long TIME_INTERVAL = 600000;
     private static final float DISTANCE = 10000;
+    private static final int PERMISSION_REQUEST_CODE=11;
     private LocationManager locationManager=null;
     /* ------------------------------------------------------------------------------------------*/
 
@@ -122,6 +123,12 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 if (grantedGpsPermission || grantedWiFiPermission){
                     // permision granted
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+                }else{
+                    // permission denied, ask for permission from the users (works in Marshmellow and later)
+                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                                ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
+                    }
                 }
             }else{
                 // No provider enabled, display a message and start fetching for city
