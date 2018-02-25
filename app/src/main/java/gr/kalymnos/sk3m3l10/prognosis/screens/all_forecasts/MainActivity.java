@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -41,7 +43,8 @@ import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
 public class MainActivity extends AppCompatActivity implements WeatherItemListener,
-        LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener {
+        LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener,
+        LocationListener{
 
     private static final String CLASS_TAG = MainActivity.class.getSimpleName();
 
@@ -93,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private void startFetchingWeatherForTheFirstTime(){
         if (this.settingUtils.isSettingsLocationEnabled()) {
             // Aqcuire location and fetch weather
+            
+
         }else{
             // Fetch weather usin city-name defined in settigns
             startLoaderForCity(true);
@@ -262,5 +267,25 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 Log.d(CLASS_TAG,"Notifications disabled.");
             }
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
