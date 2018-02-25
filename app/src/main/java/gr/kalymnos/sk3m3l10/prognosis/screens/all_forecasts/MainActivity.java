@@ -102,6 +102,12 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             // Aqcuire location and fetch weather
             LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
             String locationProvider = null;
+
+            /*
+               This app does not need to be 'location-aware'. If we first are able to get a location
+               that was fetched from another app, that will do. If not we will ask the network and
+               lastly the gps.
+            */
             if (locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)){
                 locationProvider = LocationManager.PASSIVE_PROVIDER;
             }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
