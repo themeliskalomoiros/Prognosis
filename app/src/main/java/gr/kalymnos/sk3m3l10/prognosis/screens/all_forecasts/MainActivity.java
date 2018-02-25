@@ -99,20 +99,26 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.main_menu,menu);
-        return true;
+    protected void onStart() {
+        super.onStart();
+        if (this.settingUtils.isSettingsLocationEnabled()){
+            initializeLocationListener();
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menu_item_settings:
-                this.startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    protected void onStop() {
+        super.onStop();
+        if (this.locationManager!=null){
+            this.locationManager.removeUpdates(this);
+            this.locationManager=null;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.defaultPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        super.onDestroy();
     }
 
     @Override
@@ -134,25 +140,19 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     }
 
     @Override
-    protected void onDestroy() {
-        this.defaultPreferences.unregisterOnSharedPreferenceChangeListener(this);
-        super.onDestroy();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (this.settingUtils.isSettingsLocationEnabled()){
-            initializeLocationListener();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (this.locationManager!=null){
-            this.locationManager.removeUpdates(this);
-            this.locationManager=null;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_item_settings:
+                this.startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -208,19 +208,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                         ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
             }
         }
-    }
-
-    private void startLoaderForCity(){
-        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-        loaderArgs.putString(CITY_NAME_KEY,this.settingUtils.getCityNameFromSettings());
-        this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
-    }
-
-    private void startLoaderForLocation(Location location){
-        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_DEVICE_LOCATION);
-        loaderArgs.putDouble(LON_KEY,location.getLongitude());
-        loaderArgs.putDouble(LAT_KEY,location.getLatitude());
-        this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
     @Override
@@ -285,6 +272,19 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     public void onLoaderReset(Loader<List<Weather>> loader) {
 
+    }
+
+    private void startLoaderForCity(){
+        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
+        loaderArgs.putString(CITY_NAME_KEY,this.settingUtils.getCityNameFromSettings());
+        this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
+    }
+
+    private void startLoaderForLocation(Location location){
+        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_DEVICE_LOCATION);
+        loaderArgs.putDouble(LON_KEY,location.getLongitude());
+        loaderArgs.putDouble(LAT_KEY,location.getLatitude());
+        this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
     private Bundle getLoaderArgs(int fetchType){
