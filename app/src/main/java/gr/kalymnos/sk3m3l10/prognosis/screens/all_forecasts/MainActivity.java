@@ -125,12 +125,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 }
             }else{
                 // No provider enabled, display a message and start fetching for city
-                startLoaderForCity(true);
+                startLoaderForCity();
             }
 
         }else{
             // Fetch weather usin city-name defined in settigns
-            startLoaderForCity(true);
+            // we start by fetching weather for city
+            startLoaderForCity();
         }
     }
 
@@ -179,25 +180,17 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     
 
-    private void startLoaderForCity(boolean init){
+    private void startLoaderForCity(){
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
         loaderArgs.putString(CITY_NAME_KEY,this.settingUtils.getCityNameFromSettings());
-        if (init){
-            this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
-        }else{
-            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
-        }
+        this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
-    private void startLoaderForLocation(boolean init, Location location){
+    private void startLoaderForLocation(Location location){
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_DEVICE_LOCATION);
         loaderArgs.putDouble(LON_KEY,location.getLongitude());
         loaderArgs.putDouble(LAT_KEY,location.getLatitude());
-        if (init){
-            this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
-        }else{
-            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
-        }
+        this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
     @Override
@@ -279,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                2) Fetch the new weather data
             */
             this.forceLoad = true;
-            startLoaderForCity(false);
+            startLoaderForCity();
         }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
             // TODO: gps setting changed
             boolean gpsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.gps_search_by_default));
@@ -301,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     @Override
     public void onLocationChanged(Location location) {
-        
+
     }
 
     @Override
