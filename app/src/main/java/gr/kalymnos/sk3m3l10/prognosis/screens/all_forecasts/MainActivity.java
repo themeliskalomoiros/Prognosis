@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     protected void onDestroy() {
         super.onDestroy();
         this.defaultPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        this.locationManager.removeUpdates(this);
     }
 
     @Override
