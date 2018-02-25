@@ -16,4 +16,7 @@
     <string name="pref_weather_notifications_true">Enabled</string>
     <string name="pref_weather_notifications_label">Weather Notifications</string>
     <string name="settings">Settings</string>
+    <string name="location_not_found_msg">Unable to obtain device location.</string>
+    <string name="permission_location_explanation_msg">Needed to fetch weather forecast.</string>
+    <string name="permission_location_denied">Permission denied. Fetching weather for</string>
 </resources>
