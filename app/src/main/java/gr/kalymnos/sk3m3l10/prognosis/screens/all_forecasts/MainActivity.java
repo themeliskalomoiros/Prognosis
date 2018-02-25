@@ -1,20 +1,30 @@
 package gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.LocationListener;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
@@ -24,20 +34,21 @@ import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
+import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItemListener;
 
 public class MainActivity extends AppCompatActivity implements WeatherItemListener,
-LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener{
+        LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String CLASS_TAG = MainActivity.class.getSimpleName();
 
     /* ---------------------------- LOADER ------------------------------------------------------*/
-    private static final int ID_WEATHER_LOADER= 1821;
+    private static final int ID_WEATHER_LOADER = 1821;
     private static final int TYPE_FETCH_FROM_DEVICE_LOCATION = 1010;
-    private static final int TYPE_FETCH_FROM_CITY_NAME= 1011;
+    private static final int TYPE_FETCH_FROM_CITY_NAME = 1011;
     // when access Loader<List<Weather>> args, this key will return the fetch type of the Loader.
     private static final String TYPE_FETCH_KEY = "loader type fetch key";
     private static final String CITY_NAME_KEY = "city name key";
@@ -51,8 +62,10 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
     private WeatherViewMvc view;
 
     private SharedPreferences defaultPreferences;
+    private SettingsUtils settingUtils = null;
 
-    private FusedLocationProviderClient locationListener;
+    private static final int PERMISSION_LOCATION_REQUEST_CODE = 13;
+    private FusedLocationProviderClient locationClient = null;
 
     // When true Loader is forced to load new data
     private boolean forceLoad = false;
@@ -62,27 +75,28 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         super.onCreate(savedInstanceState);
 
         // create the mvc view to display the weather forecast
-        this.view = new WeatherViewMvcImpl(LayoutInflater.from(this),null);
+        this.view = new WeatherViewMvcImpl(LayoutInflater.from(this), null);
         this.view.setWeatherItemListener(this);
         setContentView(view.getRootView());
 
         // define the weather service
         this.weatherService = new FakeWeatherService();
 
-        // initialize the default shared preferences which are the settings
+        // initialize default shared preferences (settings) and setting utils.
         this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
+        this.settingUtils = new SettingsUtils(this,this.defaultPreferences);
 
-        if (this.isSettingsLocationEnabled()){
-            // app is set to get weather from device location
+        startFetchingWeatherForTheFirstTime();
+    }
+
+    private void startFetchingWeatherForTheFirstTime(){
+        if (this.settingUtils.isSettingsLocationEnabled()) {
+            // Aqcuire location and fetch weather
         }else{
-            // start fetching weather using the settings city-name
-            Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-            loaderArgs.putString(CITY_NAME_KEY,this.getCityNameFromSettings());
-            this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
+            // Fetch weather usin city-name defined in settigns
+            startLoaderForCity(true);
         }
-
-
     }
 
     @Override
@@ -128,6 +142,29 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         this.startActivity(intent);
     }
 
+    
+
+    private void startLoaderForCity(boolean init){
+        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
+        loaderArgs.putString(CITY_NAME_KEY,this.settingUtils.getCityNameFromSettings());
+        if (init){
+            this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
+        }else{
+            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
+        }
+    }
+
+    private void startLoaderForLocation(boolean init, Location location){
+        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_DEVICE_LOCATION);
+        loaderArgs.putDouble(LON_KEY,location.getLongitude());
+        loaderArgs.putDouble(LAT_KEY,location.getLatitude());
+        if (init){
+            this.getSupportLoaderManager().initLoader(ID_WEATHER_LOADER,loaderArgs,this);
+        }else{
+            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
+        }
+    }
+
     @Override
     public Loader<List<Weather>> onCreateLoader(int loaderId, Bundle args) {
         switch (loaderId){
@@ -140,12 +177,14 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                             // Delivers any previously loaded data immediately
                             deliverResult(weatherList);
                         }else{
-                            // Start fetching, display the progress
-                            view.displayProgressIndicator(true);
-                            // Force a new load
-                            this.forceLoad();
                             // reset the flag
                             forceLoad=false;
+
+                            // Start fetching, display the progress
+                            view.displayProgressIndicator(true);
+
+                            // Force a new load
+                            this.forceLoad();
 
                         }
                     }
@@ -177,25 +216,6 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
         }
     }
 
-    private Bundle getLoaderArgs(int fetchType){
-        Bundle loaderArgs = new Bundle();
-        loaderArgs.putInt(TYPE_FETCH_KEY,fetchType);
-        return loaderArgs;
-    }
-    
-    private String getCityNameFromSettings(){
-        // take location query from user settings
-        defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String locationKey = this.getString(R.string.pref_location_key);
-        String defaultValue = this.getString(R.string.pref_location_default);
-        return defaultPreferences.getString(locationKey,defaultValue);
-    }
-
-    private boolean isSettingsLocationEnabled(){
-        return this.defaultPreferences.getBoolean(this.getString(R.string.pref_enable_gps_search_key)
-                ,this.getResources().getBoolean(R.bool.gps_search_by_default));
-    }
-
     @Override
     public void onLoadFinished(Loader<List<Weather>> loader, List<Weather> data) {
         // load is finished, hide the progress bar and
@@ -209,6 +229,12 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
 
     }
 
+    private Bundle getLoaderArgs(int fetchType){
+        Bundle loaderArgs = new Bundle();
+        loaderArgs.putInt(TYPE_FETCH_KEY,fetchType);
+        return loaderArgs;
+    }
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(this.getString(R.string.pref_location_key))){
@@ -218,9 +244,7 @@ LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListen
                2) Fetch the new weather data
             */
             this.forceLoad = true;
-            Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-            loaderArgs.putString(CITY_NAME_KEY,this.getCityNameFromSettings());
-            this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
+            startLoaderForCity(false);
         }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
             // TODO: gps setting changed
             boolean gpsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.gps_search_by_default));
