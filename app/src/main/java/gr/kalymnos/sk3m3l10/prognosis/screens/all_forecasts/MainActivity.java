@@ -127,11 +127,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                     // permission denied, ask for permission from the users (works in Marshmellow and later)
                     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
                         // if user wants to, we will explain why we need this permission
-                        if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)){
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
                             Toast.makeText(this, R.string.permission_location_explanation_msg, Toast.LENGTH_SHORT).show();
                         }
                         // request permissions (calls onRequestPermissionsResult()
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
                                 ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
                     }
                 }
@@ -165,10 +165,30 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length==2 && grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                    // permission granted
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+                }else{
+                    Toast.makeText(this, this.getString(R.string.permission_location_denied)
+                            +" "+this.settingUtils.getCityNameFromSettings(), Toast.LENGTH_SHORT).show();
+                    startLoaderForCity();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
-        super.onDestroy();
         this.defaultPreferences.unregisterOnSharedPreferenceChangeListener(this);
-        this.locationManager.removeUpdates(this);
+        if (this.locationManager!=null){
+            this.locationManager.removeUpdates(this);
+        }
+        super.onDestroy();
     }
 
     @Override
