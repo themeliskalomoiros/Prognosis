@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     /* ---------------------------- LOCATION ----------------------------------------------------*/
     private static final long TIME_INTERVAL = 600000;
     private static final float DISTANCE = 10000;
+    private LocationManager locationManager=null;
     /* ------------------------------------------------------------------------------------------*/
+
     /* ---------------------------- LOADER ------------------------------------------------------*/
     private static final int ID_WEATHER_LOADER = 1821;
     private static final int TYPE_FETCH_FROM_DEVICE_LOCATION = 1010;
@@ -70,9 +72,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     private SharedPreferences defaultPreferences;
     private SettingsUtils settingUtils = null;
-
-    private static final int PERMISSION_LOCATION_REQUEST_CODE = 13;
-    private FusedLocationProviderClient locationClient = null;
 
     // When true Loader is forced to load new data
     private boolean forceLoad = false;
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private void startFetchingWeatherForTheFirstTime(){
         if (this.settingUtils.isSettingsLocationEnabled()) {
             // Aqcuire location and fetch weather
-            LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+            this.locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
             String locationProvider = null;
 
             /*
@@ -117,8 +116,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             }
 
             if (locationProvider!=null){
-                // If we have a provider available, request location
-                locationManager.requestLocationUpdates(locationProvider,TIME_INTERVAL,DISTANCE,this);
+                // We have a provider available. Ask user for permission and request location.
+                boolean grantedGpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                boolean grantedWiFiPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                if (grantedGpsPermission || grantedWiFiPermission){
+                    // permision granted
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+                }
             }else{
                 // No provider enabled, display a message and start fetching for city
                 startLoaderForCity(true);
@@ -297,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     @Override
     public void onLocationChanged(Location location) {
-
+        
     }
 
     @Override
