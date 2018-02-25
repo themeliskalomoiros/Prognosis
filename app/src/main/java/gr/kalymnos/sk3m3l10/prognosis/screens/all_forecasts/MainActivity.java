@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
         this.settingUtils = new SettingsUtils(this,this.defaultPreferences);
 
-        startFetchingWeatherForTheFirstTime();
+        startLoaderForCity();
     }
 
     private void startFetchingWeatherForTheFirstTime(){
@@ -188,10 +188,54 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     protected void onDestroy() {
         this.defaultPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (this.settingUtils.isSettingsLocationEnabled()){
+            initializeLocationListener();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         if (this.locationManager!=null){
             this.locationManager.removeUpdates(this);
+            this.locationManager=null;
         }
-        super.onDestroy();
+    }
+
+    private void initializeLocationListener(){
+        if (this.locationManager==null){
+            this.locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+            boolean providersEnabled = this.locationManager.getAllProviders().size()>0;
+            if (providersEnabled){
+                boolean grantedGpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                boolean grantedWiFiPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                if (grantedGpsPermission || grantedWiFiPermission){
+                    // permision granted
+                    // TODO: I could check the last known location and if its new use that instead (LocationManager.getLastKnownLocation()).
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+                }else{
+                    // permission denied, ask for permission from the users (works in Marshmellow and later)
+                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+
+                        // if continues to deny, we will explain why we need this permission
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+                            this.showAlertDialog(R.string.permission_location_denied_title,R.string.permission_location_explanation_msg);
+                        }
+                        // request permissions (calls onRequestPermissionsResult()
+
+                        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                                ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -330,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     @Override
     public void onLocationChanged(Location location) {
-
+       
     }
 
     @Override
