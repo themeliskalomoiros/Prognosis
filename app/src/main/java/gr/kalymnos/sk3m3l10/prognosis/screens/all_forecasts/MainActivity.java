@@ -98,58 +98,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         startLoaderForCity();
     }
 
-    private void startFetchingWeatherForTheFirstTime(){
-        if (this.settingUtils.isSettingsLocationEnabled()) {
-            // Aqcuire location and fetch weather
-            this.locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-            String locationProvider = null;
-
-            /*
-               This app does not need to be 'location-aware'. If we first are able to get a location
-               that was fetched from another app, that will do. If not we will ask the network and
-               lastly the gps.
-            */
-            if (locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)){
-                locationProvider = LocationManager.PASSIVE_PROVIDER;
-            }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-                locationProvider = LocationManager.NETWORK_PROVIDER;
-            }else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-                locationProvider = LocationManager.GPS_PROVIDER;
-            }
-
-            if (locationProvider!=null){
-                // We have a provider available. Ask user for permission and request location.
-                boolean grantedGpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-                boolean grantedWiFiPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-                if (grantedGpsPermission || grantedWiFiPermission){
-                    // permision granted
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
-                }else{
-                    // permission denied, ask for permission from the users (works in Marshmellow and later)
-                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-
-                        // if continues to deny, we will explain why we need this permission
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                            this.showAlertDialog(R.string.permission_location_denied_title,R.string.permission_location_explanation_msg);
-                        }
-                        // request permissions (calls onRequestPermissionsResult()
-
-                        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
-                                ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
-                    }
-                }
-            }else{
-                // No provider enabled, display a message and start fetching for city
-                startLoaderForCity();
-            }
-
-        }else{
-            // Fetch weather usin city-name defined in settigns
-            // we start by fetching weather for city
-            startLoaderForCity();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.main_menu,menu);
@@ -361,7 +309,14 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             if (gpsEnabled){
                 Log.d(CLASS_TAG,"GPS enabled.");
             }else{
-                Log.d(CLASS_TAG,"GPS disabled.");
+                // User disabled location awareness, clear location listener
+                if (this.locationManager!=null){
+                    this.locationManager.removeUpdates(this);
+                    this.locationManager=null;
+                }
+                // force a load
+                this.forceLoad=true;
+                startLoaderForCity();
             }
         }else if(key.equals(this.getString(R.string.pref_weather_notifications_search_key))){
             // TODO: weather notification setting changed
@@ -377,6 +332,8 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     public void onLocationChanged(Location location) {
         if (location!=null){
+            // force a load
+            this.forceLoad=true;
             startLoaderForLocation(location);
         }else{
             Toast.makeText(this, this.getString(R.string.location_not_found_msg)+" "
