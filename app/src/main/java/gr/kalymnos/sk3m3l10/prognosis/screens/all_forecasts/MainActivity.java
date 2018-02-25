@@ -374,7 +374,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     @Override
     public void onLocationChanged(Location location) {
-       
+        if (location!=null){
+            startLoaderForLocation(location);
+        }else{
+            Toast.makeText(this, this.getString(R.string.location_not_found_msg)+" "
+                    +this.settingUtils.getCityNameFromSettings(), Toast.LENGTH_SHORT).show();
+            startLoaderForCity();
+        }
     }
 
     @Override
