@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     private static final String CLASS_TAG = MainActivity.class.getSimpleName();
 
+    /* ---------------------------- LOCATION ----------------------------------------------------*/
+    private static final long TIME_INTERVAL = 600000;
+    private static final float DISTANCE = 10000;
+    /* ------------------------------------------------------------------------------------------*/
     /* ---------------------------- LOADER ------------------------------------------------------*/
     private static final int ID_WEATHER_LOADER = 1821;
     private static final int TYPE_FETCH_FROM_DEVICE_LOCATION = 1010;
@@ -96,7 +100,21 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private void startFetchingWeatherForTheFirstTime(){
         if (this.settingUtils.isSettingsLocationEnabled()) {
             // Aqcuire location and fetch weather
-            
+            LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+            String locationProvider = null;
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                locationProvider = LocationManager.GPS_PROVIDER;
+            }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                locationProvider = LocationManager.NETWORK_PROVIDER;
+            }
+
+            if (locationProvider!=null){
+                // If we have a provider available, request location
+                locationManager.requestLocationUpdates(locationProvider,TIME_INTERVAL,DISTANCE,this);
+            }else{
+                // No provider enabled, display a message and start fetching for city
+                startLoaderForCity(true);
+            }
 
         }else{
             // Fetch weather usin city-name defined in settigns
