@@ -126,6 +126,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 }else{
                     // permission denied, ask for permission from the users (works in Marshmellow and later)
                     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                        // if user wants to, we will explain why we need this permission
+                        if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)){
+                            Toast.makeText(this, R.string.permission_location_explanation_msg, Toast.LENGTH_SHORT).show();
+                        }
+                        // request permissions (calls onRequestPermissionsResult()
                         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
                                 ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
                     }
