@@ -102,10 +102,12 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             // Aqcuire location and fetch weather
             LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
             String locationProvider = null;
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-                locationProvider = LocationManager.GPS_PROVIDER;
+            if (locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)){
+                locationProvider = LocationManager.PASSIVE_PROVIDER;
             }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
                 locationProvider = LocationManager.NETWORK_PROVIDER;
+            }else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                locationProvider = LocationManager.GPS_PROVIDER;
             }
 
             if (locationProvider!=null){
