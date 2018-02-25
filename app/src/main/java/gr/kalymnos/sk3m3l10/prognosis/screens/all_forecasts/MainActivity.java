@@ -213,27 +213,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             this.locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
             boolean providersEnabled = this.locationManager.getAllProviders().size()>0;
             if (providersEnabled){
-                boolean grantedGpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-                boolean grantedWiFiPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-                if (grantedGpsPermission || grantedWiFiPermission){
-                    // permision granted
-                    // TODO: I could check the last known location and if its new use that instead (LocationManager.getLastKnownLocation()).
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,TIME_INTERVAL,DISTANCE,this);
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
-                }else{
-                    // permission denied, ask for permission from the users (works in Marshmellow and later)
-                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-
-                        // if continues to deny, we will explain why we need this permission
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                            this.showAlertDialog(R.string.permission_location_denied_title,R.string.permission_location_explanation_msg);
-                        }
-                        // request permissions (calls onRequestPermissionsResult()
-
-                        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
-                                ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
-                    }
-                }
+                requestLocation();
             }
         }
     }
@@ -258,7 +238,29 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         this.startActivity(intent);
     }
 
-    
+    private void requestLocation(){
+        boolean grantedGpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        boolean grantedWiFiPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (grantedGpsPermission || grantedWiFiPermission){
+            // permision granted
+            // TODO: I could check the last known location and if its new use that instead (LocationManager.getLastKnownLocation()).
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+        }else{
+            // permission denied, ask for permission from the users (works in Marshmellow and later)
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+
+                // if continues to deny, we will explain why we need this permission
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+                    this.showAlertDialog(R.string.permission_location_denied_title,R.string.permission_location_explanation_msg);
+                }
+                // request permissions (calls onRequestPermissionsResult()
+
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                        ,Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
 
     private void startLoaderForCity(){
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
