@@ -30,4 +30,20 @@ public class SettingsUtils {
         return this.settingPreferences.getBoolean(deviceLocationSettingKey,defaultLocationSettingValue);
     }
 
+    public String getCityPrefKey(){
+        return this.context.getString(R.string.pref_location_key);
+    }
+
+    public String getDeviceLocationPrefKey(){
+        return this.context.getString(R.string.pref_enable_gps_search_key);
+    }
+
+    public String getNotificationEnabledPrefKey(){
+        return this.context.getString(R.string.pref_notifications_enabled_key);
+    }
+
+    public String getNotificationTimePrefKey(){
+        return this.context.getString(R.string.pref_notification_time_key);
+    }
+
 }
