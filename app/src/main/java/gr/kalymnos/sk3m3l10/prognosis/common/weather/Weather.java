@@ -83,7 +83,6 @@ public abstract class Weather {
     public abstract String getQueryTitle();
 
     public final int getImage(){
-        WeatherImageProvider imageProvider = WeatherImageProvider.getInstance();
-        return imageProvider.getImage(this.mainWeather,this.timeMilli);
+        return WeatherImageProvider.getImage(this.mainWeather,this.timeMilli);
     }
 }

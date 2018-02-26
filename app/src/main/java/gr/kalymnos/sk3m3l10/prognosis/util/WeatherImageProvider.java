@@ -22,18 +22,9 @@ public class WeatherImageProvider {
     private static final String SNOW = "snow";
     private static final String MIST = "mist";
     
-    private static WeatherImageProvider instance = null;
+    private WeatherImageProvider(){}
     
-    private WeatherImageProvider(){ /* Singleton */}
-
-    public static WeatherImageProvider getInstance(){
-        if (instance==null){
-            instance=new WeatherImageProvider();
-        }
-        return instance;
-    }
-    
-    public int getImage(String weather, long timeMilli){
+    public static int getImage(String weather, long timeMilli){
         DateUtils dateUtils = new DateUtils(timeMilli);
         boolean isDay = dateUtils.isDay(DAY_LOWER_BOUND,DAY_UPPER_BOUND);
 
