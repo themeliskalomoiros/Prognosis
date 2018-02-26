@@ -18,13 +18,13 @@ public class SettingsUtils {
         this.settingPreferences=settingPreferences;
     }
 
-    public String getCityNameFromSettings(){
+    public String getCityName(){
         String locationKey = this.context.getString(R.string.pref_location_key);
         String defaultValue = this.context.getString(R.string.pref_location_default);
         return this.settingPreferences.getString(locationKey,defaultValue);
     }
 
-    public boolean isSettingsLocationEnabled(){
+    public boolean isDeviceLocationEnabled(){
         String deviceLocationSettingKey = this.context.getString(R.string.pref_enable_gps_search_key);
         boolean defaultLocationSettingValue = this.context.getResources().getBoolean(R.bool.gps_search_by_default);
         return this.settingPreferences.getBoolean(deviceLocationSettingKey,defaultLocationSettingValue);

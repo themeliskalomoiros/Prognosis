@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     protected void onStart() {
         super.onStart();
-        if (this.settingUtils.isSettingsLocationEnabled()){
+        if (this.settingUtils.isDeviceLocationEnabled()){
             initializeLocationListener();
         }
     }
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
                 }else{
                     Toast.makeText(this, this.getString(R.string.permission_location_denied)
-                            +" "+this.settingUtils.getCityNameFromSettings(), Toast.LENGTH_SHORT).show();
+                            +" "+this.settingUtils.getCityName(), Toast.LENGTH_SHORT).show();
                     startLoaderForCity();
                 }
                 break;
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     private void startLoaderForCity(){
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-        loaderArgs.putString(CITY_NAME_KEY,this.settingUtils.getCityNameFromSettings());
+        loaderArgs.putString(CITY_NAME_KEY,this.settingUtils.getCityName());
         this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             startLoaderForLocation(location);
         }else{
             Toast.makeText(this, this.getString(R.string.location_not_found_msg)+" "
-                    +this.settingUtils.getCityNameFromSettings(), Toast.LENGTH_SHORT).show();
+                    +this.settingUtils.getCityName(), Toast.LENGTH_SHORT).show();
             startLoaderForCity();
         }
     }
