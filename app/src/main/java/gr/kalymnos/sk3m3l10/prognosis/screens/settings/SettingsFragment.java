@@ -35,6 +35,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         // set notification time preference summary
         notificationTimePref.setSummary(notificationTimePref.getEntry());
+
+        // if notifications are not checked then disable the time setting
+        if (this.notificationsEnabledPref.isChecked()){
+            this.notificationTimePref.setEnabled(true);
+        }else{
+            this.notificationTimePref.setEnabled(false);
+        }
     }
 
     private void initialize(){
