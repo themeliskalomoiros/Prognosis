@@ -20,7 +20,7 @@
     <string name="permission_location_explanation_msg">Need device location to get weather forecast automatically!</string>
     <string name="permission_location_denied">Permission denied. Fetching weather for</string>
     <string name="permission_location_denied_title">Permission denied</string>
-    <string name="preference_weather_source_title">Source</string>
+    <string name="preference_weather_source_title">Weather Source</string>
     <string name="pref_notification_time_entry_one">3 hours</string>
     <string name="pref_notification_time_entry_two">8 hours</string>
     <string name="pref_notification_time_entry_three">12 hours</string>
