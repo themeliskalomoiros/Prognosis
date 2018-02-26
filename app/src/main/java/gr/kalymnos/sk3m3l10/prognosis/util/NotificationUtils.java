@@ -42,6 +42,12 @@ public class NotificationUtils {
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
                 .setAutoCancel(true); /* The notification will go away if we click on it*/
+
+        // Set the priority for backward compatibility
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
+                &&  Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+            notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        }
     }
 
     /*
