@@ -8,5 +8,6 @@ public class ReminderUtils {
 
     private static final String REMINDER_JOB_TAG = "weather notification reminder tag";
 
-    
+    // Track if the job was initialized
+    private static boolean jobInitialized = false;
 }
