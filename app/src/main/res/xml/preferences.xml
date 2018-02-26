@@ -16,12 +16,15 @@
             android:title="@string/pref_gps_search_label" />
     </PreferenceCategory>
 
-    <CheckBoxPreference
-        android:defaultValue="@bool/weather_notifications_by_default"
-        android:key="@string/pref_weather_notifications_search_key"
-        android:summaryOff="@string/pref_weather_notifications_false"
-        android:summaryOn="@string/pref_weather_notifications_true"
-        android:title="@string/pref_weather_notifications_label" />
+    <PreferenceCategory android:title="@string/pref_weather_notifications_label">
+        <CheckBoxPreference
+            android:defaultValue="@bool/weather_notifications_by_default"
+            android:key="@string/pref_weather_notifications_search_key"
+            android:summaryOff="@string/pref_weather_notifications_false"
+            android:summaryOn="@string/pref_weather_notifications_true"
+            android:title="@string/pref_weather_notifications_label" />
+    </PreferenceCategory>
+
 
 
 
