@@ -19,15 +19,7 @@ public class SettingsUtils {
     }
 
     public String getCityName(){
-        String locationKey = this.context.getString(R.string.pref_location_key);
-        String defaultValue = this.context.getString(R.string.pref_location_default);
-        return this.settingPreferences.getString(locationKey,defaultValue);
-    }
-
-    public boolean isDeviceLocationEnabled(){
-        String deviceLocationSettingKey = this.context.getString(R.string.pref_enable_gps_search_key);
-        boolean defaultLocationSettingValue = this.context.getResources().getBoolean(R.bool.gps_search_by_default);
-        return this.settingPreferences.getBoolean(deviceLocationSettingKey,defaultLocationSettingValue);
+        return this.settingPreferences.getString(getCityPrefKey(),getCityDefaultValue());
     }
 
     public String getCityPrefKey(){
@@ -36,6 +28,10 @@ public class SettingsUtils {
 
     public String getCityDefaultValue(){
         return this.context.getString(R.string.pref_location_default);
+    }
+
+    public boolean isDeviceLocationEnabled(){
+        return this.settingPreferences.getBoolean(getDeviceLocationPrefKey(),getDeviceLocationDefaultValue());
     }
 
     public String getDeviceLocationPrefKey(){
