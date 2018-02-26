@@ -51,11 +51,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(this.cityNameKey)){
+        if (key.equals(this.settingsUtils.getCityPrefKey())){
             this.setLocationSummary();
-        }else if(key.equals(this.notificationTimeKey)){
+        }else if(key.equals(this.settingsUtils.getNotificationTimePrefKey())){
             notificationTimePref.setSummary(notificationTimePref.getEntry());
-        }else if (key.equals(this.notificationsEnabledKey)){
+        }else if (key.equals(this.settingsUtils.getNotificationEnabledPrefKey())){
             this.setNotificationsTimeEnabled();
         }
     }
@@ -70,13 +70,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private void setLocationSummary(){
         String cityName = this.getPreferenceScreen().getSharedPreferences()
-                .getString(cityNameKey,cityNameDefaultValue);
+                .getString(this.settingsUtils.getCityPrefKey(),this.settingsUtils.getCityDefaultValue());
         cityPref.setSummary(cityName);
     }
 
     private void initialize(){
-        this.cityPref = this.findPreference(cityNameKey);
-        this.notificationTimePref = (ListPreference) this.findPreference(notificationTimeKey);
-        this.notificationsEnabledPref = (CheckBoxPreference) this.findPreference(notificationsEnabledKey);
+        this.settingsUtils = new SettingsUtils(this.getActivity(),this.getPreferenceScreen().getSharedPreferences());
+        this.cityPref = this.findPreference(this.settingsUtils.getCityPrefKey());
+        this.notificationTimePref = (ListPreference) this.findPreference(this.settingsUtils.getNotificationTimePrefKey());
+        this.notificationsEnabledPref = (CheckBoxPreference) this.findPreference(this.settingsUtils.getNotificationEnabledPrefKey());
     }
 }
