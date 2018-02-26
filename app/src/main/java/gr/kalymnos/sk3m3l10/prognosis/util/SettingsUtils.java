@@ -42,6 +42,10 @@ public class SettingsUtils {
         return this.context.getResources().getBoolean(R.bool.gps_search_by_default);
     }
 
+    public boolean areNotificationsEnabled(){
+        return this.settingPreferences.getBoolean(getNotificationEnabledPrefKey(),getNotificationEnabledDefaultValue());
+    }
+
     public String getNotificationEnabledPrefKey(){
         return this.context.getString(R.string.pref_notifications_enabled_key);
     }
