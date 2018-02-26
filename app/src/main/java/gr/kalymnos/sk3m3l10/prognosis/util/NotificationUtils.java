@@ -3,7 +3,10 @@ package gr.kalymnos.sk3m3l10.prognosis.util;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts.MainActivity;
 
 public class NotificationUtils {
@@ -22,5 +25,10 @@ public class NotificationUtils {
         Intent startMainActivity = new Intent(context, MainActivity.class);
         return PendingIntent.getActivity(context,WEATHER_NOTIFICATION_INTENT_ID,startMainActivity
                 ,PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    // This method will decode a bitmap needed for the notification.
+    private static Bitmap largeIcon(Context context, int imgRes){
+        return BitmapFactory.decodeResource(context.getResources(), imgRes);
     }
 }
