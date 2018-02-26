@@ -19,7 +19,7 @@
     <PreferenceCategory android:title="@string/pref_weather_notifications_title">
         <CheckBoxPreference
             android:defaultValue="@bool/weather_notifications_by_default"
-            android:key="@string/pref_weather_notifications_search_key"
+            android:key="@string/pref_notifications_enabled_key"
             android:summaryOff="@string/pref_weather_notifications_false"
             android:summaryOn="@string/pref_weather_notifications_true"
             android:title="@string/pref_weather_notifications_label" />

@@ -2,11 +2,10 @@ package gr.kalymnos.sk3m3l10.prognosis.screens.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.PreferenceScreen;
 import android.widget.Toast;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
@@ -18,8 +17,9 @@ import gr.kalymnos.sk3m3l10.prognosis.R;
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     private String cityNameKey, cityNameDefaultValue, notificationTimeKey,notificationsEnabledKey;
-    private Preference cityPref,notificationsEnabledPref;
+    private Preference cityPref;
     private ListPreference notificationTimePref;
+    private CheckBoxPreference notificationsEnabledPref;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -41,11 +41,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         this.cityNameKey = this.getString(R.string.pref_location_key);
         this.cityNameDefaultValue = this.getString(R.string.pref_location_default);
         this.notificationTimeKey = this.getString(R.string.pref_notification_time_key);
-        this.notificationsEnabledKey = this.getString(R.string.pref_weather_notifications_search_key);
+        this.notificationsEnabledKey = this.getString(R.string.pref_notifications_enabled_key);
 
         this.cityPref = this.findPreference(cityNameKey);
         this.notificationTimePref = (ListPreference) this.findPreference(notificationTimeKey);
-        this.notificationsEnabledPref = this.findPreference(notificationsEnabledKey);
+        this.notificationsEnabledPref = (CheckBoxPreference) this.findPreference(notificationsEnabledKey);
     }
 
     @Override
@@ -68,6 +68,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             cityPref.setSummary(cityName);
         }else if(key.equals(this.notificationTimeKey)){
             notificationTimePref.setSummary(notificationTimePref.getEntry());
+        }else if (key.equals(this.notificationsEnabledKey)){
+            if (this.notificationsEnabledPref.isChecked()){
+                this.notificationTimePref.setEnabled(true);
+            }else{
+                this.notificationTimePref.setEnabled(false);
+            }
         }
     }
 }

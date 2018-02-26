@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 this.forceLoad=true;
                 startLoaderForCity();
             }
-        }else if(key.equals(this.getString(R.string.pref_weather_notifications_search_key))){
+        }else if(key.equals(this.getString(R.string.pref_notifications_enabled_key))){
             // TODO: weather notification setting changed
             boolean notificationsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.weather_notifications_by_default));
             if (notificationsEnabled){

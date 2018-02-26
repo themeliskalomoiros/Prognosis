@@ -11,7 +11,7 @@
     <string name="pref_gps_search_label">Device location</string>
     <string name="pref_enable_gps_search_true">Enabled</string>
     <string name="pref_enable_gps_search_false">Disabled</string>
-    <string name="pref_weather_notifications_search_key">weather_notifications_key</string>
+    <string name="pref_notifications_enabled_key">notifications_enabled_key</string>
     <string name="pref_weather_notifications_false">Disabled</string>
     <string name="pref_weather_notifications_true">Enabled</string>
     <string name="pref_weather_notifications_label">Get notified</string>
