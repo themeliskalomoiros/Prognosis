@@ -42,7 +42,8 @@ public class SettingsUtils {
     }
 
     public static boolean areNotificationsEnabled(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(getNotificationEnabledPrefKey(),getNotificationEnabledDefaultValue());
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(getNotificationEnabledPrefKey(context)
+                ,getNotificationEnabledDefaultValue(context));
     }
 
     public static String getNotificationEnabledPrefKey(Context context){
