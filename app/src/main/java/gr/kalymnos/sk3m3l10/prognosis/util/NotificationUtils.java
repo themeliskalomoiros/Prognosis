@@ -1,5 +1,6 @@
 package gr.kalymnos.sk3m3l10.prognosis.util;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts.MainActivity;
@@ -28,6 +31,17 @@ public class NotificationUtils {
                     ,NotificationManager.IMPORTANCE_HIGH); /* IMPORTANCE_HIGH so notification must pop up*/
             notificationManager.createNotificationChannel(channel);
         }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context,NOTIFICATION_CHANNEL_ID)
+                .setColor(ContextCompat.getColor(context,R.color.primary))
+                .setSmallIcon(R.drawable.ic_sun)
+                .setLargeIcon(largeIcon(context,R.drawable.sun_few_clouds))
+                .setContentTitle("Weather notification")
+                .setContentText("The weather is splendit today!!!")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText("The weather is splendit today!!!"))
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setContentIntent(contentIntent(context))
+                .setAutoCancel(true); /* The notification will go away if we click on it*/
     }
 
     /*
