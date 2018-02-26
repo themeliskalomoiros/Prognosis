@@ -20,6 +20,7 @@ public class NotificationUtils {
     private static final int WEATHER_NOTIFICATION_INTENT_ID=1990;
     private static final String NOTIFICATION_CHANNEL_ID = "weather notification channel id";
 
+    // TODO: This notification must display an accurate title,text and image relative to the weatherForecast.
     public static void showWeatherNotification(Context context){
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
