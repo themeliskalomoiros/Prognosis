@@ -1,7 +1,9 @@
 package gr.kalymnos.sk3m3l10.prognosis.util;
 
+import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
 
@@ -10,56 +12,49 @@ import gr.kalymnos.sk3m3l10.prognosis.R;
  */
 
 public class SettingsUtils {
-    private SharedPreferences settingPreferences = null;
-    private Context context;
 
-    public SettingsUtils(Context context, SharedPreferences settingPreferences){
-        this.context=context;
-        this.settingPreferences=settingPreferences;
+    private SettingsUtils(){}
+    
+    public static String getCityName(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(getCityPrefKey(context),getCityDefaultValue(context));
     }
 
-    public String getCityName(){
-        return this.settingPreferences.getString(getCityPrefKey(),getCityDefaultValue());
+    public static String getCityPrefKey(Context context){
+        return context.getString(R.string.pref_location_key);
     }
 
-    public String getCityPrefKey(){
-        return this.context.getString(R.string.pref_location_key);
+    public static String getCityDefaultValue(Context context){
+        return context.getString(R.string.pref_location_default);
     }
 
-    public String getCityDefaultValue(){
-        return this.context.getString(R.string.pref_location_default);
+    public static boolean isDeviceLocationEnabled(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(getDeviceLocationPrefKey(context),getDeviceLocationDefaultValue(context));
     }
 
-    public boolean isDeviceLocationEnabled(){
-        return this.settingPreferences.getBoolean(getDeviceLocationPrefKey(),getDeviceLocationDefaultValue());
+    public static String getDeviceLocationPrefKey(Context context){
+        return context.getString(R.string.pref_enable_gps_search_key);
     }
 
-    public String getDeviceLocationPrefKey(){
-        return this.context.getString(R.string.pref_enable_gps_search_key);
+    public static boolean getDeviceLocationDefaultValue(Context context){
+        return context.getResources().getBoolean(R.bool.gps_search_by_default);
     }
 
-    public boolean getDeviceLocationDefaultValue(){
-        return this.context.getResources().getBoolean(R.bool.gps_search_by_default);
+    public static boolean areNotificationsEnabled(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(getNotificationEnabledPrefKey(),getNotificationEnabledDefaultValue());
     }
 
-    public boolean areNotificationsEnabled(){
-        return this.settingPreferences.getBoolean(getNotificationEnabledPrefKey(),getNotificationEnabledDefaultValue());
+    public static String getNotificationEnabledPrefKey(Context context){
+        return context.getString(R.string.pref_notifications_enabled_key);
     }
 
-    public String getNotificationEnabledPrefKey(){
-        return this.context.getString(R.string.pref_notifications_enabled_key);
+    public static boolean getNotificationEnabledDefaultValue(Context context){
+        return context.getResources().getBoolean(R.bool.weather_notifications_by_default);
     }
 
-    public boolean getNotificationEnabledDefaultValue(){
-        return this.context.getResources().getBoolean(R.bool.weather_notifications_by_default);
-    }
-
-    public String getNotificationTimePrefKey(){
-        return this.context.getString(R.string.pref_notification_time_key);
-    }
-
-    public String getNotificationTimeDefaultEntry(){
-        return this.context.getString(R.string.pref_notification_time_entry_three);
+    public static String getNotificationTimePrefKey(Context context){
+        return context.getString(R.string.pref_notification_time_key);
     }
 
 }
