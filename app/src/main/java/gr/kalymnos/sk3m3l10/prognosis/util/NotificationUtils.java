@@ -48,6 +48,8 @@ public class NotificationUtils {
                 &&  Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
             notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
         }
+
+        notificationManager.notify(WEATHER_NOTIFICATION_INTENT_ID,notificationBuilder.build());
     }
 
     /*
