@@ -14,11 +14,11 @@
     <string name="pref_weather_notifications_search_key">weather_notifications_key</string>
     <string name="pref_weather_notifications_false">Disabled</string>
     <string name="pref_weather_notifications_true">Enabled</string>
-    <string name="pref_weather_notifications_label">Weather Notifications</string>
+    <string name="pref_weather_notifications_label">Notifications</string>
     <string name="settings">Settings</string>
     <string name="location_not_found_msg">Unable to obtain device location.</string>
     <string name="permission_location_explanation_msg">Need device location to get weather forecast automatically!</string>
     <string name="permission_location_denied">Permission denied. Fetching weather for</string>
     <string name="permission_location_denied_title">Permission denied</string>
-    <string name="preference_weather_source_title">Weather source</string>
+    <string name="preference_weather_source_title">Source</string>
 </resources>
