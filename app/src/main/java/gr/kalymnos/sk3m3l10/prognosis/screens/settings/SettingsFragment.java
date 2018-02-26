@@ -17,7 +17,7 @@ import gr.kalymnos.sk3m3l10.prognosis.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private String cityNameKey, cityNameDefaultValue, notificationTimeKey;
+    private String cityNameKey, cityNameDefaultValue, notificationTimeKey,notificationsEnabledKey;
     private Preference cityPref;
     private ListPreference notificationTimePref;
 
@@ -41,6 +41,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         this.cityNameKey = this.getString(R.string.pref_location_key);
         this.cityNameDefaultValue = this.getString(R.string.pref_location_default);
         this.notificationTimeKey = this.getString(R.string.pref_notification_time_key);
+        this.notificationsEnabledKey = this.getString(R.string.pref_weather_notifications_search_key);
 
         this.cityPref = this.findPreference(cityNameKey);
         this.notificationTimePref = (ListPreference) this.findPreference(this.getString(R.string.pref_notification_time_key));
