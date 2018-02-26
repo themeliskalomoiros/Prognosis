@@ -9,6 +9,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
+import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
 
 /**
  * This fragment will host the app settings
@@ -16,7 +17,7 @@ import gr.kalymnos.sk3m3l10.prognosis.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private String cityNameKey, cityNameDefaultValue, notificationTimeKey,notificationsEnabledKey;
+    private SettingsUtils settingsUtils;
     private Preference cityPref;
     private ListPreference notificationTimePref;
     private CheckBoxPreference notificationsEnabledPref;
@@ -74,11 +75,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
 
     private void initialize(){
-        this.cityNameKey = this.getString(R.string.pref_location_key);
-        this.cityNameDefaultValue = this.getString(R.string.pref_location_default);
-        this.notificationTimeKey = this.getString(R.string.pref_notification_time_key);
-        this.notificationsEnabledKey = this.getString(R.string.pref_notifications_enabled_key);
-
         this.cityPref = this.findPreference(cityNameKey);
         this.notificationTimePref = (ListPreference) this.findPreference(notificationTimeKey);
         this.notificationsEnabledPref = (CheckBoxPreference) this.findPreference(notificationsEnabledKey);
