@@ -5,4 +5,8 @@ package gr.kalymnos.sk3m3l10.prognosis.util;
  */
 
 public class ReminderUtils {
+
+    private static final String REMINDER_JOB_TAG = "weather notification reminder tag";
+
+    
 }
