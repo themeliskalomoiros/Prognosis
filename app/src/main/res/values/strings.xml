@@ -6,9 +6,9 @@
     <string name="wind_label">Wind</string>
     <string name="pref_location_default">Cologne</string>
     <string name="pref_location_key">location_preference_key</string>
-    <string name="pref_location_label">Location</string>
+    <string name="pref_location_label">City name</string>
     <string name="pref_enable_gps_search_key">gps_search</string>
-    <string name="pref_gps_search_label">Automate GPS Search</string>
+    <string name="pref_gps_search_label">Device location</string>
     <string name="pref_enable_gps_search_true">Enabled</string>
     <string name="pref_enable_gps_search_false">Disabled</string>
     <string name="pref_weather_notifications_search_key">weather_notifications_key</string>
@@ -20,4 +20,5 @@
     <string name="permission_location_explanation_msg">Need device location to get weather forecast automatically!</string>
     <string name="permission_location_denied">Permission denied. Fetching weather for</string>
     <string name="permission_location_denied_title">Permission denied</string>
+    <string name="preference_weather_source_title">Weather source</string>
 </resources>
