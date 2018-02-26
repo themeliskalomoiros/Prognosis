@@ -26,6 +26,7 @@ public class WeatherReminderJobService extends JobService {
         this.backgroundTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
+                // TODO: For now the job is to display a useless notification, later the job has to connect with the WeatherService and display the current weather via notification.
                 Context context = WeatherReminderJobService.this;
                 NotificationUtils.showWeatherNotification(context);
                 return null;
