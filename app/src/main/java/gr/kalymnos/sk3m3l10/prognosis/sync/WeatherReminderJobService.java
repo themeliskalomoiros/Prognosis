@@ -4,7 +4,12 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 
 /**
- * Created by skemelio on 26.02.18.
+ *  WeatherReminderJobService extends JobService because
+ *  this is what Firebases Job-dispatcher requires.
+ *
+ *  Also JobService runs from the main thread by default
+ *  so we will implement make our calculations in a seperate
+ *  thread instead.
  */
 
 public class WeatherReminderJobService extends JobService {
