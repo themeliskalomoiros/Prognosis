@@ -44,10 +44,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
     }
 
-    private void setLocationSummary(){
-        PreferenceScreen settings = getPreferenceScreen();
-        Preference locationSetting = settings.getPreference(LOCATION_SETTING_INDEX);
-        locationSetting.setSummary(settings.getSharedPreferences()
-                .getString(getActivity().getString(R.string.pref_location_key),""));
+    private void setPreferenceSummary(int preferenceIndex, String summary){
+        PreferenceScreen settings = this.getPreferenceScreen();
+        Preference pref = settings.getPreference(preferenceIndex);
+        pref.setSummary(summary);
     }
 }
