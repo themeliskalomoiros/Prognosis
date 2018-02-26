@@ -16,8 +16,7 @@ import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
  */
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener{
-
-    private SettingsUtils settingsUtils;
+    
     private Preference cityPref;
     private ListPreference notificationTimePref;
     private CheckBoxPreference notificationsEnabledPref;
@@ -51,11 +50,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(this.settingsUtils.getCityPrefKey())){
+        if (key.equals(SettingsUtils.getCityPrefKey(this.getActivity()))){
             this.setLocationSummary();
-        }else if(key.equals(this.settingsUtils.getNotificationTimePrefKey())){
+        }else if(key.equals(SettingsUtils.getNotificationTimePrefKey(this.getActivity()))){
             notificationTimePref.setSummary(notificationTimePref.getEntry());
-        }else if (key.equals(this.settingsUtils.getNotificationEnabledPrefKey())){
+        }else if (key.equals(SettingsUtils.getNotificationEnabledPrefKey(this.getActivity()))){
             this.setNotificationsTimeEnabled();
         }
     }
@@ -70,14 +69,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private void setLocationSummary(){
         String cityName = this.getPreferenceScreen().getSharedPreferences()
-                .getString(this.settingsUtils.getCityPrefKey(),this.settingsUtils.getCityDefaultValue());
+                .getString(SettingsUtils.getCityPrefKey(this.getActivity()),SettingsUtils.getCityDefaultValue(this.getActivity()));
         cityPref.setSummary(cityName);
     }
 
     private void initialize(){
-        this.settingsUtils = new SettingsUtils(this.getActivity(),this.getPreferenceScreen().getSharedPreferences());
-        this.cityPref = this.findPreference(this.settingsUtils.getCityPrefKey());
-        this.notificationTimePref = (ListPreference) this.findPreference(this.settingsUtils.getNotificationTimePrefKey());
-        this.notificationsEnabledPref = (CheckBoxPreference) this.findPreference(this.settingsUtils.getNotificationEnabledPrefKey());
+        this.cityPref = this.findPreference(SettingsUtils.getCityPrefKey(this.getActivity()));
+        this.notificationTimePref = (ListPreference) this.findPreference(SettingsUtils.getNotificationTimePrefKey(this.getActivity()));
+        this.notificationsEnabledPref = (CheckBoxPreference) this.findPreference(SettingsUtils.getNotificationEnabledPrefKey(this.getActivity()));
     }
 }

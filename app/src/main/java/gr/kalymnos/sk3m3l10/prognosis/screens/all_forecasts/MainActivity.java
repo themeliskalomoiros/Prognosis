@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private WeatherViewMvc view;
 
     private SharedPreferences defaultPreferences;
-    private SettingsUtils settingUtils = null;
 
     // When true Loader is forced to load new data
     private boolean forceLoad = false;
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         // initialize default shared preferences (settings) and setting utils.
         this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
-        this.settingUtils = new SettingsUtils(this,this.defaultPreferences);
 
         startLoaderForCity();
     }
@@ -95,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     protected void onStart() {
         super.onStart();
-        if (this.settingUtils.isDeviceLocationEnabled()){
+        if (SettingsUtils.isDeviceLocationEnabled(this)){
             initializeLocationListener();
         }
     }
@@ -121,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
                 }else{
                     Toast.makeText(this, this.getString(R.string.permission_location_denied)
-                            +" "+this.settingUtils.getCityName(), Toast.LENGTH_SHORT).show();
+                            +" "+SettingsUtils.getCityName(this), Toast.LENGTH_SHORT).show();
                     startLoaderForCity();
                 }
                 break;
@@ -274,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     private void startLoaderForCity(){
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
-        loaderArgs.putString(CITY_NAME_KEY,this.settingUtils.getCityName());
+        loaderArgs.putString(CITY_NAME_KEY,SettingsUtils.getCityName(this));
         this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
@@ -294,21 +292,21 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     // Called when user changes something in app Settings.
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(this.settingUtils.getCityPrefKey())){
+        if (key.equals(SettingsUtils.getCityPrefKey(this))){
             // User inputted a new city
             this.forceLoad = true;
             startLoaderForCity();
-        }else if(key.equals(this.settingUtils.getDeviceLocationPrefKey())){
+        }else if(key.equals(SettingsUtils.getDeviceLocationPrefKey(this))){
             /* Note: We do not need to start fetching weather for location if the
             *  corresponding setting is disabled. This will be done in onStart() anyway.*/
-            if (!this.settingUtils.isDeviceLocationEnabled()){
+            if (!SettingsUtils.isDeviceLocationEnabled(this)){
                 // Fetching weather from device location disabled
                 clearLocationManager();
                 this.forceLoad=true;
                 startLoaderForCity();
             }
-        }else if(key.equals(this.settingUtils.getNotificationEnabledPrefKey())){
-            if (this.settingUtils.areNotificationsEnabled()){
+        }else if(key.equals(SettingsUtils.getNotificationEnabledPrefKey(this))){
+            if (SettingsUtils.areNotificationsEnabled(this)){
                 Log.d(CLASS_TAG,"Notifications enabled.");
             }else{
                 Log.d(CLASS_TAG,"Notifications disabled.");
@@ -324,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             startLoaderForLocation(location);
         }else{
             Toast.makeText(this, this.getString(R.string.location_not_found_msg)+" "
-                    +this.settingUtils.getCityName(), Toast.LENGTH_SHORT).show();
+                    +SettingsUtils.getCityName(this), Toast.LENGTH_SHORT).show();
             startLoaderForCity();
         }
     }
