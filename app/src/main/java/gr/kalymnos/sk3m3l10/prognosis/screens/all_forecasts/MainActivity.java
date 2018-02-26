@@ -106,13 +106,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         clearLocationManager();
     }
 
-    private void clearLocationManager() {
-        if (this.locationManager!=null){
-            this.locationManager.removeUpdates(this);
-            this.locationManager=null;
-        }
-    }
-
     @Override
     protected void onDestroy() {
         this.defaultPreferences.unregisterOnSharedPreferenceChangeListener(this);
@@ -161,6 +154,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             if (providersEnabled){
                 requestLocation();
             }
+        }
+    }
+
+    private void clearLocationManager() {
+        if (this.locationManager!=null){
+            this.locationManager.removeUpdates(this);
+            this.locationManager=null;
         }
     }
 
@@ -299,16 +299,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             this.forceLoad = true;
             startLoaderForCity();
         }else if(key.equals(this.settingUtils.getDeviceLocationPrefKey())){
+            /* Note: We do not need to start fetching weather for location if the
+            *  corresponding setting is disabled. This will be done in onStart() anyway.*/
             if (!this.settingUtils.isDeviceLocationEnabled()){
-                /*
-                   We don't have to start a loader to fetch weather data here
-                *  because this action will be done anyway in onStart().
-                */
-                Log.d(CLASS_TAG,"GPS enabled.");
-            }else{
-                // User disabled location awareness, clear location listener
+                // Fetching weather from device location disabled
                 clearLocationManager();
-                // force a load
                 this.forceLoad=true;
                 startLoaderForCity();
             }
