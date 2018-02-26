@@ -287,20 +287,19 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         return loaderArgs;
     }
 
+    // Called when user changes something in app Settings.
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(this.getString(R.string.pref_location_key))){
-            /*
-                  Location in settings changed.
-               1) State that the loader is forced to load new data.
-               2) Fetch the new weather data
-            */
+        if (key.equals(this.settingUtils.getCityPrefKey())){
+            // User inputted a new city
             this.forceLoad = true;
             startLoaderForCity();
-        }else if(key.equals(this.getString(R.string.pref_enable_gps_search_key))){
-            // TODO: gps setting changed
-            boolean gpsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.gps_search_by_default));
-            if (gpsEnabled){
+        }else if(key.equals(this.settingUtils.getDeviceLocationPrefKey())){
+            if (this.settingUtils.isDeviceLocationEnabled()){
+                /*
+                   We don't have to start a loader to fetch weather data here
+                *  because this action will be done anyway in onStart().
+                */
                 Log.d(CLASS_TAG,"GPS enabled.");
             }else{
                 // User disabled location awareness, clear location listener
@@ -312,10 +311,8 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 this.forceLoad=true;
                 startLoaderForCity();
             }
-        }else if(key.equals(this.getString(R.string.pref_notifications_enabled_key))){
-            // TODO: weather notification setting changed
-            boolean notificationsEnabled = this.defaultPreferences.getBoolean(key,this.getResources().getBoolean(R.bool.weather_notifications_by_default));
-            if (notificationsEnabled){
+        }else if(key.equals(this.settingUtils.getNotificationEnabledPrefKey())){
+            if (this.settingUtils.areNotificationsEnabled()){
                 Log.d(CLASS_TAG,"Notifications enabled.");
             }else{
                 Log.d(CLASS_TAG,"Notifications disabled.");
