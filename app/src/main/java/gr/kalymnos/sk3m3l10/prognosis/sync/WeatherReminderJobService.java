@@ -43,8 +43,15 @@ public class WeatherReminderJobService extends JobService {
         return true; /* Signals that our service is still doing some work (because of the thread)*/
     }
 
+    /*
+       Called when the requirements of our job are no longer met, so the scheduling engine interrupts
+       the execution
+    */
     @Override
     public boolean onStopJob(JobParameters params) {
-        return false;
+        if (this.backgroundTask!=null){
+            this.backgroundTask.cancel(true);
+        }
+        return true;    /* If the conditions are remet, retry that job.*/
     }
 }
