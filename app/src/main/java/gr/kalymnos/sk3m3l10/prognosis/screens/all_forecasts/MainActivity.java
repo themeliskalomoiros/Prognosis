@@ -31,6 +31,7 @@ import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
+import gr.kalymnos.sk3m3l10.prognosis.util.ReminderUtils;
 import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
 
@@ -86,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         // initialize default shared preferences (settings) and setting utils.
         this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
+
+        if (SettingsUtils.areNotificationsEnabled(this)){
+            ReminderUtils.scheduleWeatherReminder(this);
+        }
 
         startLoaderForCity();
     }
