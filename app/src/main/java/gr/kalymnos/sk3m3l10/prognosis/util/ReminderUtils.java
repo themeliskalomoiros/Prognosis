@@ -34,6 +34,9 @@ public class ReminderUtils {
 
     synchronized public static void scheduleWeatherReminder(Context context){
 
+        int userInputInHours = SettingsUtils.getNotificationTimeValue(context);
+        int userInputInSeconds = (int) TimeUnit.HOURS.toSeconds(userInputInHours);
+
         if (jobInitialized){
             return;
         }
@@ -49,7 +52,7 @@ public class ReminderUtils {
                 .setLifetime(Lifetime.FOREVER)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(SettingsUtils.getNotificationTimeValue(context)
+                .setTrigger(Trigger.executionWindow(userInputInSeconds
                         ,TIME_TOLERANCE))
                 .setReplaceCurrent(false)
                 .build();
