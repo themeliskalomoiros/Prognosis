@@ -15,16 +15,20 @@ import java.util.concurrent.TimeUnit;
 import gr.kalymnos.sk3m3l10.prognosis.sync.WeatherReminderJobService;
 
 /**
- * This class is responsible to schedule jobs.
+ * This class is responsible for scheduling jobs.
  */
 
 public class ReminderUtils {
 
     private static final String REMINDER_JOB_TAG = "weather notification reminder tag";
 
+    public static final String CITY_KEY = "city_name_key";
+
     private static boolean jobInitialized = false;
 
-    synchronized public static void scheduleWeatherReminder(Context context){
+
+    synchronized public static void scheduleWeatherReminder(Context context, String cityName){
+
         if (jobInitialized){
             return;
         }
