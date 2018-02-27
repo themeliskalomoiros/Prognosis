@@ -143,4 +143,12 @@ public class FakeWeatherService implements WeatherService {
         return new Random().nextInt(limit)+1;
     }
 
+    private class ForecastWorker extends Thread{
+
+    }
+
+    private class WeatherWorker extends Thread{
+
+    }
+
 }
