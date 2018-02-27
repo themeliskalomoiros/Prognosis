@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts.MainActivity;
+import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 
 public class NotificationUtils {
 
@@ -42,7 +44,7 @@ public class NotificationUtils {
                 .setContentText(weather.getMainWeather())
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(weather.getMainWeather()))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setContentIntent(contentIntent(context))
+                .setContentIntent(contentIntent(context,weather))
                 .setAutoCancel(true); /* The notification will go away if we click on it*/
 
         // Set the priority for backward compatibility
@@ -57,14 +59,27 @@ public class NotificationUtils {
     /*
        This method will create the pending intent which will trigger
        when the notification is pressed. This pending intent will open up
-       the MainActivity.
+       the DetailActivity.
 
        The flag is set to FLAG_UPDATE_CURRENT, so that if the intent is created
        again, keep the intent but update the data.
     */
-    private static PendingIntent contentIntent(Context context){
-        Intent startMainActivity = new Intent(context, MainActivity.class);
-        return PendingIntent.getActivity(context,WEATHER_NOTIFICATION_INTENT_ID,startMainActivity
+    private static PendingIntent contentIntent(Context context,Weather w){
+        // Bundle the Weather obj
+        Bundle extras = new Bundle();
+        extras.putInt(DetailActivity.IMAGE_KEY,w.getImage());
+        extras.putString(DetailActivity.DATE_KEY,w.getDate());
+        extras.putString(DetailActivity.DESCRIPTION_KEY,w.getDescription());
+        extras.putString(DetailActivity.HIGH_TEMP_KEY,w.getTempHighWithSymbol());
+        extras.putString(DetailActivity.LOW_TEMP_KEY,w.getTempLowWithSymbol());
+        extras.putString(DetailActivity.HUMIDITY_KEY,w.getHumidity());
+        extras.putString(DetailActivity.PRESSURE_KEY,w.getPressure());
+        extras.putString(DetailActivity.WIND_KEY,w.getWindWithSymbol());
+
+        Intent startDetailActivity = new Intent(context, DetailActivity.class);
+        startDetailActivity.putExtras(extras);
+
+        return PendingIntent.getActivity(context,WEATHER_NOTIFICATION_INTENT_ID,startDetailActivity
                 ,PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
