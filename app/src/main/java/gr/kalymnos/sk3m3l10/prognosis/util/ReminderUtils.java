@@ -21,13 +21,18 @@ import gr.kalymnos.sk3m3l10.prognosis.sync.WeatherReminderJobService;
 public class ReminderUtils {
 
     private static final String REMINDER_JOB_TAG = "weather notification reminder tag";
-
-    public static final String CITY_KEY = "city_name_key";
-
     private static boolean jobInitialized = false;
 
+    /*
+        The job ideally will start at the time that the user specified.
+        In practise it will not happen this way. This constant states the
+        maximum tollerance in seconds where the system can delay to start our
+        job. Yet again is not guaranteed.
+    */
+    private static final int TIME_TOLERANCE = (int) TimeUnit.MINUTES.toSeconds(15);
 
-    synchronized public static void scheduleWeatherReminder(Context context, String cityName){
+
+    synchronized public static void scheduleWeatherReminder(Context context){
 
         if (jobInitialized){
             return;
@@ -44,7 +49,8 @@ public class ReminderUtils {
                 .setLifetime(Lifetime.FOREVER)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(1,3))
+                .setTrigger(Trigger.executionWindow(SettingsUtils.getNotificationTimeValue(context)
+                        ,TIME_TOLERANCE))
                 .setReplaceCurrent(false)
                 .build();
         dispatcher.mustSchedule(job);
