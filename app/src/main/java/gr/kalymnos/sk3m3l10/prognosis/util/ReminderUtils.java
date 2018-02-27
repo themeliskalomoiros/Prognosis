@@ -42,6 +42,7 @@ public class ReminderUtils {
                 .setService(WeatherReminderJobService.class)
                 .setTag(REMINDER_JOB_TAG)
                 .setLifetime(Lifetime.FOREVER)
+                .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setRecurring(true)
                 .setTrigger(Trigger.executionWindow(1,3))
                 .setReplaceCurrent(false)
