@@ -33,12 +33,36 @@ public class FakeWeatherService implements WeatherService {
 
     @Override
     public Weather getCurrentWeather(String cityName) {
-        return null;
+        int index = new Random().nextInt(weatherValues.length);
+
+        Weather weather = new CityWeather(cityName,"",TIME_MILLI,weatherValues[index],
+                descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
+                getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
+
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return weather;
     }
 
     @Override
     public Weather getCurrentWeather(double lat, double lon) {
-        return null;
+        int index = new Random().nextInt(weatherValues.length);
+
+        Weather weather = new LocationWeather(lat,lon,TIME_MILLI,weatherValues[index],
+                descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
+                getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
+
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return weather;
     }
 
     @Override
@@ -182,11 +206,6 @@ public class FakeWeatherService implements WeatherService {
         List<Weather> getForecast(){
             return this.forecast;
         }
-    }
-
-    private class WeatherWorker extends Thread{
-        private static final int TYPE_CITY=0;
-        private static final int TYPE_LOCATION=1;
     }
 
 }
