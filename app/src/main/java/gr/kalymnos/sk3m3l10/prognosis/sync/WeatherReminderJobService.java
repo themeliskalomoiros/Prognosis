@@ -2,6 +2,7 @@ package gr.kalymnos.sk3m3l10.prognosis.sync;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,7 +10,12 @@ import android.widget.Toast;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
+import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
+import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
+import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.util.NotificationUtils;
+import gr.kalymnos.sk3m3l10.prognosis.util.ReminderUtils;
+import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
 
 /**
  *  WeatherReminderJobService extends JobService because
@@ -24,23 +30,26 @@ public class WeatherReminderJobService extends JobService {
 
     private static final String CLASS_TAG = WeatherReminderJobService.class.getSimpleName();
 
-    private AsyncTask backgroundTask;
+    private AsyncTask<Void,Void,Weather> backgroundTask;
 
     @Override
     public boolean onStartJob(final JobParameters job) {
-        this.backgroundTask = new AsyncTask() {
+
+        this.backgroundTask = new AsyncTask<Void, Void, Weather>() {
             @Override
-            protected Object doInBackground(Object[] objects) {
-                // TODO: Here the weather service will get the current weather and return it.
-                Log.d(CLASS_TAG,"Job started.");
-                return null;
+            protected Weather doInBackground(Void... voids) {
+                // TODO: Switch to a real weather service.
+                WeatherService weatherService = new FakeWeatherService();
+                String cityName = SettingsUtils.getCityName(WeatherReminderJobService.this);
+                return weatherService.getCurrentWeather(cityName);
             }
 
             @Override
-            protected void onPostExecute(Object o) {
-                // TODO: Here a notification will be displayed with the current weather.
-                NotificationUtils.showWeatherNotification(WeatherReminderJobService.this);
+            protected void onPostExecute(Weather weather) {
+                Context context = WeatherReminderJobService.this;
+                NotificationUtils.showWeatherNotification(context,weather);
                 jobFinished(job,false);
+
             }
         };
 
