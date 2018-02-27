@@ -26,8 +26,8 @@ public class FakeWeatherService implements WeatherService {
     private static final int WEATHER_ITEMS_MAX_SIZE= 100;
     private static final int TIME_MILLI = 1519387200;
 
-    String[] weatherValues = {"clear sky","few clouds","scattered clouds","broken clouds","shower rain","thunderstorm","snow","mist"};
-    String[] descriptions = {"Great day, seize it","Some clouds in the sky","Clouds scattered along the sky","Broken clouds","Raining heavilly","Raining cats and dogs","Snowing","Misty mountains"};
+    private String[] weatherValues = {"clear sky","few clouds","scattered clouds","broken clouds","shower rain","thunderstorm","snow","mist"};
+    private String[] descriptions = {"Great day, seize it","Some clouds in the sky","Clouds scattered along the sky","Broken clouds","Raining heavilly","Raining cats and dogs","Snowing","Misty mountains"};
 
     @Override
     public Weather getCurrentWeather(String cityName) {
