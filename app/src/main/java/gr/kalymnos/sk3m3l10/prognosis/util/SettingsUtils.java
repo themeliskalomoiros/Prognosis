@@ -4,6 +4,7 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Xml;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
 
@@ -56,6 +57,14 @@ public class SettingsUtils {
 
     public static String getNotificationTimePrefKey(Context context){
         return context.getString(R.string.pref_notification_time_key);
+    }
+
+    // @return: Time in hours.
+    public static int getNotificationTimeValue(Context context){
+        String entry = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(getNotificationTimePrefKey(context),"");
+        // TODO: 'Dirty' solution. Get the entry (ex. "12 hours") and return the numeric value.
+        return Integer.parseInt(entry.split(" ")[0]);
     }
 
 }
