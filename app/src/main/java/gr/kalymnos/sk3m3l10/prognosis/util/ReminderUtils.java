@@ -50,5 +50,6 @@ public class ReminderUtils {
         Driver driver = new GooglePlayDriver(context);
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
         dispatcher.cancel(REMINDER_JOB_TAG);
+        jobInitialized=false;
     }
 }
