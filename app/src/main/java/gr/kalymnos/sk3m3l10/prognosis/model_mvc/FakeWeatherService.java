@@ -76,12 +76,7 @@ public class FakeWeatherService implements WeatherService {
 
         return list;
     }
-
-    @Override
-    public List<Weather> getWeatherForecast(String cityName, String countryCode) {
-        return null;
-    }
-
+    
     @Override
     public List<Weather> getWeatherForecast(double lat, double lon) {
         final List<Weather> list = new ArrayList<>();
