@@ -30,6 +30,16 @@ public class FakeWeatherService implements WeatherService {
     String[] descriptions = {"Great day, seize it","Some clouds in the sky","Clouds scattered along the sky","Broken clouds","Raining heavilly","Raining cats and dogs","Snowing","Misty mountains"};
 
     @Override
+    public Weather getCurrentWeather(String cityName) {
+        return null;
+    }
+
+    @Override
+    public Weather getCurrentWeather(double lat, double lon) {
+        return null;
+    }
+
+    @Override
     public List<Weather> getWeatherForecast(String cityName) {
         final List<Weather> list = new ArrayList<>();
 
