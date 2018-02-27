@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
+import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.screens.all_forecasts.MainActivity;
 
 public class NotificationUtils {
@@ -21,7 +22,7 @@ public class NotificationUtils {
     private static final String NOTIFICATION_CHANNEL_ID = "weather notification channel id";
 
     // TODO: This notification must display an accurate title,text and image relative to the weatherForecast.
-    public static void showWeatherNotification(Context context){
+    public static void showWeatherNotification(Context context, Weather weather){
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -36,10 +37,10 @@ public class NotificationUtils {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context,NOTIFICATION_CHANNEL_ID)
                 .setColor(ContextCompat.getColor(context,R.color.primary))
                 .setSmallIcon(R.drawable.ic_sun)
-                .setLargeIcon(largeIcon(context,R.drawable.sun_few_clouds))
-                .setContentTitle("Weather notification")
-                .setContentText("The weather is splendit today!!!")
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("The weather is splendit today!!!"))
+                .setLargeIcon(largeIcon(context,weather.getImage()))
+                .setContentTitle(weather.getQueryTitle())
+                .setContentText(weather.getMainWeather())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(weather.getMainWeather()))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
                 .setAutoCancel(true); /* The notification will go away if we click on it*/
