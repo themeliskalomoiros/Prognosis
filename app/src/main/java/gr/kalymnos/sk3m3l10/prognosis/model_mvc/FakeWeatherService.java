@@ -1,5 +1,7 @@
 package gr.kalymnos.sk3m3l10.prognosis.model_mvc;
 
+import android.os.Bundle;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -146,6 +148,21 @@ public class FakeWeatherService implements WeatherService {
     private class ForecastWorker extends Thread{
         private static final int TYPE_CITY=0;
         private static final int TYPE_LOCATION=1;
+
+        private static final String TYPE_KEY="worker type key";
+        private static final String CITY_KEY="city key";
+        private static final String LAT_KEY="lat key";
+        private static final String LON_KEY="lon key";
+
+        private Bundle args;
+
+        ForecastWorker(Bundle args){
+            this.args=args;
+        }
+
+        private int getType(){
+            return this.args.getInt(TYPE_KEY);
+        }
     }
 
     private class WeatherWorker extends Thread{
