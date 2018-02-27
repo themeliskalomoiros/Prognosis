@@ -144,11 +144,13 @@ public class FakeWeatherService implements WeatherService {
     }
 
     private class ForecastWorker extends Thread{
-
+        private static final int TYPE_CITY=0;
+        private static final int TYPE_LOCATION=1;
     }
 
     private class WeatherWorker extends Thread{
-
+        private static final int TYPE_CITY=0;
+        private static final int TYPE_LOCATION=1;
     }
 
 }
