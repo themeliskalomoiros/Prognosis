@@ -314,9 +314,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             if (SettingsUtils.areNotificationsEnabled(this)){
                 ReminderUtils.scheduleWeatherReminder(this);
                 Log.d(CLASS_TAG,"Notifications enabled.");
+                ReminderUtils.scheduleWeatherReminder(this);
             }else{
                 ReminderUtils.stopWeatherReminder(this);
                 Log.d(CLASS_TAG,"Notifications disabled.");
+                ReminderUtils.stopWeatherReminder(this);
             }
         }
     }
