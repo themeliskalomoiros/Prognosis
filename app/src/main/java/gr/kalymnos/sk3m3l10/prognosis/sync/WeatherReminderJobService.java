@@ -2,6 +2,9 @@ package gr.kalymnos.sk3m3l10.prognosis.sync;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -13,47 +16,49 @@ import gr.kalymnos.sk3m3l10.prognosis.util.NotificationUtils;
  *  this is what Firebases Job-dispatcher requires.
  *
  *  Also JobService runs from the main thread by default
- *  so we will implement make our calculations in a seperate
+ *  so we will make our calculations in a seperate
  *  thread instead.
  */
 
 public class WeatherReminderJobService extends JobService {
 
+    private static final String CLASS_TAG = WeatherReminderJobService.class.getSimpleName();
+
     private AsyncTask backgroundTask;
 
     @Override
-    public boolean onStartJob(JobParameters params) {
+    public boolean onStartJob(final JobParameters job) {
         this.backgroundTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                // TODO: For now the job is to display a useless notification, later the job has to connect with the WeatherService and display the current weather via notification.
-                Context context = WeatherReminderJobService.this;
-                NotificationUtils.showWeatherNotification(context);
+                // TODO: Here the weather service will get the current weather and return it.
+                Log.d(CLASS_TAG,"Job started.");
                 return null;
             }
 
             @Override
             protected void onPostExecute(Object o) {
-                /* Signal here that the job is finished
-                   (because the job is finised only when AsyncTask is finish).
-                   */
-                jobFinished(params,false);
+                // TODO: Here a notification will be displayed with the current weather.
+                NotificationUtils.showWeatherNotification(WeatherReminderJobService.this);
+                jobFinished(job,false);
             }
         };
 
-        this.backgroundTask.execute();
-        return true; /* Signals that our service is still doing some work (because of the thread)*/
+        backgroundTask.execute();
+        return true;    // Indicate that there is job still done (by the thread)
     }
 
+
     /*
-       Called when the requirements of our job are no longer met, so the scheduling engine interrupts
-       the execution
-    */
+        Called when our job is stoped, usually because a constrained failed to match.
+    *   For example our job starts only when there is internet connection, but if the
+    *   latter is lost then onStopJob will be called.
+    * */
     @Override
-    public boolean onStopJob(JobParameters params) {
+    public boolean onStopJob(JobParameters job) {
         if (this.backgroundTask!=null){
             this.backgroundTask.cancel(true);
         }
-        return true;    /* If the conditions are remet, retry that job.*/
+        return true;    // Retry the job if it was stoped.
     }
 }
