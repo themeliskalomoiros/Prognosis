@@ -45,4 +45,10 @@ public class ReminderUtils {
         dispatcher.mustSchedule(job);
         jobInitialized=true;
     }
+
+    synchronized public static void stopWeatherReminder(Context context){
+        Driver driver = new GooglePlayDriver(context);
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
+        dispatcher.cancel(REMINDER_JOB_TAG);
+    }
 }
