@@ -29,8 +29,8 @@ public class OpenWeatherMapUtils implements NetworkUtils {
 
     // Urls
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
-    private static final String CURRENT_WEATHER_URL = BASE_URL+"weather";
-    private static final String FORECAST_URL = BASE_URL+"forecast";
+    public static final String CURRENT_WEATHER_URL = BASE_URL+"weather";
+    public static final String FORECAST_URL = BASE_URL+"forecast";
 
     private static final String CLASS_TAG = OpenWeatherMapUtils.class.getSimpleName();
 
