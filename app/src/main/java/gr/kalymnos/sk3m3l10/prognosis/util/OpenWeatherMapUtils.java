@@ -34,7 +34,9 @@ public class OpenWeatherMapUtils implements NetworkUtils {
 
     private static final String CLASS_TAG = OpenWeatherMapUtils.class.getSimpleName();
 
-    public URL buildUrlWithCityQuery(String cityQuery, String apiUrl) {
+    private OpenWeatherMapUtils(){}
+
+    public static URL buildUrlWithCityQuery(String cityQuery, String apiUrl) {
         Uri weatherQueryUri = Uri.parse(apiUrl).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, cityQuery)
                 .appendQueryParameter(FORMAT_PARAM, FORMAT_JSON)
@@ -51,7 +53,7 @@ public class OpenWeatherMapUtils implements NetworkUtils {
         }
     }
 
-    public URL buildUrlWithLocationQuery(Location location, String apiUrl) {
+    public static URL buildUrlWithLocationQuery(Location location, String apiUrl) {
         Uri weatherQueryUri = Uri.parse(apiUrl).buildUpon()
                 .appendQueryParameter(LAT_PARAM, String.valueOf(location.getLatitude()))
                 .appendQueryParameter(LON_PARAM, String.valueOf(location.getLongitude()))
