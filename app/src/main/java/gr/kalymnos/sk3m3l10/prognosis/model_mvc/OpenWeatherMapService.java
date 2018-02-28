@@ -97,6 +97,10 @@ public class OpenWeatherMapService implements WeatherService {
         return null;
     }
 
+    private Weather assembleWeather(JsonAssembler assembler){
+        
+    }
+
     /*
         This classs will be responsible for retrieving weather values,
         after parsing a json http response.
