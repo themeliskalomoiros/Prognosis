@@ -35,18 +35,19 @@ public class OpenWeatherMapService implements WeatherService {
         This classs will be responsible for retrieving weather values,
         after parsing a json http response.
     */
-    private class JsonFinder{
+    private class JsonAssembler {
 
-        static final int TYPE_CITY=0;
-        static final int TYPE_LOCATION=1;
-
+        static final int TYPE_CURRENT_WEATHER=0;
+        static final int TYPE_FORECAST=1;
 
         private String json;
         private int type;
 
-        JsonFinder(String json, int type){
+        JsonAssembler(String json, int responseType){
             this.json=json;
-            this.type=type;
+            this.type=responseType;
         }
+
+
     }
 }
