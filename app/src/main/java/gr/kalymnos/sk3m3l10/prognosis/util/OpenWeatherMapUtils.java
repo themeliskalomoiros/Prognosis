@@ -34,8 +34,8 @@ public class OpenWeatherMapUtils implements NetworkUtils {
 
     private static final String CLASS_TAG = OpenWeatherMapUtils.class.getSimpleName();
 
-    public URL buildCurrentWeatherUrlWithCityQuery(String cityQuery) {
-        Uri weatherQueryUri = Uri.parse(CURRENT_WEATHER_URL).buildUpon()
+    public URL buildUrlWithCityQuery(String cityQuery, String apiUrl) {
+        Uri weatherQueryUri = Uri.parse(apiUrl).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, cityQuery)
                 .appendQueryParameter(FORMAT_PARAM, FORMAT_JSON)
                 .appendQueryParameter(UNITS_PARAM, UNITS_METRIC)
@@ -51,43 +51,8 @@ public class OpenWeatherMapUtils implements NetworkUtils {
         }
     }
 
-    public URL buildCurrentWeatherUrlWithLocationQuery(Location location) {
-        Uri weatherQueryUri = Uri.parse(CURRENT_WEATHER_URL).buildUpon()
-                .appendQueryParameter(LAT_PARAM, String.valueOf(location.getLatitude()))
-                .appendQueryParameter(LON_PARAM, String.valueOf(location.getLongitude()))
-                .appendQueryParameter(FORMAT_PARAM, FORMAT_JSON)
-                .appendQueryParameter(UNITS_PARAM, UNITS_METRIC)
-                .appendQueryParameter(API_KEY_PARAM,API_KEY)
-                .build();
-        try {
-            URL weatherQueryUrl = new URL(weatherQueryUri.toString());
-            Log.d(CLASS_TAG, "Location URL: " + weatherQueryUrl);
-            return weatherQueryUrl;
-        } catch (MalformedURLException e) {
-            Log.e(CLASS_TAG, e.getMessage());
-            return null;
-        }
-    }
-
-    public URL buildForecastUrlWithCityQuery(String cityQuery) {
-        Uri weatherQueryUri = Uri.parse(FORECAST_URL).buildUpon()
-                .appendQueryParameter(QUERY_PARAM, cityQuery)
-                .appendQueryParameter(FORMAT_PARAM, FORMAT_JSON)
-                .appendQueryParameter(UNITS_PARAM, UNITS_METRIC)
-                .appendQueryParameter(API_KEY_PARAM,API_KEY)
-                .build();
-        try {
-            URL weatherQueryUrl = new URL(weatherQueryUri.toString());
-            Log.d(CLASS_TAG, "Current weather URL: " + weatherQueryUrl);
-            return weatherQueryUrl;
-        } catch (MalformedURLException e) {
-            Log.e(CLASS_TAG, e.getMessage());
-            return null;
-        }
-    }
-
-    public URL buildForecastUrlWithLocationQuery(Location location) {
-        Uri weatherQueryUri = Uri.parse(FORECAST_URL).buildUpon()
+    public URL buildUrlWithLocationQuery(Location location, String apiUrl) {
+        Uri weatherQueryUri = Uri.parse(apiUrl).buildUpon()
                 .appendQueryParameter(LAT_PARAM, String.valueOf(location.getLatitude()))
                 .appendQueryParameter(LON_PARAM, String.valueOf(location.getLongitude()))
                 .appendQueryParameter(FORMAT_PARAM, FORMAT_JSON)
