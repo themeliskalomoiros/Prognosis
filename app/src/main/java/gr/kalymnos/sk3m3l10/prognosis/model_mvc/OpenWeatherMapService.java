@@ -36,6 +36,10 @@ public class OpenWeatherMapService implements WeatherService {
         after parsing a json http response.
     */
     private class JsonFinder{
+        private String json;
 
+        JsonFinder(String json){
+            this.json=json;
+        }
     }
 }
