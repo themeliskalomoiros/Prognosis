@@ -1,9 +1,12 @@
 package gr.kalymnos.sk3m3l10.prognosis.util;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownServiceException;
 import java.util.Scanner;
 
 /**
@@ -12,6 +15,7 @@ import java.util.Scanner;
 
 public interface NetworkUtils {
 
+    private static final String CLASS_TAG = NetworkUtils.class.getSimpleName();
 
     /**
      * This method returns the entire result from the HTTP response.
@@ -35,6 +39,10 @@ public interface NetworkUtils {
             }
             scanner.close();
             return response;
+        } catch (UnknownServiceException u){
+            Log.e(CLASS_TAG, u.getMessage());
+        } catch (IOException e){
+            Log.e(CLASS_TAG,e.getMessage());
         } finally {
             urlConnection.disconnect();
         }
