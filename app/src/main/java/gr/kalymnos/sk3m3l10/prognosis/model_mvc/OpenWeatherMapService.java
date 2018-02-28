@@ -49,17 +49,17 @@ public class OpenWeatherMapService implements WeatherService {
         private static final int TYPE_CURRENT_WEATHER=0;
         private static final int TYPE_FORECAST=1;
 
-        private String json;
         private int type;
+        private JSONObject rootObj;
 
-        private JsonAssembler(String json, int responseType){
-            this.json=json;
+        private JsonAssembler(String json, int responseType) throws JSONException {
+            this.rootObj = new JSONObject(json);
             this.type=responseType;
         }
 
-        private String getCityName() throws JSONException {
+        private String getCityName(){
             String city=null;
-            JSONObject rootObj = new JSONObject(this.json);
+
 
             switch (this.type){
                 case TYPE_CURRENT_WEATHER:
@@ -71,6 +71,8 @@ public class OpenWeatherMapService implements WeatherService {
                     throw new IllegalArgumentException(CLASS_TAG+": Unknown responseType.");
             }
         }
+
+
 
     }
 }
