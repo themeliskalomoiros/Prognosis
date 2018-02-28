@@ -62,7 +62,7 @@ public class SettingsUtils {
     // @return: Time in hours.
     public static int getNotificationTimeValue(Context context){
         String entry = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(getNotificationTimePrefKey(context),"");
+                .getString(getNotificationTimePrefKey(context),"12");
         // TODO: 'Dirty' solution. Get the entry (ex. "12 hours") and return the numeric value.
         return Integer.parseInt(entry.split(" ")[0]);
     }
