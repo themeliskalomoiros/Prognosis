@@ -36,10 +36,17 @@ public class OpenWeatherMapService implements WeatherService {
         after parsing a json http response.
     */
     private class JsonFinder{
-        private String json;
 
-        JsonFinder(String json){
+        static final int TYPE_CITY=0;
+        static final int TYPE_LOCATION=1;
+
+
+        private String json;
+        private int type;
+
+        JsonFinder(String json, int type){
             this.json=json;
+            this.type=type;
         }
     }
 }
