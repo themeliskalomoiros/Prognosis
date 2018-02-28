@@ -53,7 +53,7 @@ public class ReminderUtils {
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setRecurring(true)
                 .setTrigger(Trigger.executionWindow(userInputInSeconds
-                        ,TIME_TOLERANCE))
+                        ,userInputInSeconds+TIME_TOLERANCE))
                 .setReplaceCurrent(false)
                 .build();
         dispatcher.mustSchedule(job);
