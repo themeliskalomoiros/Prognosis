@@ -55,6 +55,23 @@ public class OpenWeatherMapService implements WeatherService {
             this.json=json;
             this.type=responseType;
         }
+        
+        private String getCityName() throws JSONException {
+            String city=null;
+            JSONObject jsonFile = new JSONObject(this.json);
+
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+
+                    break;
+                case TYPE_FORECAST:
+                    break;
+                default:
+                    throw new IllegalArgumentException()
+            }
+
+            return city;
+        }
 
     }
 }
