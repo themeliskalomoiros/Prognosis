@@ -30,4 +30,12 @@ public class OpenWeatherMapService implements WeatherService {
     public List<Weather> getWeatherForecast(Location location) {
         return null;
     }
+
+    /*
+        This classs will be responsible for retrieving weather values,
+        after parsing a json http response.
+    */
+    private class JsonFinder{
+
+    }
 }
