@@ -30,7 +30,7 @@ public class OpenWeatherMapUtils implements NetworkUtils {
 
     private static final String CLASS_TAG = OpenWeatherMapUtils.class.getSimpleName();
 
-    private URL buildCurrentWeatherUrlWithCityQuery(String cityQuery) {
+    public URL buildCurrentWeatherUrlWithCityQuery(String cityQuery) {
         Uri weatherQueryUri = Uri.parse(CURRENT_WEATHER_URL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, cityQuery)
                 .appendQueryParameter(FORMAT_PARAM, FORMAT_JSON)
