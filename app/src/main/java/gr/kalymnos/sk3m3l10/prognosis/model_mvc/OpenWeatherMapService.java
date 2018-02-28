@@ -43,7 +43,7 @@ public class OpenWeatherMapService implements WeatherService {
 
         private static final String CLASS_TAG = JsonAssembler.class.getSimpleName();
 
-        // Json keys
+        /*--------------------------JSON KEYS--------------------*/
         private static final String CITY_NAME = "name";
         private static final String DATE_TIME = "dt";
         private static final String CITY = "city";
@@ -53,7 +53,10 @@ public class OpenWeatherMapService implements WeatherService {
         private static final String MAIN = "main";
         private static final String TEMP_MIN = "temp_min";
         private static final String TEMP_MAX = "temp_max";
+        private static final String TEMP_MAX = "temp_max";
+        /*-------------------------------------------------------*/
 
+        // Json response types (from .../weather? or .../forecast?)
         private static final int TYPE_CURRENT_WEATHER=0;
         private static final int TYPE_FORECAST=1;
 
