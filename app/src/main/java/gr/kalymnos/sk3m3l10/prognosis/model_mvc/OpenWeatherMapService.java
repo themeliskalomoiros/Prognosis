@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.List;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.CityWeather;
+import gr.kalymnos.sk3m3l10.prognosis.common.weather.LocationWeather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.OpenWeatherMapUnits;
 import gr.kalymnos.sk3m3l10.prognosis.util.NetworkUtils;
@@ -58,7 +59,32 @@ public class OpenWeatherMapService implements WeatherService {
 
     @Override
     public Weather getCurrentWeather(Location location) {
-        return null;
+        URL url = Utilities.buildUrlWithLocationQuery(location,Utilities.CURRENT_WEATHER_URL);
+        Weather weather=null;
+        try {
+
+            String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
+            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
+
+            String city = assembler.getCityName();
+            String country = assembler.getCountryCode();
+            long time = assembler.getTimeMilli();
+            String mainWeather = assembler.getMainWeather();
+            String description = assembler.getDescription();
+            int tempMax = assembler.getMaxTemp();
+            int tempMin = assembler.getMinTemp();
+            int humidity = assembler.getHumidity();
+            int pressure = assembler.getPressure();
+            double windSpeed = assembler.getWind();
+
+            return new LocationWeather(location.getLatitude(),location.getLongitude(),time,mainWeather,description,tempMax,tempMin,humidity
+                    ,pressure,windSpeed,new OpenWeatherMapUnits.OpenWeatherMetric());
+        } catch (IOException e) {
+            Log.e(CLASS_TAG,e.getMessage());
+        } catch (JSONException e) {
+            Log.e(CLASS_TAG,e.getMessage());
+        }
+        return weather;
     }
 
     @Override
