@@ -322,6 +322,8 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             }
         }else if(key.equals(SettingsUtils.getNotificationTimePrefKey(this))){
             Log.d(CLASS_TAG,"Hours changed to "+SettingsUtils.getNotificationTimeValue(this));
+            ReminderUtils.stopWeatherReminder(this);
+            ReminderUtils.scheduleWeatherReminder(this);
         }
     }
 
