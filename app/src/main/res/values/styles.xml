@@ -9,7 +9,7 @@
         <!-- Used for settings preference theme -->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
-    
+        
     <style name="AppTheme.Forecast" parent="@style/AppTheme">
         <item name="actionBarStyle">@style/ActionBar.Solid.Prognosis.NoTitle</item>
     </style>
