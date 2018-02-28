@@ -53,7 +53,12 @@ public class OpenWeatherMapService implements WeatherService {
         private static final String MAIN = "main";
         private static final String TEMP_MIN = "temp_min";
         private static final String TEMP_MAX = "temp_max";
-        private static final String TEMP_MAX = "temp_max";
+        private static final String WEATHER = "weather";
+        private static final String DESCRIPTION = "description";
+        private static final String HUMIDITY = "humidity";
+        private static final String PRESSURE = "pressure";
+        private static final String WIND = "wind";
+        private static final String SPEED = "speed";
         /*-------------------------------------------------------*/
 
         // Json response types (from .../weather? or .../forecast?)
@@ -158,6 +163,117 @@ public class OpenWeatherMapService implements WeatherService {
                     JSONArray list = this.rootObj.optJSONArray(LIST);
                     return list.optJSONObject(index).optJSONObject(MAIN)
                             .optInt(TEMP_MIN);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
+        private String getMainWeather(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONArray(WEATHER).optJSONObject(0)
+                            .optString(MAIN);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private String getMainWeather(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONArray(WEATHER)
+                            .optJSONObject(0).optString(MAIN);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
+        private String getDescription(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONObject(WEATHER).optString(DESCRIPTION);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private String getDescription(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONArray(WEATHER)
+                            .optJSONObject(0).optString(DESCRIPTION);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
+        private int getHumidity(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONObject(MAIN).optInt(HUMIDITY);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private int getHumidity(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONObject(MAIN)
+                            .optInt(HUMIDITY);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
+        private int getPressure(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONObject(MAIN).optInt(PRESSURE);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private int getPressure(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONObject(MAIN)
+                            .optInt(PRESSURE);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
+        private double getWind(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONObject(WIND).optDouble(SPEED);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private double getWind(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONObject(WIND)
+                            .optDouble(SPEED);
                 default:
                     throw new IllegalArgumentException(CLASS_TAG+": responseType " +
                             "must be TYPE_FORECAST for this call.");
