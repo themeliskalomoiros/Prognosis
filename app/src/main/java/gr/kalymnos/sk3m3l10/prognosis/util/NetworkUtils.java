@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public interface NetworkUtils {
 
-    private static final String CLASS_TAG = NetworkUtils.class.getSimpleName();
+    public static final String CLASS_TAG = NetworkUtils.class.getSimpleName();
 
     /**
      * This method returns the entire result from the HTTP response.
@@ -25,6 +25,8 @@ public interface NetworkUtils {
      * @throws IOException Related to network and stream reading
      */
     public static String getResponseFromHttpUrl(URL url) throws IOException {
+        String response = null;
+
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();
@@ -33,12 +35,10 @@ public interface NetworkUtils {
             scanner.useDelimiter("\\A");
 
             boolean hasInput = scanner.hasNext();
-            String response = null;
             if (hasInput) {
                 response = scanner.next();
             }
             scanner.close();
-            return response;
         } catch (UnknownServiceException u){
             Log.e(CLASS_TAG, u.getMessage());
         } catch (IOException e){
@@ -46,5 +46,6 @@ public interface NetworkUtils {
         } finally {
             urlConnection.disconnect();
         }
+        return response;
     }
 }
