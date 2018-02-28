@@ -28,4 +28,7 @@
     <string name="pref_notification_time_label">Every</string>
     <string name="pref_weather_notifications_title">Notifications</string>
     <string name="weather_notification_channel_name">Weather Notifications</string>
+    <string name="error_title">Sorry for that</string>
+    <string name="reload">Reload</string>
+    <string name="error_msg">We could not provide you with a weather forecast. It might be your internet connection or servers fault. Hit reload to give a new try.</string>
 </resources>
