@@ -42,6 +42,9 @@ public class OpenWeatherMapService implements WeatherService {
 
         private static final String CLASS_TAG = JsonAssembler.class.getSimpleName();
 
+        // Json keys
+        private static final String CITY_NAME = "name";
+
         private static final int TYPE_CURRENT_WEATHER=0;
         private static final int TYPE_FORECAST=1;
 
@@ -51,22 +54,6 @@ public class OpenWeatherMapService implements WeatherService {
         private JsonAssembler(String json, int responseType){
             this.json=json;
             this.type=responseType;
-        }
-
-        String getCityName() throws JSONException {
-            String city=null;
-            JSONObject jsonFile = new JSONObject(this.json);
-
-            switch (this.type){
-                case TYPE_CURRENT_WEATHER:
-                    break;
-                case TYPE_FORECAST:
-                    break;
-                default:
-                    throw new IllegalArgumentException()
-            }
-
-            return city;
         }
 
     }
