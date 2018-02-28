@@ -247,9 +247,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                                     String cityName = args.getString(CITY_NAME_KEY);
                                     return weatherList = weatherService.getWeatherForecast(cityName);
                                 case TYPE_FETCH_FROM_DEVICE_LOCATION:
-                                    double lat = args.getDouble(LAT_KEY);
-                                    double lon = args.getDouble(LON_KEY);
-                                    return weatherList = weatherService.getWeatherForecast(lat,lon);
+                                    // This Location obj will be a temp a wrapper for lat/lon.
+                                    Location location = new Location("");
+                                    location.setLatitude(args.getDouble(LAT_KEY));
+                                    location.setLongitude(args.getDouble(LON_KEY));
+                                    return weatherList = weatherService.getWeatherForecast(location);
                                 default:
                                     throw new IllegalArgumentException(CLASS_TAG+": Unknown loader fetch type!");
                             }

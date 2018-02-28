@@ -1,5 +1,6 @@
 package gr.kalymnos.sk3m3l10.prognosis.model_mvc;
 
+import android.location.Location;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -49,10 +50,10 @@ public class FakeWeatherService implements WeatherService {
     }
 
     @Override
-    public Weather getCurrentWeather(double lat, double lon) {
+    public Weather getCurrentWeather(Location location) {
         int index = new Random().nextInt(weatherValues.length);
 
-        Weather weather = new LocationWeather(lat,lon,TIME_MILLI,weatherValues[index],
+        Weather weather = new LocationWeather(location.getLatitude(),location.getLongitude(),TIME_MILLI,weatherValues[index],
                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
@@ -85,11 +86,11 @@ public class FakeWeatherService implements WeatherService {
     }
     
     @Override
-    public List<Weather> getWeatherForecast(double lat, double lon) {
+    public List<Weather> getWeatherForecast(Location location) {
         Bundle workerArgs = new Bundle();
         workerArgs.putInt(ForecastWorker.TYPE_KEY,ForecastWorker.TYPE_LOCATION);
-        workerArgs.putDouble(ForecastWorker.LAT_KEY,lat);
-        workerArgs.putDouble(ForecastWorker.LON_KEY,lon);
+        workerArgs.putDouble(ForecastWorker.LAT_KEY,location.getLatitude());
+        workerArgs.putDouble(ForecastWorker.LON_KEY,location.getLongitude());
 
         ForecastWorker worker = new ForecastWorker(workerArgs);
 
