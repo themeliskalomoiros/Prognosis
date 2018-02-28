@@ -50,6 +50,9 @@ public class OpenWeatherMapService implements WeatherService {
         private static final String SYS = "sys";
         private static final String COUNTRY = "country";
         private static final String LIST = "list";
+        private static final String MAIN = "main";
+        private static final String TEMP_MIN = "temp_min";
+        private static final String TEMP_MAX = "temp_max";
 
         private static final int TYPE_CURRENT_WEATHER=0;
         private static final int TYPE_FORECAST=1;
@@ -106,6 +109,55 @@ public class OpenWeatherMapService implements WeatherService {
                 default:
                     throw new IllegalArgumentException(CLASS_TAG+": responseType " +
                             "type must be TYPE_FORECAST for this call.");
+            }
+        }
+
+
+        /*  
+            The temperature in the api is a double, 
+            though the optInt() is able to cast it to an integer.
+        */
+        private int getMaxTemp(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONObject(MAIN).optInt(TEMP_MAX);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private int getMaxTemp(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONObject(MAIN)
+                            .optInt(TEMP_MAX);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
+        private int getMinTemp(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONObject(MAIN).optInt(TEMP_MIN);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private int getMinTemp(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONObject(MAIN)
+                            .optInt(TEMP_MIN);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
             }
         }
 
