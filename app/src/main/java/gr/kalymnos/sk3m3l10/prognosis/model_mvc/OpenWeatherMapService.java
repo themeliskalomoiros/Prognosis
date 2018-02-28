@@ -289,7 +289,7 @@ public class OpenWeatherMapService implements WeatherService {
      * Network utilities for OpenWeatherMap.com
      */
 
-    public static class OpenWeatherMapUtils{
+    private static class Utilities {
 
         // OpenWeatherMap.org parameters
         private static final String QUERY_PARAM = "q";
@@ -307,14 +307,14 @@ public class OpenWeatherMapService implements WeatherService {
 
         // Urls
         private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
-        public static final String CURRENT_WEATHER_URL = BASE_URL+"weather";
-        public static final String FORECAST_URL = BASE_URL+"forecast";
+        private static final String CURRENT_WEATHER_URL = BASE_URL+"weather";
+        private static final String FORECAST_URL = BASE_URL+"forecast";
 
-        private static final String CLASS_TAG = OpenWeatherMapUtils.class.getSimpleName();
+        private static final String CLASS_TAG = Utilities.class.getSimpleName();
 
-        private OpenWeatherMapUtils(){}
+        private Utilities(){}
 
-        public static URL buildUrlWithCityQuery(String cityQuery, String apiUrl) {
+        private static URL buildUrlWithCityQuery(String cityQuery, String apiUrl) {
             Uri weatherQueryUri = Uri.parse(apiUrl).buildUpon()
                     .appendQueryParameter(QUERY_PARAM, cityQuery)
                     .appendQueryParameter(FORMAT_PARAM, FORMAT_JSON)
@@ -331,7 +331,7 @@ public class OpenWeatherMapService implements WeatherService {
             }
         }
 
-        public static URL buildUrlWithLocationQuery(Location location, String apiUrl) {
+        private static URL buildUrlWithLocationQuery(Location location, String apiUrl) {
             Uri weatherQueryUri = Uri.parse(apiUrl).buildUpon()
                     .appendQueryParameter(LAT_PARAM, String.valueOf(location.getLatitude()))
                     .appendQueryParameter(LON_PARAM, String.valueOf(location.getLongitude()))
