@@ -13,7 +13,9 @@ import java.util.Scanner;
  * This class will be responsible for handling network operations.
  */
 
-public interface NetworkUtils {
+public class NetworkUtils {
+
+    private NetworkUtils(){}
 
     public static final String CLASS_TAG = NetworkUtils.class.getSimpleName();
 
