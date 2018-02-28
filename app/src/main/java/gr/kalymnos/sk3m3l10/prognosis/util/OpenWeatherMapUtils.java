@@ -11,7 +11,7 @@ import java.net.URL;
  * Network utilities for OpenWeatherMap.com
  */
 
-public class OpenWeatherMapUtils implements NetworkUtils {
+public class OpenWeatherMapUtils{
 
     // OpenWeatherMap.org parameters
     private static final String QUERY_PARAM = "q";
