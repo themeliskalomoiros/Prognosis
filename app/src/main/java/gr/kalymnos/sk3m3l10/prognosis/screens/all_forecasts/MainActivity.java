@@ -84,10 +84,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         // define the weather service
         this.weatherService = new FakeWeatherService();
 
-        // initialize default shared preferences (settings) and setting utils.
+        // initialize default shared preferences (settings).
         this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
 
+        // If user enabled it, start a job to fire weather notifications.
         if (SettingsUtils.areNotificationsEnabled(this)){
             ReminderUtils.scheduleWeatherReminder(this);
         }
