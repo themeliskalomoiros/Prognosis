@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         extras.putString(DetailActivity.HUMIDITY_KEY,w.getHumidity());
         extras.putString(DetailActivity.PRESSURE_KEY,w.getPressure());
         extras.putString(DetailActivity.WIND_KEY,w.getWindWithSymbol());
+        extras.putString(DetailActivity.APPROX_HOUR_KEY,w.getApproxHour());
 
         Intent intent = new Intent(this,DetailActivity.class);
         intent.putExtras(extras);
