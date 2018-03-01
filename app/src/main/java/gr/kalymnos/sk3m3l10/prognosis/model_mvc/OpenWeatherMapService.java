@@ -72,7 +72,26 @@ public class OpenWeatherMapService implements WeatherService {
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
-            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
+            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
+
+            return this.assembleForecast(assembler);
+
+        } catch (IOException e) {
+            Log.e(CLASS_TAG,e.getMessage());
+        } catch (JSONException e) {
+            Log.e(CLASS_TAG,e.getMessage());
+        }
+        return forecast;
+    }
+
+    @Override
+    public List<Weather> getWeatherForecast(Location location) {
+        URL url = Utilities.buildUrlWithLocationQuery(location,Utilities.FORECAST_URL);
+        List<Weather> forecast = null;
+        try {
+
+            String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
+            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
 
             return this.assembleForecast(assembler);
 
@@ -90,11 +109,6 @@ public class OpenWeatherMapService implements WeatherService {
             forecast.add(this.assembleWeather(assembler));
         }
         return forecast;
-    }
-
-    @Override
-    public List<Weather> getWeatherForecast(Location location) {
-        return null;
     }
 
     private Weather assembleWeather(JsonAssembler assembler){
