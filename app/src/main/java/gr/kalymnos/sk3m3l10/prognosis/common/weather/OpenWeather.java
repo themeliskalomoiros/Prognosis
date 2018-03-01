@@ -8,6 +8,7 @@ package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 import android.text.TextUtils;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
+import gr.kalymnos.sk3m3l10.prognosis.model_mvc.OpenWeatherImageProvider;
 
 public class OpenWeather extends Weather {
 
@@ -52,7 +53,6 @@ public class OpenWeather extends Weather {
 
     @Override
     public int getImage() {
-        // TODO: Provide an implementation
-        return 0;
+        return OpenWeatherImageProvider.getInstance().getImage(this.iconFileName);
     }
 }
