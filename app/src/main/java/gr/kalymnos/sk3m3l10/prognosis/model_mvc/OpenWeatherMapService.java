@@ -86,20 +86,9 @@ public class OpenWeatherMapService implements WeatherService {
 
             // we will try to assemble a Weather obj only if httpResponse is not empty
             if (!TextUtils.isEmpty(httpResponse)){
-
                 JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
-
-                // We query forecast from device location, so set the flag before returning the objects.
-                List<Weather> forecast = this.assembleForecast(assembler);
-                for (Weather w : forecast){
-                    OpenWeather openWeather = (OpenWeather) w;
-                    openWeather.setObtainedFromDeviceLocation(true);
-                }
-                return forecast;
-
+                return this.assembleForecast(assembler);
             }
-
-
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
@@ -119,7 +108,14 @@ public class OpenWeatherMapService implements WeatherService {
             // we will try to assemble a Weather obj only if httpResponse is not empty
             if (!TextUtils.isEmpty(httpResponse)){
                 JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
-                return this.assembleForecast(assembler);
+
+                // We query forecast from device location, so set the flag before returning the objects.
+                List<Weather> forecast = this.assembleForecast(assembler);
+                for (Weather w : forecast){
+                    OpenWeather openWeather = (OpenWeather) w;
+                    openWeather.setObtainedFromDeviceLocation(true);
+                }
+                return forecast;
             }
 
 
