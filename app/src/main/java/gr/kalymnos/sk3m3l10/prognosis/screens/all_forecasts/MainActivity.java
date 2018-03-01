@@ -34,6 +34,7 @@ import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
 import gr.kalymnos.sk3m3l10.prognosis.util.ReminderUtils;
 import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.ErrorViewMvc;
+import gr.kalymnos.sk3m3l10.prognosis.view_mvc.ViewMvc;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -277,7 +278,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         // Load finished, hide the progress bar.
         forecastView.displayProgressIndicator(false);
         if (data!=null){
+            if (errorView!=null){
+                // So an error view was being displayed before, display again the forecast view
+                this.setContentView(forecastView.getRootView());
+            }
             forecastView.bindWeatherItems(data);
+            // Set error view to null
+            this.errorView=null;
         }else{
             // We dont have data, switch to the error view
             if (this.errorView==null){
