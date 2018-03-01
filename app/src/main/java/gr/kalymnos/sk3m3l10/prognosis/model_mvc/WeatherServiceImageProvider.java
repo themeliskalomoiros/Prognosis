@@ -1,7 +1,7 @@
 package gr.kalymnos.sk3m3l10.prognosis.model_mvc;
 
 /**
- * This class provides with drawables a weather service.
+ * This class provides proper drawables for weather fetched from a weather service.
  */
 
 public interface WeatherServiceImageProvider {
