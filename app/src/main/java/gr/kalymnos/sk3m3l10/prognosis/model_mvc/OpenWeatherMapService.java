@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.OpenWeather;
@@ -66,7 +67,21 @@ public class OpenWeatherMapService implements WeatherService {
 
     @Override
     public List<Weather> getWeatherForecast(String cityName) {
-        return null;
+        URL url = Utilities.buildUrlWithCityQuery(cityName,Utilities.FORECAST_URL);
+        List<Weather> forecast = new ArrayList<>();
+        try {
+
+            String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
+            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
+
+            return this.assembleForecasst(assembler);
+
+        } catch (IOException e) {
+            Log.e(CLASS_TAG,e.getMessage());
+        } catch (JSONException e) {
+            Log.e(CLASS_TAG,e.getMessage());
+        }
+        return forecast;
     }
 
     @Override
