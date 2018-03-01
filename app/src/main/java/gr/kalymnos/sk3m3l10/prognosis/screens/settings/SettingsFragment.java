@@ -19,7 +19,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     
     private Preference cityPref;
     private ListPreference notificationTimePref;
-    private CheckBoxPreference notificationsEnabledPref;
+    private CheckBoxPreference notificationsEnabledPref,geoLocationPref;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -34,6 +34,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         this.notificationTimePref.setSummary(notificationTimePref.getEntry());
 
         this.setNotificationsTimeEnabled();
+        this.setCityNameEnabled();
     }
 
     @Override
@@ -56,6 +57,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             notificationTimePref.setSummary(notificationTimePref.getEntry());
         }else if (key.equals(SettingsUtils.getNotificationEnabledPrefKey(this.getActivity()))){
             this.setNotificationsTimeEnabled();
+        }else if (key.equals(SettingsUtils.getDeviceLocationPrefKey(this.getActivity()))){
+            this.setCityNameEnabled();
+        }
+    }
+
+    private void setCityNameEnabled() {
+        if (this.geoLocationPref.isChecked()){
+            this.cityPref.setEnabled(false);
+        }else{
+            this.cityPref.setEnabled(true);
         }
     }
 
@@ -77,5 +88,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         this.cityPref = this.findPreference(SettingsUtils.getCityPrefKey(this.getActivity()));
         this.notificationTimePref = (ListPreference) this.findPreference(SettingsUtils.getNotificationTimePrefKey(this.getActivity()));
         this.notificationsEnabledPref = (CheckBoxPreference) this.findPreference(SettingsUtils.getNotificationEnabledPrefKey(this.getActivity()));
+        this.geoLocationPref= (CheckBoxPreference) this.findPreference(SettingsUtils.getDeviceLocationPrefKey(this.getActivity()));
     }
 }
