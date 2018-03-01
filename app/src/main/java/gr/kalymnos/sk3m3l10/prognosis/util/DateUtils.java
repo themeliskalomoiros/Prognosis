@@ -90,4 +90,44 @@ public class DateUtils {
                 return null;
         }
     }
+    
+    private boolean isToday(){
+        Calendar today = Calendar.getInstance();
+        today.setTimeInMillis(System.currentTimeMillis());
+
+        // Todays date
+        int todayYear = today.get(Calendar.YEAR);
+        int todayMonth = today.get(Calendar.MONTH);
+        int todayDay = today.get(Calendar.DAY_OF_WEEK);
+
+        // Date to compare with today
+        int otherYear = this.calendar.get(Calendar.YEAR);
+        int otherMonth = this.calendar.get(Calendar.MONTH);
+        int otherDay = this.calendar.get(Calendar.DAY_OF_WEEK);
+
+        if (todayYear==otherYear && todayMonth==otherMonth && todayDay==otherDay){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTomorrow(){
+        Calendar today = Calendar.getInstance();
+        today.setTimeInMillis(System.currentTimeMillis());
+
+        // Todays date
+        int todayYear = today.get(Calendar.YEAR);
+        int todayMonth = today.get(Calendar.MONTH);
+        int todayDay = today.get(Calendar.DAY_OF_WEEK);
+
+        // Date to compare with tomorrow
+        int otherYear = this.calendar.get(Calendar.YEAR);
+        int otherMonth = this.calendar.get(Calendar.MONTH);
+        int otherDay = this.calendar.get(Calendar.DAY_OF_WEEK);
+
+        if (todayYear==otherYear && todayMonth==otherMonth && todayDay==otherDay+1){
+            return true;
+        }
+        return false;
+    }
 }
