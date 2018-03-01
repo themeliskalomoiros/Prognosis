@@ -139,4 +139,11 @@ public class DateUtils {
         }
         return false;
     }
+
+    public String getApproximateTime(){
+        // We don't care about the exact time, just the hour of the day.
+        int hour = this.calendar.get(Calendar.HOUR_OF_DAY);
+        String sHour = hour<10?"0"+hour:String.valueOf(hour);
+        return String.format("~%s:00",sHour);
+    }
 }
