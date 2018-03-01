@@ -78,7 +78,5 @@ public abstract class Weather {
         return wind+" "+this.weatherUnit.getWindUnitSymbol();
     }
 
-    public final int getImage(){
-        return FakeWeatherImageProvider.getImage(this.mainWeather,this.timeMilli);
-    }
+    public abstract int getImage();
 }
