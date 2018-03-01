@@ -49,39 +49,46 @@ public class OpenWeatherMapService implements WeatherService {
     @Override
     public Weather getCurrentWeather(Location location) {
         URL url = Utilities.buildUrlWithLocationQuery(location,Utilities.CURRENT_WEATHER_URL);
-        Weather weather=null;
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
             JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
 
-            return this.assembleWeather(assembler);
+            // We query weather from device location, so set the flag before returning the object.
+            OpenWeather locationWeather = (OpenWeather) this.assembleWeather(assembler);
+            locationWeather.setObtainedFromDeviceLocation(true);
+            return locationWeather;
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
         } catch (JSONException e) {
             Log.e(CLASS_TAG,e.getMessage());
         }
-        return weather;
+        return null;
     }
 
     @Override
     public List<Weather> getWeatherForecast(String cityName) {
         URL url = Utilities.buildUrlWithCityQuery(cityName,Utilities.FORECAST_URL);
-        List<Weather> forecast = null;
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
             JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
 
-            return this.assembleForecast(assembler);
+            // We query forecast from device location, so set the flag before returning the objects.
+            List<Weather> forecast = this.assembleForecast(assembler);
+            for (Weather w : forecast){
+                OpenWeather openWeather = (OpenWeather) w;
+                openWeather.setObtainedFromDeviceLocation(true);
+            }
+            return forecast;
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
         } catch (JSONException e) {
             Log.e(CLASS_TAG,e.getMessage());
         }
-        return forecast;
+        return null;
     }
 
     @Override
