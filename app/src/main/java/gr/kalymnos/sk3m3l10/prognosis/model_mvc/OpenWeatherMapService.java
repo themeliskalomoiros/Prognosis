@@ -327,7 +327,7 @@ public class OpenWeatherMapService implements WeatherService {
         private String getDescription(){
             switch (this.type){
                 case TYPE_CURRENT_WEATHER:
-                    return this.rootObj.optJSONObject(WEATHER).optString(DESCRIPTION);
+                    return this.rootObj.optJSONArray(WEATHER).optJSONObject(0).optString(DESCRIPTION);
                 default:
                     throw new IllegalArgumentException(CLASS_TAG+": responseType " +
                             "must be TYPE_CURRENT_WEATHER for this call.");
@@ -349,7 +349,7 @@ public class OpenWeatherMapService implements WeatherService {
         private String getIcon(){
             switch (this.type){
                 case TYPE_CURRENT_WEATHER:
-                    return this.rootObj.optJSONObject(WEATHER).optString(ICON);
+                    return this.rootObj.optJSONArray(WEATHER).optJSONObject(0).optString(ICON);
                 default:
                     throw new IllegalArgumentException(CLASS_TAG+": responseType " +
                             "must be TYPE_CURRENT_WEATHER for this call.");
