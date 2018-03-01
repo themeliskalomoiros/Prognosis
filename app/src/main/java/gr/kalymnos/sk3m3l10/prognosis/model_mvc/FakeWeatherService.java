@@ -56,6 +56,9 @@ public class FakeWeatherService implements WeatherService {
                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
+        // We query weather from device location, so set the flag before returning the object.
+        ((OpenWeather)weather).setObtainedFromDeviceLocation(true);
+
         try {
             Thread.sleep(1200);
         } catch (InterruptedException e) {
@@ -101,7 +104,13 @@ public class FakeWeatherService implements WeatherService {
             e.printStackTrace();
         }
 
-        return worker.getForecast();
+        // We query forecast from device location, so set the flag before returning the objects.
+        List<Weather> forecast = worker.getForecast();
+        for (Weather w : forecast){
+            OpenWeather openWeather = (OpenWeather) w;
+            openWeather.setObtainedFromDeviceLocation(true);
+        }
+        return forecast;
     }
 
     private int getRandomTemp(){
