@@ -2,7 +2,7 @@ package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
 import gr.kalymnos.sk3m3l10.prognosis.util.DateUtils;
-import gr.kalymnos.sk3m3l10.prognosis.util.WeatherImageProvider;
+import gr.kalymnos.sk3m3l10.prognosis.util.FakeWeatherImageProvider;
 
 /**
  * A container which holds weather data fetched from a web service.
@@ -79,6 +79,6 @@ public abstract class Weather {
     }
 
     public final int getImage(){
-        return WeatherImageProvider.getImage(this.mainWeather,this.timeMilli);
+        return FakeWeatherImageProvider.getImage(this.mainWeather,this.timeMilli);
     }
 }

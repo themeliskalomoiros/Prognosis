@@ -6,7 +6,7 @@ import gr.kalymnos.sk3m3l10.prognosis.R;
  * Provides an image for specific weather
  */
 
-public class WeatherImageProvider {
+public class FakeWeatherImageProvider {
 
     private static final int DAY_LOWER_BOUND = 7;
     private static final int DAY_UPPER_BOUND = 19;
@@ -22,7 +22,7 @@ public class WeatherImageProvider {
     private static final String SNOW = "snow";
     private static final String MIST = "mist";
     
-    private WeatherImageProvider(){}
+    private FakeWeatherImageProvider(){}
     
     public static int getImage(String weather, long timeMilli){
         DateUtils dateUtils = new DateUtils(timeMilli);
@@ -65,7 +65,7 @@ public class WeatherImageProvider {
                 return R.drawable.clouds;
                 
             default:
-                throw new IllegalArgumentException("Unknown weather value from OpenWeatherMap.com");
+                throw new IllegalArgumentException("Unknown weather value from OpenWeatherMap.com: "+weather);
         }
     }
 }
