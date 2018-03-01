@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             ReminderUtils.scheduleWeatherReminder(this);
         }
 
-        startLoaderForCity();
+        fetchWeatherViaCityName();
     }
 
     @Override
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 }else{
                     Toast.makeText(this, this.getString(R.string.permission_location_denied)
                             +" "+SettingsUtils.getCityName(this), Toast.LENGTH_SHORT).show();
-                    startLoaderForCity();
+                    fetchWeatherViaCityName();
                 }
                 break;
             default:
@@ -278,13 +278,13 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     }
 
-    private void startLoaderForCity(){
+    private void fetchWeatherViaCityName(){
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_CITY_NAME);
         loaderArgs.putString(CITY_NAME_KEY,SettingsUtils.getCityName(this));
         this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
     }
 
-    private void startLoaderForLocation(Location location){
+    private void fetchWeatherViaDeviceLocation(Location location){
         Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_DEVICE_LOCATION);
         loaderArgs.putDouble(LON_KEY,location.getLongitude());
         loaderArgs.putDouble(LAT_KEY,location.getLatitude());
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         if (key.equals(SettingsUtils.getCityPrefKey(this))){
             // User inputted a new city
             this.forceLoad = true;
-            startLoaderForCity();
+            fetchWeatherViaCityName();
         }else if(key.equals(SettingsUtils.getDeviceLocationPrefKey(this))){
             /* Note: We do not need to start fetching weather for location if the
             *  corresponding setting is disabled. This will be done in onStart() anyway.*/
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 // Fetching weather from device location disabled
                 clearLocationManager();
                 this.forceLoad=true;
-                startLoaderForCity();
+                fetchWeatherViaCityName();
             }
         }else if(key.equals(SettingsUtils.getNotificationEnabledPrefKey(this))){
             if (SettingsUtils.areNotificationsEnabled(this)){
@@ -335,11 +335,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         if (location!=null){
             // force a load
             this.forceLoad=true;
-            startLoaderForLocation(location);
+            fetchWeatherViaDeviceLocation(location);
         }else{
             Toast.makeText(this, this.getString(R.string.location_not_found_msg)+" "
                     +SettingsUtils.getCityName(this), Toast.LENGTH_SHORT).show();
-            startLoaderForCity();
+            fetchWeatherViaCityName();
         }
     }
 
