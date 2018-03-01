@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import gr.kalymnos.sk3m3l10.prognosis.common.weather.CityWeather;
-import gr.kalymnos.sk3m3l10.prognosis.common.weather.LocationWeather;
+import gr.kalymnos.sk3m3l10.prognosis.common.weather.OpenWeather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.OpenWeatherMapUnits;
 
@@ -17,7 +16,7 @@ import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.OpenWeatherMapUnits;
  */
 
 /*
-* new CityWeather("Kalpaca","GR",1519138800,
+* new OpenWeather("Kalpaca","GR",1519138800,
                     "rain","Great day, no clouds",
                     15,8,86,55,
                     56.4,new OpenWeatherMapUnits.OpenWeatherMetric())
@@ -36,7 +35,7 @@ public class FakeWeatherService implements WeatherService {
     public Weather getCurrentWeather(String cityName) {
         int index = new Random().nextInt(weatherValues.length);
 
-        Weather weather = new CityWeather(cityName,"",TIME_MILLI,weatherValues[index],
+        Weather weather = new OpenWeather(cityName,"",TIME_MILLI,weatherValues[index],
                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
@@ -53,7 +52,7 @@ public class FakeWeatherService implements WeatherService {
     public Weather getCurrentWeather(Location location) {
         int index = new Random().nextInt(weatherValues.length);
 
-        Weather weather = new LocationWeather(location.getLatitude(),location.getLongitude(),TIME_MILLI,weatherValues[index],
+        Weather weather = new OpenWeather("Duisburg","DE",TIME_MILLI,weatherValues[index],
                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
@@ -165,7 +164,7 @@ public class FakeWeatherService implements WeatherService {
                         // A random index that will feed with random mock values Weather objects
                         int index = r.nextInt(weatherValues.length);
 
-                        Weather weather = new CityWeather(cityName,"",TIME_MILLI,weatherValues[index],
+                        Weather weather = new OpenWeather(cityName,"",TIME_MILLI,weatherValues[index],
                                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
@@ -180,7 +179,7 @@ public class FakeWeatherService implements WeatherService {
                     for (int i=0; i<itemSize; i++){
                         int index = r.nextInt(weatherValues.length);
 
-                        Weather weather = new LocationWeather(lat,lon,TIME_MILLI,weatherValues[index],
+                        Weather weather = new OpenWeather("Duisburg","DE",TIME_MILLI,weatherValues[index],
                                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
