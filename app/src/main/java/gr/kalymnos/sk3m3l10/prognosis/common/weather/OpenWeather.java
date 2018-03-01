@@ -47,4 +47,10 @@ public class OpenWeather extends Weather {
             }
         }
     }
+
+    @Override
+    public int getImage() {
+        // TODO: Provide an implementation
+        return 0;
+    }
 }
