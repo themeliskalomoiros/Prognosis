@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private static final String CLASS_TAG = MainActivity.class.getSimpleName();
 
     /* ---------------------------- LOCATION ----------------------------------------------------*/
+    private LocationManager locationManager=null;
     private static final long TIME_INTERVAL = 600000;
     private static final float DISTANCE = 10000;
     private static final int PERMISSION_REQUEST_CODE=11;
-    private LocationManager locationManager=null;
     /* ------------------------------------------------------------------------------------------*/
 
     /* ---------------------------- LOADER ------------------------------------------------------*/
@@ -61,18 +61,21 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private static final String CITY_NAME_KEY = "city name key";
     private static final String LAT_KEY = "latitude key";
     private static final String LON_KEY = "longitude key";
-    /* ------------------------------------------------------------------------------------------*/
-
-    private WeatherService weatherService;
-    private List<Weather> weatherList = null;
-
-    private WeatherViewMvc forecastView;    // This view displays forecast.
-    private ErrorViewMvc errorView;      // This view displays error if forecast is null.
-
-    private SharedPreferences defaultPreferences;
 
     // When true Loader is forced to load new data
     private boolean forceLoad = false;
+    /* ------------------------------------------------------------------------------------------*/
+
+    // This view displays forecast.
+    private WeatherViewMvc forecastView;
+    private WeatherService weatherService;
+    private List<Weather> weatherList = null;
+
+    // This view displays error when there is no forecast to display (null).
+    private ErrorViewMvc errorView;
+
+    // Settings.
+    private SharedPreferences defaultPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
