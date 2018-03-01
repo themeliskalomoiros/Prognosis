@@ -88,13 +88,13 @@ public class DateUtils {
             case Calendar.TUESDAY:
                 return "Tuesday";
             case Calendar.WEDNESDAY:
-                return "Wed";
+                return "Wednesday";
             case Calendar.THURSDAY:
-                return "Thur";
+                return "Thursday";
             case Calendar.FRIDAY:
-                return "Fr";
+                return "Friday";
             case Calendar.SATURDAY:
-                return "Sat";
+                return "Saturday";
             default:
                 return null;
         }
@@ -134,7 +134,7 @@ public class DateUtils {
         int otherMonth = this.calendar.get(Calendar.MONTH);
         int otherDay = this.calendar.get(Calendar.DAY_OF_MONTH);
 
-        if (todayYear==otherYear && todayMonth==otherMonth && todayDay==otherDay+1){
+        if (todayYear==otherYear && todayMonth==otherMonth && otherDay==todayDay+1){
             return true;
         }
         return false;
