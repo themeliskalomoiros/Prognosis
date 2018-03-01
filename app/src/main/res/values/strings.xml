@@ -18,7 +18,7 @@
     <string name="settings">Settings</string>
     <string name="location_not_found_msg">Unable to obtain device location.</string>
     <string name="permission_location_explanation_msg">Need device location to get weather forecast automatically!</string>
-    <string name="permission_location_denied">Permission denied. Fetching weather for</string>
+    <string name="permission_location_denied">Permission denied.</string>
     <string name="permission_location_denied_title">Permission denied</string>
     <string name="preference_weather_source_title">Weather Source</string>
     <string name="pref_notification_time_entry_one">3 hours</string>
@@ -30,5 +30,5 @@
     <string name="weather_notification_channel_name">Weather Notifications</string>
     <string name="error_title">Sorry for that</string>
     <string name="reload">Reload</string>
-    <string name="error_msg">We could not provide you with a weather forecast. It might be your internet connection or a server fault. Hit reload to give a new try.</string>
+    <string name="error_msg">Assure that the city is written correctly (country code seperated by comma, \'bohn, de\') and that you have an internet connection.</string>
 </resources>
