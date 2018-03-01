@@ -81,19 +81,19 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // create the mvc forecastView to display the weather forecast
+        // Weather service initialization.
+        this.weatherService = new OpenWeatherMapService();
+
+        // Settings initialization.
+        this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
+
+        // Create forecastView to display forecast
         this.forecastView = new WeatherViewMvcImpl(LayoutInflater.from(this), null);
         this.forecastView.setWeatherItemListener(this);
         setContentView(forecastView.getRootView());
 
-        // define the weather service
-        this.weatherService = new OpenWeatherMapService();
-
-        // initialize default shared preferences (settings).
-        this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.defaultPreferences.registerOnSharedPreferenceChangeListener(this);
-
-        // If user enabled it, start a job to fire weather notifications.
+        // If user allow it, start a job to fire weather notifications.
         if (SettingsUtils.areNotificationsEnabled(this)){
             ReminderUtils.scheduleWeatherReminder(this);
         }
