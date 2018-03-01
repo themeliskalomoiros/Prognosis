@@ -17,6 +17,12 @@ public class OpenWeatherImageProvider implements WeatherServiceImageProvider {
         return instance;
     }
 
+    /*
+    *   OpenWeatherMap.org provides an image file name for every weather object.
+    *   The getImage() will map that filename to a native drawable resource,
+    *   relative to the specific weather condition of course.
+    *
+    * */
     @Override
     public int getImage(Object... params) {
         return 0;
