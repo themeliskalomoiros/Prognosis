@@ -2,6 +2,7 @@ package gr.kalymnos.sk3m3l10.prognosis.model_mvc;
 
 import android.location.Location;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -30,20 +31,22 @@ public class OpenWeatherMapService implements WeatherService {
     @Override
     public Weather getCurrentWeather(String cityName){
         URL url = Utilities.buildUrlWithCityQuery(cityName,Utilities.CURRENT_WEATHER_URL);
-        Weather weather=null;
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
-            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
 
-            return this.assembleWeather(assembler);
+            // we will try to assemble a Weather obj only if httpResponse is not empty
+            if (!TextUtils.isEmpty(httpResponse)){
+                JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
+                return this.assembleWeather(assembler);
+            }
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
         } catch (JSONException e) {
             Log.e(CLASS_TAG,e.getMessage());
         }
-        return weather;
+        return null;
     }
 
     @Override
@@ -52,12 +55,19 @@ public class OpenWeatherMapService implements WeatherService {
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
-            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
 
-            // We query weather from device location, so set the flag before returning the object.
-            OpenWeather locationWeather = (OpenWeather) this.assembleWeather(assembler);
-            locationWeather.setObtainedFromDeviceLocation(true);
-            return locationWeather;
+            // we will try to assemble a Weather obj only if httpResponse is not empty
+            if (!TextUtils.isEmpty(httpResponse)){
+
+                JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
+
+                // We query weather from device location, so set the flag before returning the object.
+                OpenWeather locationWeather = (OpenWeather) this.assembleWeather(assembler);
+                locationWeather.setObtainedFromDeviceLocation(true);
+                return locationWeather;
+
+            }
+
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
@@ -73,15 +83,23 @@ public class OpenWeatherMapService implements WeatherService {
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
-            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
 
-            // We query forecast from device location, so set the flag before returning the objects.
-            List<Weather> forecast = this.assembleForecast(assembler);
-            for (Weather w : forecast){
-                OpenWeather openWeather = (OpenWeather) w;
-                openWeather.setObtainedFromDeviceLocation(true);
+            // we will try to assemble a Weather obj only if httpResponse is not empty
+            if (!TextUtils.isEmpty(httpResponse)){
+
+                JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
+
+                // We query forecast from device location, so set the flag before returning the objects.
+                List<Weather> forecast = this.assembleForecast(assembler);
+                for (Weather w : forecast){
+                    OpenWeather openWeather = (OpenWeather) w;
+                    openWeather.setObtainedFromDeviceLocation(true);
+                }
+                return forecast;
+
             }
-            return forecast;
+
+
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
@@ -94,20 +112,23 @@ public class OpenWeatherMapService implements WeatherService {
     @Override
     public List<Weather> getWeatherForecast(Location location) {
         URL url = Utilities.buildUrlWithLocationQuery(location,Utilities.FORECAST_URL);
-        List<Weather> forecast = null;
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
-            JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
 
-            return this.assembleForecast(assembler);
+            // we will try to assemble a Weather obj only if httpResponse is not empty
+            if (!TextUtils.isEmpty(httpResponse)){
+                JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);
+                return this.assembleForecast(assembler);
+            }
+
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
         } catch (JSONException e) {
             Log.e(CLASS_TAG,e.getMessage());
         }
-        return forecast;
+        return null;
     }
 
     private List<Weather> assembleForecast(JsonAssembler assembler) {
