@@ -18,7 +18,13 @@ public class ErrorWeatherViewMvcImpl implements ErrorViewMvc {
 
     public ErrorWeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
         this.rootView = inflater.inflate(R.layout.activity_main_error,parent,false);
+
         this.reloadButton = this.rootView.findViewById(R.id.reload_button);
+        this.reloadButton.setOnClickListener((button) -> {
+            if (listener!=null){
+                listener.onReloadClicked();
+            }
+        });
     }
 
     @Override
