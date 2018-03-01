@@ -27,7 +27,7 @@ public class DateUtils {
     * @param lowerBound: From this hour is a day
     * @param lowerBound: Until this hour is a day
     * */
-    public boolean isDay(int lowerBound, int upperBound){
+    public boolean isDayLight(int lowerBound, int upperBound){
         int hour = this.calendar.get(Calendar.HOUR_OF_DAY);
         if (hour>=lowerBound && hour<=upperBound){
             return true;

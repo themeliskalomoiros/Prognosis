@@ -39,7 +39,7 @@ public class FakeWeatherImageProvider implements WeatherServiceImageProvider{
         String weather = (String) params[0];
         Long timeMilli = (Long) params[1];
         DateUtils dateUtils = new DateUtils(timeMilli);
-        boolean isDay = dateUtils.isDay(DAY_LOWER_BOUND,DAY_UPPER_BOUND);
+        boolean isDay = dateUtils.isDayLight(DAY_LOWER_BOUND,DAY_UPPER_BOUND);
 
         switch (weather){
             case CLEAR_SKY:
