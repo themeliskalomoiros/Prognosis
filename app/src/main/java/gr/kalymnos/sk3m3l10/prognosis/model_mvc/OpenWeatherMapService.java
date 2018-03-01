@@ -172,6 +172,7 @@ public class OpenWeatherMapService implements WeatherService {
         private static final String PRESSURE = "pressure";
         private static final String WIND = "wind";
         private static final String SPEED = "speed";
+        private static final String ICON = "icon";
         /*-------------------------------------------------------*/
 
         // Json response types (from .../weather? or .../forecast?)
@@ -321,6 +322,28 @@ public class OpenWeatherMapService implements WeatherService {
                     JSONArray list = this.rootObj.optJSONArray(LIST);
                     return list.optJSONObject(index).optJSONArray(WEATHER)
                             .optJSONObject(0).optString(DESCRIPTION);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
+        private String getIcon(){
+            switch (this.type){
+                case TYPE_CURRENT_WEATHER:
+                    return this.rootObj.optJSONObject(WEATHER).optString(ICON);
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_CURRENT_WEATHER for this call.");
+            }
+        }
+
+        private String getIcon(int index){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    JSONArray list = this.rootObj.optJSONArray(LIST);
+                    return list.optJSONObject(index).optJSONArray(WEATHER)
+                            .optJSONObject(0).optString(ICON);
                 default:
                     throw new IllegalArgumentException(CLASS_TAG+": responseType " +
                             "must be TYPE_FORECAST for this call.");
