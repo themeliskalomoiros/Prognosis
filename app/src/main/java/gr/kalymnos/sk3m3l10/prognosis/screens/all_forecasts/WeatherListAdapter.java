@@ -82,7 +82,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     class WeatherViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView date,weather,tempHigh,tempLow;
+        private TextView date,weather,tempHigh,tempLow,hour;
         private ImageView imageView;
 
         public WeatherViewHolder(View itemView) {
@@ -92,6 +92,11 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             this.weather=itemView.findViewById(R.id.tv_weather);
             this.tempHigh=itemView.findViewById(R.id.tv_temp_high);
             this.tempLow=itemView.findViewById(R.id.tv_temp_low);
+            /*
+                Hour Textview exists in every list item except the first one,
+                the list item for today. For that one it would be null.
+            */
+            this.hour=itemView.findViewById(R.id.tv_hour);
             // set a listener to the view which is wrapped by the ViewHolder
             this.itemView.setOnClickListener(this);
         }
@@ -104,6 +109,13 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                 this.weather.setText(w.getMainWeather());
                 this.tempHigh.setText(w.getTempHighWithSymbol());
                 this.tempLow.setText(w.getTempLowWithSymbol());
+                if (hour!=null){
+                    /*
+                        The first list item (item for today) will
+                        not have an hour view, so it would be null
+                    */
+                    this.hour.setText(w.getApproxHour());
+                }
             }else{
                 throw new NullPointerException("The list in the "
                         +WeatherListAdapter.class.getSimpleName()+" is null!");
