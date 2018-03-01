@@ -121,6 +121,7 @@ public class OpenWeatherMapService implements WeatherService {
     private Weather assembleWeather(JsonAssembler assembler, int index){
         String city = assembler.getCityName();
         String country = assembler.getCountryCode();
+        String icon = assembler.getIcon(index);
         long time = assembler.getTimeMilli(index);
         String mainWeather = assembler.getMainWeather(index);
         String description = assembler.getDescription(index);
@@ -129,13 +130,14 @@ public class OpenWeatherMapService implements WeatherService {
         int humidity = assembler.getHumidity(index);
         int pressure = assembler.getPressure(index);
         double windSpeed = assembler.getWind(index);
-        return new OpenWeather(city,country,time,mainWeather,description,tempMax,tempMin,humidity
+        return new OpenWeather(city,country,icon,time,mainWeather,description,tempMax,tempMin,humidity
                 ,pressure,windSpeed, new OpenWeatherMapUnits.OpenWeatherMetric());
     }
     
     private Weather assembleWeather(JsonAssembler assembler){
         String city = assembler.getCityName();
         String country = assembler.getCountryCode();
+        String icon = assembler.getIcon();
         long time = assembler.getTimeMilli();
         String mainWeather = assembler.getMainWeather();
         String description = assembler.getDescription();
@@ -144,7 +146,7 @@ public class OpenWeatherMapService implements WeatherService {
         int humidity = assembler.getHumidity();
         int pressure = assembler.getPressure();
         double windSpeed = assembler.getWind();
-        return new OpenWeather(city,country,time,mainWeather,description,tempMax,tempMin,humidity
+        return new OpenWeather(city,country,icon,time,mainWeather,description,tempMax,tempMin,humidity
                 ,pressure,windSpeed, new OpenWeatherMapUnits.OpenWeatherMetric());
     }
 
