@@ -22,6 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     public static final String PRESSURE_KEY = "pressure key";
     public static final String WIND_KEY = "wind key";
     public static final String IMAGE_KEY= "image key";
+    public static final String APPROX_HOUR_KEY = "approx hour key";
     
     private DetailViewMvc detailViewMvc;
     
@@ -41,6 +42,7 @@ public class DetailActivity extends AppCompatActivity {
             this.detailViewMvc.bindHumidity(extras.getString(HUMIDITY_KEY));
             this.detailViewMvc.bindPressure(extras.getString(PRESSURE_KEY));
             this.detailViewMvc.bindWind(extras.getString(WIND_KEY));
+            this.detailViewMvc.bindApproxHour(extras.getString(APPROX_HOUR_KEY));
             setContentView(this.detailViewMvc.getRootView());
         }else{
             // TODO: Do something (better) if the intent does not contain bundled info
