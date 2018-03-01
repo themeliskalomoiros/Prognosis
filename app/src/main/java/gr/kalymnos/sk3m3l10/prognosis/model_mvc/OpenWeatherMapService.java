@@ -68,13 +68,13 @@ public class OpenWeatherMapService implements WeatherService {
     @Override
     public List<Weather> getWeatherForecast(String cityName) {
         URL url = Utilities.buildUrlWithCityQuery(cityName,Utilities.FORECAST_URL);
-        List<Weather> forecast = new ArrayList<>();
+        List<Weather> forecast = null;
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
             JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_CURRENT_WEATHER);
 
-            return this.assembleForecasst(assembler);
+            return this.assembleForecast(assembler);
 
         } catch (IOException e) {
             Log.e(CLASS_TAG,e.getMessage());
@@ -348,6 +348,17 @@ public class OpenWeatherMapService implements WeatherService {
                             "must be TYPE_FORECAST for this call.");
             }
         }
+
+        private int getForecastSize(){
+            switch (this.type){
+                case TYPE_FORECAST:
+                    return this.rootObj.optJSONArray(LIST).length();
+                default:
+                    throw new IllegalArgumentException(CLASS_TAG+": responseType " +
+                            "must be TYPE_FORECAST for this call.");
+            }
+        }
+
     }
 
     /**
