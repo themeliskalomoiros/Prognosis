@@ -113,11 +113,26 @@ public class OpenWeatherMapService implements WeatherService {
     private List<Weather> assembleForecast(JsonAssembler assembler) {
         List<Weather> forecast = new ArrayList<>();
         for (int i=0; i<assembler.getForecastSize(); i++){
-            forecast.add(this.assembleWeather(assembler));
+            forecast.add(this.assembleWeather(assembler,i));
         }
         return forecast;
     }
 
+    private Weather assembleWeather(JsonAssembler assembler, int index){
+        String city = assembler.getCityName();
+        String country = assembler.getCountryCode();
+        long time = assembler.getTimeMilli(index);
+        String mainWeather = assembler.getMainWeather(index);
+        String description = assembler.getDescription(index);
+        int tempMax = assembler.getMaxTemp(index);
+        int tempMin = assembler.getMinTemp(index);
+        int humidity = assembler.getHumidity(index);
+        int pressure = assembler.getPressure(index);
+        double windSpeed = assembler.getWind(index);
+        return new OpenWeather(city,country,time,mainWeather,description,tempMax,tempMin,humidity
+                ,pressure,windSpeed, new OpenWeatherMapUnits.OpenWeatherMetric());
+    }
+    
     private Weather assembleWeather(JsonAssembler assembler){
         String city = assembler.getCityName();
         String country = assembler.getCountryCode();
