@@ -9,14 +9,14 @@ import android.widget.Button;
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.ErrorViewMvc;
 
-public class ErrorWeatherViewMvcImpl implements ErrorViewMvc {
+public class ErrorViewMvcImpl implements ErrorViewMvc {
 
     private View rootView;
     private Button reloadButton;
 
     private ReloadListener listener;
 
-    public ErrorWeatherViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
+    public ErrorViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
         this.rootView = inflater.inflate(R.layout.activity_main_error,parent,false);
 
         this.reloadButton = this.rootView.findViewById(R.id.reload_button);
