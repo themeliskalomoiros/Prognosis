@@ -16,7 +16,7 @@ public class DateUtils {
         // OpenWeatherMapApi returns unix time in seconds that have past since 'the Epoch'.
         long timeMilli = timeSeconds * 1000;
         this.calendar = Calendar.getInstance();
-        this.calendar.setTimeInMillis(timeMilli*1000);
+        this.calendar.setTimeInMillis(timeMilli);
     }
 
     public String getDate() {
@@ -71,6 +71,15 @@ public class DateUtils {
     }
 
     private String getDayName(){
+
+        if (isToday()){
+            return "Today";
+        }
+
+        if (isTomorrow()){
+            return "Tomorrow";
+        }
+
         switch (this.calendar.get(Calendar.DAY_OF_WEEK)) {
             case Calendar.SUNDAY:
                 return "Sunday";
@@ -98,12 +107,12 @@ public class DateUtils {
         // Todays date
         int todayYear = today.get(Calendar.YEAR);
         int todayMonth = today.get(Calendar.MONTH);
-        int todayDay = today.get(Calendar.DAY_OF_WEEK);
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
 
         // Date to compare with today
         int otherYear = this.calendar.get(Calendar.YEAR);
         int otherMonth = this.calendar.get(Calendar.MONTH);
-        int otherDay = this.calendar.get(Calendar.DAY_OF_WEEK);
+        int otherDay = this.calendar.get(Calendar.DAY_OF_MONTH);
 
         if (todayYear==otherYear && todayMonth==otherMonth && todayDay==otherDay){
             return true;
@@ -118,12 +127,12 @@ public class DateUtils {
         // Todays date
         int todayYear = today.get(Calendar.YEAR);
         int todayMonth = today.get(Calendar.MONTH);
-        int todayDay = today.get(Calendar.DAY_OF_WEEK);
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
 
         // Date to compare with tomorrow
         int otherYear = this.calendar.get(Calendar.YEAR);
         int otherMonth = this.calendar.get(Calendar.MONTH);
-        int otherDay = this.calendar.get(Calendar.DAY_OF_WEEK);
+        int otherDay = this.calendar.get(Calendar.DAY_OF_MONTH);
 
         if (todayYear==otherYear && todayMonth==otherMonth && todayDay==otherDay+1){
             return true;
