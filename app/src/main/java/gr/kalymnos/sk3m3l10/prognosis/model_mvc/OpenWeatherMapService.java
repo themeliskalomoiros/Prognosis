@@ -84,6 +84,14 @@ public class OpenWeatherMapService implements WeatherService {
         return forecast;
     }
 
+    private List<Weather> assembleForecast(JsonAssembler assembler) {
+        List<Weather> forecast = new ArrayList<>();
+        for (int i=0; i<assembler.getForecastSize(); i++){
+            forecast.add(this.assembleWeather(assembler));
+        }
+        return forecast;
+    }
+
     @Override
     public List<Weather> getWeatherForecast(Location location) {
         return null;
