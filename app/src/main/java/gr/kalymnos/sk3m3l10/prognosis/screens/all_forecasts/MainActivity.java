@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            // TODO: The MVC Controller must not know about UI related references (R class in this case).
             case R.id.menu_item_settings:
                 this.startActivity(new Intent(this, SettingsActivity.class));
                 return true;
