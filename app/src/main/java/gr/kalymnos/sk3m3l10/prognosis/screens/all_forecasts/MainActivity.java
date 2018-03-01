@@ -34,7 +34,6 @@ import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
 import gr.kalymnos.sk3m3l10.prognosis.util.ReminderUtils;
 import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.ErrorViewMvc;
-import gr.kalymnos.sk3m3l10.prognosis.view_mvc.ViewMvc;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     /* ---------------------------- LOADER ------------------------------------------------------*/
     private static final int ID_WEATHER_LOADER = 1821;
-    private static final int TYPE_FETCH_FROM_DEVICE_LOCATION = 1010;
+    private static final int TYPE_FETCH_FROM_GEOLOCATION = 1010;
     private static final int TYPE_FETCH_FROM_CITY_NAME = 1011;
     // when access Loader<List<Weather>> args, this key will return the fetch type of the Loader.
     private static final String TYPE_FETCH_KEY = "loader type fetch key";
@@ -254,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                                     // fetch the weather
                                     String cityName = args.getString(CITY_NAME_KEY);
                                     return weatherList = weatherService.getWeatherForecast(cityName);
-                                case TYPE_FETCH_FROM_DEVICE_LOCATION:
+                                case TYPE_FETCH_FROM_GEOLOCATION:
                                     // This Location obj will be a temp a wrapper for lat/lon.
                                     Location location = new Location("");
                                     location.setLatitude(args.getDouble(LAT_KEY));
@@ -307,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     }
 
     private void fetchWeatherViaDeviceLocation(Location location){
-        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_DEVICE_LOCATION);
+        Bundle loaderArgs = getLoaderArgs(TYPE_FETCH_FROM_GEOLOCATION);
         loaderArgs.putDouble(LON_KEY,location.getLongitude());
         loaderArgs.putDouble(LAT_KEY,location.getLatitude());
         this.getSupportLoaderManager().restartLoader(ID_WEATHER_LOADER,loaderArgs,this);
