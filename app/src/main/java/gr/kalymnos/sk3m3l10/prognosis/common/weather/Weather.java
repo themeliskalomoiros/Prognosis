@@ -78,10 +78,6 @@ public abstract class Weather {
         return wind+" "+this.weatherUnit.getWindUnitSymbol();
     }
 
-    /* If user searched via city name, then it is the city name,
-        if searched with location, then it's Lat/Lon */
-    public abstract String getQueryTitle();
-
     public final int getImage(){
         return WeatherImageProvider.getImage(this.mainWeather,this.timeMilli);
     }

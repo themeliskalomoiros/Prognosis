@@ -29,12 +29,4 @@ public class OpenWeather extends Weather {
     public void setObtainedFromDeviceLocation(boolean obtainedFromDeviceLocation) {
         this.obtainedFromDeviceLocation = obtainedFromDeviceLocation;
     }
-
-    @Override
-    public String getQueryTitle() {
-        if (TextUtils.isEmpty(this.countryCode)){
-            return this.cityName;
-        }
-        return cityName+", "+countryCode;
-    }
 }
