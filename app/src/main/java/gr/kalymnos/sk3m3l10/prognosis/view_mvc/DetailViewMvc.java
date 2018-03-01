@@ -16,4 +16,5 @@ public interface DetailViewMvc extends ViewMvc {
     public void bindHumidity(String s);
     public void bindPressure(String s);
     public void bindWind(String s);
+    public void bindApproxHour(String s);
 }

@@ -19,7 +19,8 @@ public class DetailViewMvcImpl implements DetailViewMvc {
 
     private View rootView;
 
-    private TextView tvDate, tvWeatherDescription,tvHighTemp,tvLowTemp,tvHumidity,tvPressure,tvWind;
+    private TextView tvDate, tvWeatherDescription,tvHighTemp,tvLowTemp,tvHumidity,tvPressure,tvWind
+            ,tvApproxHour;
     private ImageView imageView;
 
     public DetailViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
@@ -36,6 +37,8 @@ public class DetailViewMvcImpl implements DetailViewMvc {
         this.tvPressure=this.rootView.findViewById(R.id.pressure);
         this.tvWind= this.rootView.findViewById(R.id.wind_measurement);
         this.imageView=this.rootView.findViewById(R.id.weather_icon);
+        this.tvApproxHour=this.rootView.findViewById(R.id.tv_hour);
+
     }
 
     @Override
@@ -87,5 +90,10 @@ public class DetailViewMvcImpl implements DetailViewMvc {
     @Override
     public void bindWind(String s) {
         this.tvWind.setText(s);
+    }
+
+    @Override
+    public void bindApproxHour(String s) {
+        this.tvApproxHour.setText(s);
     }
 }
