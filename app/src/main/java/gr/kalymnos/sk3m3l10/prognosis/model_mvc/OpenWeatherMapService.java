@@ -98,7 +98,18 @@ public class OpenWeatherMapService implements WeatherService {
     }
 
     private Weather assembleWeather(JsonAssembler assembler){
-        
+        String city = assembler.getCityName();
+        String country = assembler.getCountryCode();
+        long time = assembler.getTimeMilli();
+        String mainWeather = assembler.getMainWeather();
+        String description = assembler.getDescription();
+        int tempMax = assembler.getMaxTemp();
+        int tempMin = assembler.getMinTemp();
+        int humidity = assembler.getHumidity();
+        int pressure = assembler.getPressure();
+        double windSpeed = assembler.getWind();
+        return new CityWeather(city,country,time,mainWeather,description,tempMax,tempMin,humidity
+                ,pressure,windSpeed, new OpenWeatherMapUnits.OpenWeatherMetric());
     }
 
     /*
