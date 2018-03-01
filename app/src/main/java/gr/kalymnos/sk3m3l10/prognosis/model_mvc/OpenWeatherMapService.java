@@ -83,7 +83,6 @@ public class OpenWeatherMapService implements WeatherService {
         try {
 
             String httpResponse = NetworkUtils.getResponseFromHttpUrl(url);
-
             // we will try to assemble a Weather obj only if httpResponse is not empty
             if (!TextUtils.isEmpty(httpResponse)){
                 JsonAssembler assembler = new JsonAssembler(httpResponse,JsonAssembler.TYPE_FORECAST);

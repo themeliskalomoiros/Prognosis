@@ -42,7 +42,7 @@ import static gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc.WeatherItem
 
 public class MainActivity extends AppCompatActivity implements WeatherItemListener,
         LoaderCallbacks<List<Weather>>, SharedPreferences.OnSharedPreferenceChangeListener,
-        LocationListener{
+        LocationListener,ErrorViewMvc.ReloadListener{
 
     private static final String CLASS_TAG = MainActivity.class.getSimpleName();
 
@@ -289,6 +289,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             // We dont have data, switch to the error view
             if (this.errorView==null){
                 this.errorView = new ErrorViewMvcImpl(LayoutInflater.from(this),null);
+                this.errorView.setListener(this);
             }
             this.setContentView(this.errorView.getRootView());
         }
@@ -385,5 +386,11 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                 .setMessage(msgRes)
                 .create()
                 .show();
+    }
+
+    @Override
+    public void onReloadClicked() {
+        // Reload button of error view clicked
+        this.recreate();
     }
 }
