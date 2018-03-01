@@ -34,6 +34,10 @@ public abstract class Weather {
         return dateUtils.getDate();
     }
 
+    public final String getApproxHour(){
+        return new DateUtils(this.timeMilli).getApproximateTime();
+    }
+
     public final long getTimeMilli(){
         return this.timeMilli;
     }
