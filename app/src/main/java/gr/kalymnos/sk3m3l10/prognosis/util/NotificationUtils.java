@@ -40,7 +40,7 @@ public class NotificationUtils {
                 .setColor(ContextCompat.getColor(context,R.color.primary))
                 .setSmallIcon(R.drawable.ic_sun)
                 .setLargeIcon(largeIcon(context,weather.getImage()))
-                .setContentTitle(weather.getQueryTitle())
+                .setContentTitle(weather.toString())
                 .setContentText(weather.getMainWeather())
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(weather.getMainWeather()))
                 .setDefaults(Notification.DEFAULT_VIBRATE)

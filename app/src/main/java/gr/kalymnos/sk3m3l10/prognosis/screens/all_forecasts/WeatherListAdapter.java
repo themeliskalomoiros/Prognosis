@@ -131,7 +131,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         void bindViews(int position) {
             super.bindViews(position);
             Weather w = items.get(position);
-            this.queryTitle.setText(w.getQueryTitle());
+            this.queryTitle.setText(w.toString());
         }
     }
 }
