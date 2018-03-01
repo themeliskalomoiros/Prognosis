@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     protected void onStop() {
         super.onStop();
-        clearLocationManager();
+        removeLocationManager();
     }
 
     @Override
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         }
     }
 
-    private void clearLocationManager() {
+    private void removeLocationManager() {
         if (this.locationManager!=null){
             this.locationManager.removeUpdates(this);
             this.locationManager=null;
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             *  corresponding setting is disabled. This will be done in onStart() anyway.*/
             if (!SettingsUtils.isDeviceLocationEnabled(this)){
                 // Fetching weather from device location disabled
-                clearLocationManager();
+                removeLocationManager();
                 this.forceLoad=true;
                 fetchWeatherViaCityName();
             }
