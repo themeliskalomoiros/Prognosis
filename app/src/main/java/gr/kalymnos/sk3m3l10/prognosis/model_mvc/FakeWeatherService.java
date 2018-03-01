@@ -35,7 +35,7 @@ public class FakeWeatherService implements WeatherService {
     public Weather getCurrentWeather(String cityName) {
         int index = new Random().nextInt(weatherValues.length);
 
-        Weather weather = new OpenWeather(cityName,"",TIME_MILLI,weatherValues[index],
+        Weather weather = new OpenWeather(cityName,"","01n",TIME_MILLI,weatherValues[index],
                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
@@ -52,7 +52,7 @@ public class FakeWeatherService implements WeatherService {
     public Weather getCurrentWeather(Location location) {
         int index = new Random().nextInt(weatherValues.length);
 
-        Weather weather = new OpenWeather("Duisburg","DE",TIME_MILLI,weatherValues[index],
+        Weather weather = new OpenWeather("Duisburg","DE","10d",TIME_MILLI,weatherValues[index],
                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
@@ -173,7 +173,7 @@ public class FakeWeatherService implements WeatherService {
                         // A random index that will feed with random mock values Weather objects
                         int index = r.nextInt(weatherValues.length);
 
-                        Weather weather = new OpenWeather(cityName,"",TIME_MILLI,weatherValues[index],
+                        Weather weather = new OpenWeather(cityName,"","01d",TIME_MILLI,weatherValues[index],
                                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
@@ -188,7 +188,7 @@ public class FakeWeatherService implements WeatherService {
                     for (int i=0; i<itemSize; i++){
                         int index = r.nextInt(weatherValues.length);
 
-                        Weather weather = new OpenWeather("Duisburg","DE",TIME_MILLI,weatherValues[index],
+                        Weather weather = new OpenWeather("Duisburg","DE","01n",TIME_MILLI,weatherValues[index],
                                 descriptions[index],getRandomTemp(),getRandomTemp(),getRandomHumidity(),
                                 getRandomPressure(),getRandomWind(),new OpenWeatherMapUnits.OpenWeatherMetric());
 
