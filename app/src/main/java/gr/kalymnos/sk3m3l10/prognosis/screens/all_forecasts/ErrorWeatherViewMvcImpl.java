@@ -23,7 +23,7 @@ public class ErrorWeatherViewMvcImpl implements ErrorViewMvc {
 
     @Override
     public View getRootView() {
-        return null;
+        return this.rootView;
     }
 
     @Override
@@ -33,6 +33,6 @@ public class ErrorWeatherViewMvcImpl implements ErrorViewMvc {
 
     @Override
     public void setListener(ReloadListener listener) {
-
+        this.listener=listener;
     }
 }
