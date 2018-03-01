@@ -12,9 +12,11 @@ import java.util.Calendar;
 public class DateUtils {
     private Calendar calendar;
 
-    public DateUtils(long timeMilli){
+    public DateUtils(long timeSeconds){
+        // OpenWeatherMapApi returns unix time in seconds that have past since 'the Epoch'.
+        long timeMilli = timeSeconds * 1000;
         this.calendar = Calendar.getInstance();
-        this.calendar.setTimeInMillis(timeMilli);
+        this.calendar.setTimeInMillis(timeMilli*1000);
     }
 
     public String getDate() {
