@@ -21,17 +21,28 @@
         android:layout_marginLeft="8dp" />
 
     <TextView
-        android:id="@+id/tv_weather"
+        android:id="@+id/tv_hour"
         style="@style/WeatherListItem_Weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_weather"
+        app:layout_constraintTop_toBottomOf="@+id/tv_temp_high"
+        tools:text="~10:00" />
+
+    <TextView
+        android:id="@+id/tv_weather"
+        style="@style/WeatherListItem_Weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_hour"
         app:layout_constraintStart_toEndOf="@+id/img_weather"
-        app:layout_constraintTop_toBottomOf="@+id/tv_date"
-        app:layout_constraintVertical_bias="0.0"
         tools:text="Broken clouds" />
 
     <ImageView
