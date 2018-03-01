@@ -7,7 +7,7 @@ import gr.kalymnos.sk3m3l10.prognosis.util.DateUtils;
  * Provides an image for specific weather
  */
 
-public class FakeWeatherImageProvider {
+public class FakeWeatherImageProvider implements WeatherServiceImageProvider{
 
     private static final int DAY_LOWER_BOUND = 7;
     private static final int DAY_UPPER_BOUND = 19;
@@ -22,10 +22,22 @@ public class FakeWeatherImageProvider {
     private static final String THUNDERSTORM = "thunderstorm";
     private static final String SNOW = "snow";
     private static final String MIST = "mist";
+
+    private static FakeWeatherImageProvider instance=null;
     
     private FakeWeatherImageProvider(){}
-    
-    public static int getImage(String weather, long timeMilli){
+
+    public static FakeWeatherImageProvider getInstance(){
+        if (instance==null){
+            instance = new FakeWeatherImageProvider();
+        }
+        return instance;
+    }
+
+    @Override
+    public int getImage(Object... params) {
+        String weather = (String) params[0];
+        Long timeMilli = (Long) params[1];
         DateUtils dateUtils = new DateUtils(timeMilli);
         boolean isDay = dateUtils.isDay(DAY_LOWER_BOUND,DAY_UPPER_BOUND);
 
@@ -46,25 +58,25 @@ public class FakeWeatherImageProvider {
 
             case SCATTERED_CLOUDS:
                 return R.drawable.clouds;
-                
+
             case BROKEN_CLOUDS:
                 return R.drawable.clouds;
-                
+
             case RAIN:
                 return R.drawable.scattered_rain;
-                
+
             case SHOWER_RAIN:
                 return R.drawable.heavy_rain;
-                
+
             case THUNDERSTORM:
                 return R.drawable.storm;
-                
+
             case SNOW:
                 return R.drawable.snow;
-                
+
             case MIST:
                 return R.drawable.clouds;
-                
+
             default:
                 throw new IllegalArgumentException("Unknown weather value from OpenWeatherMap.com: "+weather);
         }
