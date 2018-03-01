@@ -75,6 +75,7 @@ public class NotificationUtils {
         extras.putString(DetailActivity.HUMIDITY_KEY,w.getHumidity());
         extras.putString(DetailActivity.PRESSURE_KEY,w.getPressure());
         extras.putString(DetailActivity.WIND_KEY,w.getWindWithSymbol());
+        extras.putString(DetailActivity.APPROX_HOUR_KEY,w.getApproxHour());
 
         Intent startDetailActivity = new Intent(context, DetailActivity.class);
         startDetailActivity.putExtras(extras);
