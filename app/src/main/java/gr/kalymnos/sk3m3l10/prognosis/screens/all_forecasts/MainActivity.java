@@ -33,6 +33,7 @@ import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
 import gr.kalymnos.sk3m3l10.prognosis.util.ReminderUtils;
 import gr.kalymnos.sk3m3l10.prognosis.util.SettingsUtils;
+import gr.kalymnos.sk3m3l10.prognosis.view_mvc.ErrorViewMvc;
 import gr.kalymnos.sk3m3l10.prognosis.view_mvc.WeatherViewMvc;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private WeatherService weatherService;
     private List<Weather> weatherList = null;
 
-    private WeatherViewMvc forecastView;
+    private WeatherViewMvc forecastView;    // This view displays forecast.
+    private ErrorViewMvc errorView;      // This view displays error if forecast is null.
 
     private SharedPreferences defaultPreferences;
 
