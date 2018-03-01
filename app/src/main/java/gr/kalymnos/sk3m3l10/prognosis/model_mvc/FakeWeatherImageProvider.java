@@ -1,6 +1,7 @@
-package gr.kalymnos.sk3m3l10.prognosis.util;
+package gr.kalymnos.sk3m3l10.prognosis.model_mvc;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
+import gr.kalymnos.sk3m3l10.prognosis.util.DateUtils;
 
 /**
  * Provides an image for specific weather

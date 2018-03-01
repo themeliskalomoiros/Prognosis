@@ -2,7 +2,7 @@ package gr.kalymnos.sk3m3l10.prognosis.common.weather;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather_units.WeatherUnits;
 import gr.kalymnos.sk3m3l10.prognosis.util.DateUtils;
-import gr.kalymnos.sk3m3l10.prognosis.util.FakeWeatherImageProvider;
+import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherImageProvider;
 
 /**
  * A container which holds weather data fetched from a web service.
