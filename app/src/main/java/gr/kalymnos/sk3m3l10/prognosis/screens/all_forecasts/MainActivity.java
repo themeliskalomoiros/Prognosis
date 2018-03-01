@@ -27,7 +27,6 @@ import java.util.List;
 
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
-import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.OpenWeatherMapService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     private WeatherService weatherService;
     private List<Weather> weatherList = null;
 
-    private WeatherViewMvc view;
+    private WeatherViewMvc forecastView;
 
     private SharedPreferences defaultPreferences;
 
@@ -77,10 +76,10 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // create the mvc view to display the weather forecast
-        this.view = new WeatherViewMvcImpl(LayoutInflater.from(this), null);
-        this.view.setWeatherItemListener(this);
-        setContentView(view.getRootView());
+        // create the mvc forecastView to display the weather forecast
+        this.forecastView = new WeatherViewMvcImpl(LayoutInflater.from(this), null);
+        this.forecastView.setWeatherItemListener(this);
+        setContentView(forecastView.getRootView());
 
         // define the weather service
         this.weatherService = new OpenWeatherMapService();
@@ -231,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                             forceLoad=false;
 
                             // Display progress, soon the fetching will start
-                            view.displayProgressIndicator(true);
+                            forecastView.displayProgressIndicator(true);
 
                             // Force a new load
                             this.forceLoad();
@@ -271,9 +270,9 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     @Override
     public void onLoadFinished(Loader<List<Weather>> loader, List<Weather> data) {
         // load is finished, hide the progress bar and
-        // command the MVC view to bind the weather data
-        view.displayProgressIndicator(false);
-        view.bindWeatherItems(data);
+        // command the MVC forecastView to bind the weather data
+        forecastView.displayProgressIndicator(false);
+        forecastView.bindWeatherItems(data);
     }
 
     @Override
