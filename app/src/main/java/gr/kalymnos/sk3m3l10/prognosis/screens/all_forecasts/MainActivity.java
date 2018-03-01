@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
                             // reset the flag
                             forceLoad=false;
 
-                            // Start fetching, display the progress
+                            // Display progress, soon the fetching will start
                             view.displayProgressIndicator(true);
 
                             // Force a new load
