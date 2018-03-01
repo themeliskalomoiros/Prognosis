@@ -29,4 +29,22 @@ public class OpenWeather extends Weather {
     public void setObtainedFromDeviceLocation(boolean obtainedFromDeviceLocation) {
         this.obtainedFromDeviceLocation = obtainedFromDeviceLocation;
     }
+
+    @Override
+    public String toString() {
+        if (isObtainedFromDeviceLocation()){
+            String msg = "Your location";
+            if (!TextUtils.isEmpty(this.countryCode)){
+                return msg+"\n"+this.cityName+", "+countryCode;
+            }else{
+                return msg+"\n"+this.cityName;
+            }
+        }else{
+            if (!TextUtils.isEmpty(this.countryCode)){
+                return this.cityName+", "+countryCode;
+            }else{
+                return this.cityName;
+            }
+        }
+    }
 }
