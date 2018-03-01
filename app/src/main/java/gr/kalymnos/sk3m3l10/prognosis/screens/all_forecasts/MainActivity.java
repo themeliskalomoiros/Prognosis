@@ -123,24 +123,6 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length==2 && grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
-                    // permission granted
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
-                }else{
-                    Toast.makeText(this, this.getString(R.string.permission_location_denied)
-                            +" "+SettingsUtils.getCityName(this), Toast.LENGTH_SHORT).show();
-                    fetchWeatherViaCityName();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.main_menu,menu);
         return true;
@@ -220,6 +202,24 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length==2 && grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                    // permission granted
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,TIME_INTERVAL,DISTANCE,this);
+                }else{
+                    Toast.makeText(this, this.getString(R.string.permission_location_denied)
+                            +" "+SettingsUtils.getCityName(this), Toast.LENGTH_SHORT).show();
+                    fetchWeatherViaCityName();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
     public Loader<List<Weather>> onCreateLoader(int loaderId, Bundle args) {
         switch (loaderId){
             case ID_WEATHER_LOADER:
@@ -274,10 +274,17 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
 
     @Override
     public void onLoadFinished(Loader<List<Weather>> loader, List<Weather> data) {
-        // load is finished, hide the progress bar and
-        // command the MVC forecastView to bind the weather data
+        // Load finished, hide the progress bar.
         forecastView.displayProgressIndicator(false);
-        forecastView.bindWeatherItems(data);
+        if (data!=null){
+            forecastView.bindWeatherItems(data);
+        }else{
+            // We dont have data, switch to the error view
+            if (this.errorView==null){
+                this.errorView = new ErrorViewMvcImpl(LayoutInflater.from(this),null);
+            }
+            this.setContentView(this.errorView.getRootView());
+        }
     }
 
     @Override
