@@ -32,7 +32,7 @@ public class WeatherReminderJobService extends JobService {
     private static final String CLASS_TAG = WeatherReminderJobService.class.getSimpleName();
 
     private static final int TYPE_CITY = 100;
-    private static final int TYPE_LOCATION = 101;
+    private static final int TYPE_GEOLOCATION = 101;
 
     private AsyncTask<Void,Void,Weather> backgroundTask;
 
