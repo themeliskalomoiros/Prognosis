@@ -28,6 +28,7 @@ import java.util.List;
 import gr.kalymnos.sk3m3l10.prognosis.R;
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
+import gr.kalymnos.sk3m3l10.prognosis.model_mvc.OpenWeatherMapService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.screens.detail.DetailActivity;
 import gr.kalymnos.sk3m3l10.prognosis.screens.settings.SettingsActivity;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
         setContentView(view.getRootView());
 
         // define the weather service
-        this.weatherService = new FakeWeatherService();
+        this.weatherService = new OpenWeatherMapService();
 
         // initialize default shared preferences (settings).
         this.defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements WeatherItemListen
             ReminderUtils.scheduleWeatherReminder(this);
         }
 
+        // TODO: Implement functionality when a Weather or a forecast (List<Weather>) are null
         fetchWeatherViaCityName();
     }
 
