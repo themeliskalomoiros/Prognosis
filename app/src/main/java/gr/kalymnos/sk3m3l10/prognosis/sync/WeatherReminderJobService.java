@@ -12,6 +12,7 @@ import com.firebase.jobdispatcher.JobService;
 
 import gr.kalymnos.sk3m3l10.prognosis.common.weather.Weather;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.FakeWeatherService;
+import gr.kalymnos.sk3m3l10.prognosis.model_mvc.OpenWeatherMapService;
 import gr.kalymnos.sk3m3l10.prognosis.model_mvc.WeatherService;
 import gr.kalymnos.sk3m3l10.prognosis.util.NotificationUtils;
 import gr.kalymnos.sk3m3l10.prognosis.util.ReminderUtils;
@@ -39,17 +40,18 @@ public class WeatherReminderJobService extends JobService {
             @Override
             protected Weather doInBackground(Void... voids) {
                 // TODO: Switch to a real weather service.
-                WeatherService weatherService = new FakeWeatherService();
+                WeatherService weatherService = new OpenWeatherMapService();
                 String cityName = SettingsUtils.getCityName(WeatherReminderJobService.this);
                 return weatherService.getCurrentWeather(cityName);
             }
 
             @Override
             protected void onPostExecute(Weather weather) {
-                Context context = WeatherReminderJobService.this;
-                NotificationUtils.showWeatherNotification(context,weather);
+                if (weather!=null){
+                    Context context = WeatherReminderJobService.this;
+                    NotificationUtils.showWeatherNotification(context,weather);
+                }
                 jobFinished(job,false);
-
             }
         };
 
