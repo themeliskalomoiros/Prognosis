@@ -1,0 +1,82 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <!-- Used for settings preference theme -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="AppTheme.Forecast" parent="@style/AppTheme">
+        <item name="actionBarStyle">@style/ActionBar.Solid.Prognosis.NoTitle</item>
+    </style>
+
+    <!-- action bar style -->
+    <style name="ActionBar.Solid.Prognosis.NoTitle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="displayOptions">showTitle</item>
+    </style>
+
+
+    <!-- styles for views of a weather list item-->
+    <style name="WeatherListItem_Date">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="WeatherListItem_Weather">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="WeatherListItem_High_Temp">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="WeatherListItem_Low_Temp" parent="WeatherListItem_High_Temp">
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="WeatherListItemForToday">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="WeatherListItemForToday_City" parent="WeatherListItemForToday">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="WeatherListItemForToday_Date" parent="WeatherListItemForToday">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="WeatherListItemForToday_High_Temp" parent="WeatherListItemForToday">
+        <item name="android:textSize">60sp</item>
+    </style>
+
+    <style name="WeatherListItemForToday_Low_Temp" parent="WeatherListItemForToday">
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="WeatherListItemForToday_Img">
+        <item name="android:width">100dp</item>
+        <item name="android:height">100dp</item>
+    </style>
+
+    <!-- Style used in the DetailActivity for the labels of the extra weather information -->
+    <style name="DetailLabel" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <!-- Style used in the DetailActivity for the values of the extra weather information -->
+    <style name="ExtraWeatherMeasurement" parent="@style/TextAppearance.AppCompat.Headline">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>
